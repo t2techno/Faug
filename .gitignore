@@ -1,6 +1,7 @@
 ## My ignore statements
 
-./Builds
+Builds
+.gitignore.bak
 
 ## Generated ignore statements from github's visual studio template
 

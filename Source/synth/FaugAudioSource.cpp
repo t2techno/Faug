@@ -12,6 +12,7 @@ FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState)
     mFaust = std::make_unique<DspFaust>();
     synth.addVoice(new FaustDspVoice(mFaust.get()));
     synth.addSound(new FaustDspSound());
+    keyboardState.addListener(this);
 }
 
 FaugAudioSource::~FaugAudioSource()
