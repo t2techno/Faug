@@ -1,6 +1,6 @@
 #define JUCE_DRIVER 1
 /* ------------------------------------------------------------
-name: "Faug", "FaustDSP"
+name: "faug", "FaustDSP"
 version: "2.41.1"
 Code generated with Faust 2.40.12 (https://faust.grame.fr)
 Compilation options: -a api/DspFaust.cpp -lang cpp -i -es 1 -mcd 16 -single -ftz 0
@@ -5152,7 +5152,7 @@ class mydsp : public dsp {
 		m->declare("envelopes_lib_license", "LGPL with exception");
 		m->declare("envelopes_lib_name", "Faust Envelope Library");
 		m->declare("envelopes_lib_version", "0.2");
-		m->declare("filename", "Faug.dsp");
+		m->declare("filename", "faug.dsp");
 		m->declare("filters_lib_lowpass0_highpass1", "MIT-style STK-4.3 license");
 		m->declare("filters_lib_name", "Faust Filters Library");
 		m->declare("filters_lib_pole_author", "Julius O. Smith III");
@@ -5174,7 +5174,7 @@ class mydsp : public dsp {
 		m->declare("maths_lib_license", "LGPL with exception");
 		m->declare("maths_lib_name", "Faust Math Library");
 		m->declare("maths_lib_version", "2.5");
-		m->declare("name", "Faug");
+		m->declare("name", "faug");
 		m->declare("oscillators_lib_lf_sawpos_author", "Bart Brouns, revised by Stéphane Letz");
 		m->declare("oscillators_lib_lf_sawpos_licence", "STK-4.3");
 		m->declare("oscillators_lib_lf_triangle_author", "Bart Brouns");
@@ -5469,12 +5469,18 @@ class mydsp : public dsp {
 	}
 	
 	virtual void buildUserInterface(UI* ui_interface) {
-		ui_interface->openVerticalBox("Faug");
-		ui_interface->openHorizontalBox("Faug");
+		ui_interface->openVerticalBox("faug");
+		ui_interface->declare(&fVslider20, "0", "");
+		ui_interface->declare(&fVslider20, "style", "knob");
+		ui_interface->addVerticalSlider("feedback", &fVslider20, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
+		ui_interface->openHorizontalBox("faug");
+		ui_interface->declare(&fVslider18, "0", "");
+		ui_interface->declare(&fVslider18, "style", "knob");
+		ui_interface->addVerticalSlider("feedback", &fVslider18, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(0, "0", "");
-		ui_interface->openVerticalBox("OscBank");
+		ui_interface->openVerticalBox("osc_bank");
 		ui_interface->declare(0, "0", "");
-		ui_interface->openHorizontalBox("Osc-1");
+		ui_interface->openHorizontalBox("osc-1");
 		ui_interface->declare(&fVslider4, "0", "");
 		ui_interface->declare(&fVslider4, "style", "knob");
 		ui_interface->addVerticalSlider("range", &fVslider4, FAUSTFLOAT(2.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(6.0f), FAUSTFLOAT(1.0f));
@@ -5485,14 +5491,14 @@ class mydsp : public dsp {
 		ui_interface->declare(&fVslider5, "style", "knob");
 		ui_interface->addVerticalSlider("detune", &fVslider5, FAUSTFLOAT(0.0f), FAUSTFLOAT(-7.5f), FAUSTFLOAT(7.5f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fVslider6, "style", "knob");
-		ui_interface->addVerticalSlider("driftAmount", &fVslider6, FAUSTFLOAT(0.125f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("drift_amount", &fVslider6, FAUSTFLOAT(0.125f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(&fVslider7, "style", "knob");
-		ui_interface->addVerticalSlider("driftRate", &fVslider7, FAUSTFLOAT(0.0500000007f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("drift_rate", &fVslider7, FAUSTFLOAT(0.0500000007f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(&fVslider3, "style", "knob");
 		ui_interface->addVerticalSlider("wave", &fVslider3, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(5.0f), FAUSTFLOAT(1.0f));
 		ui_interface->closeBox();
 		ui_interface->declare(0, "1", "");
-		ui_interface->openHorizontalBox("Osc-2");
+		ui_interface->openHorizontalBox("osc-2");
 		ui_interface->declare(&fVslider9, "0", "");
 		ui_interface->declare(&fVslider9, "style", "knob");
 		ui_interface->addVerticalSlider("range", &fVslider9, FAUSTFLOAT(2.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(6.0f), FAUSTFLOAT(1.0f));
@@ -5503,14 +5509,14 @@ class mydsp : public dsp {
 		ui_interface->declare(&fVslider10, "style", "knob");
 		ui_interface->addVerticalSlider("detune", &fVslider10, FAUSTFLOAT(0.0f), FAUSTFLOAT(-7.5f), FAUSTFLOAT(7.5f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fVslider11, "style", "knob");
-		ui_interface->addVerticalSlider("driftAmount", &fVslider11, FAUSTFLOAT(0.100000001f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("drift_amount", &fVslider11, FAUSTFLOAT(0.100000001f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(&fVslider12, "style", "knob");
-		ui_interface->addVerticalSlider("driftRate", &fVslider12, FAUSTFLOAT(0.100000001f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("drift_rate", &fVslider12, FAUSTFLOAT(0.100000001f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(&fVslider8, "style", "knob");
 		ui_interface->addVerticalSlider("wave", &fVslider8, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(5.0f), FAUSTFLOAT(1.0f));
 		ui_interface->closeBox();
 		ui_interface->declare(0, "2", "");
-		ui_interface->openHorizontalBox("Osc-3");
+		ui_interface->openHorizontalBox("osc-3");
 		ui_interface->declare(&fVslider14, "0", "");
 		ui_interface->declare(&fVslider14, "style", "knob");
 		ui_interface->addVerticalSlider("range", &fVslider14, FAUSTFLOAT(2.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(6.0f), FAUSTFLOAT(1.0f));
@@ -5521,60 +5527,54 @@ class mydsp : public dsp {
 		ui_interface->declare(&fVslider15, "style", "knob");
 		ui_interface->addVerticalSlider("detune", &fVslider15, FAUSTFLOAT(0.0f), FAUSTFLOAT(-7.5f), FAUSTFLOAT(7.5f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fVslider16, "style", "knob");
-		ui_interface->addVerticalSlider("driftAmount", &fVslider16, FAUSTFLOAT(0.25f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
+		ui_interface->addVerticalSlider("drift_amount", &fVslider16, FAUSTFLOAT(0.25f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fVslider17, "style", "knob");
-		ui_interface->addVerticalSlider("driftRate", &fVslider17, FAUSTFLOAT(0.150000006f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("drift_rate", &fVslider17, FAUSTFLOAT(0.150000006f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(&fVslider13, "style", "knob");
 		ui_interface->addVerticalSlider("wave", &fVslider13, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(5.0f), FAUSTFLOAT(1.0f));
 		ui_interface->closeBox();
 		ui_interface->closeBox();
-		ui_interface->declare(&fVslider18, "0", "");
-		ui_interface->declare(&fVslider18, "style", "knob");
-		ui_interface->addVerticalSlider("feedback", &fVslider18, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(0, "1", "");
-		ui_interface->openVerticalBox("Envelope");
+		ui_interface->openVerticalBox("envelope");
 		ui_interface->declare(&fHslider3, "0", "");
 		ui_interface->declare(&fHslider3, "style", "knob");
-		ui_interface->addHorizontalSlider("Attack", &fHslider3, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("attack", &fHslider3, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider5, "1", "");
 		ui_interface->declare(&fHslider5, "style", "knob");
-		ui_interface->addHorizontalSlider("Decay", &fHslider5, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("decay", &fHslider5, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider4, "2", "");
 		ui_interface->declare(&fHslider4, "style", "knob");
-		ui_interface->addHorizontalSlider("Sustain", &fHslider4, FAUSTFLOAT(0.800000012f), FAUSTFLOAT(0.00999999978f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
+		ui_interface->addHorizontalSlider("sustain", &fHslider4, FAUSTFLOAT(0.800000012f), FAUSTFLOAT(0.00999999978f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fButton1, "5", "");
 		ui_interface->addButton("gate", &fButton1);
 		ui_interface->closeBox();
 		ui_interface->declare(0, "2", "");
-		ui_interface->openHorizontalBox("Filter");
+		ui_interface->openHorizontalBox("filter");
 		ui_interface->declare(&fVslider1, "0", "");
 		ui_interface->declare(&fVslider1, "style", "knob");
 		ui_interface->addVerticalSlider("cutoff", &fVslider1, FAUSTFLOAT(440.0f), FAUSTFLOAT(10.0f), FAUSTFLOAT(32000.0f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fVslider19, "1", "");
 		ui_interface->declare(&fVslider19, "style", "knob");
-		ui_interface->addVerticalSlider("Emphasis", &fVslider19, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.707000017f), FAUSTFLOAT(25.0f), FAUSTFLOAT(0.00100000005f));
+		ui_interface->addVerticalSlider("emphasis", &fVslider19, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.707000017f), FAUSTFLOAT(25.0f), FAUSTFLOAT(0.00100000005f));
 		ui_interface->declare(0, "3", "");
-		ui_interface->openVerticalBox("FilterContour");
+		ui_interface->openVerticalBox("filter_contour");
 		ui_interface->declare(&fHslider0, "1", "");
 		ui_interface->declare(&fHslider0, "style", "knob");
-		ui_interface->addHorizontalSlider("Attack", &fHslider0, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("attack", &fHslider0, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fVslider2, "2", "");
 		ui_interface->declare(&fVslider2, "style", "knob");
-		ui_interface->addVerticalSlider("Amount", &fVslider2, FAUSTFLOAT(10.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(10.0f), FAUSTFLOAT(0.00999999978f));
+		ui_interface->addVerticalSlider("amount", &fVslider2, FAUSTFLOAT(10.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(10.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fHslider2, "2", "");
 		ui_interface->declare(&fHslider2, "style", "knob");
-		ui_interface->addHorizontalSlider("Decay", &fHslider2, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("decay", &fHslider2, FAUSTFLOAT(50.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1000.0f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider1, "3", "");
 		ui_interface->declare(&fHslider1, "style", "knob");
-		ui_interface->addHorizontalSlider("Sustain", &fHslider1, FAUSTFLOAT(0.800000012f), FAUSTFLOAT(0.00999999978f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
+		ui_interface->addHorizontalSlider("sustain", &fHslider1, FAUSTFLOAT(0.800000012f), FAUSTFLOAT(0.00999999978f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fButton0, "5", "");
 		ui_interface->addButton("gate", &fButton0);
 		ui_interface->closeBox();
 		ui_interface->closeBox();
 		ui_interface->closeBox();
-		ui_interface->declare(&fVslider20, "0", "");
-		ui_interface->declare(&fVslider20, "style", "knob");
-		ui_interface->addVerticalSlider("feedback", &fVslider20, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->declare(&fVslider0, "style", "knob");
 		ui_interface->addVerticalSlider("gain", &fVslider0, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.00999999978f));
 		ui_interface->closeBox();

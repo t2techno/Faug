@@ -17,58 +17,58 @@ waveThree(drift) = tri(drift,range), saw(drift,range), revSaw(drift,range), squa
 
 driftConst = 0.25;
 // noise = no.pink_noise
-oscOne   = hgroup("[0]Osc-1",waveOneTwo(drift))
+oscOne   = hgroup("[0]osc-1",waveOneTwo(drift))
 with{
-    driftRate = vslider("driftRate[style:knob]",0.05,0,1,0.001) : si.smoo;
-    driftAmount = vslider("driftAmount[style:knob]",.125,0,1,0.001) : si.smoo;
+    driftRate = vslider("drift_rate[style:knob]",0.05,0,1,0.001) : si.smoo;
+    driftAmount = vslider("drift_amount[style:knob]",.125,0,1,0.001) : si.smoo;
     drift = os.osc(driftRate)*driftAmount*driftConst : @(ma.SR/2);
 };
 
-oscTwo   = hgroup("[1]Osc-2",waveOneTwo(drift))
+oscTwo   = hgroup("[1]osc-2",waveOneTwo(drift))
 with{
-    driftRate = vslider("driftRate[style:knob]",0.1,0,1,0.001) : si.smoo;
-    driftAmount = vslider("driftAmount[style:knob]",.1,0,1,0.001) : si.smoo;
+    driftRate = vslider("drift_rate[style:knob]",0.1,0,1,0.001) : si.smoo;
+    driftAmount = vslider("drift_amount[style:knob]",.1,0,1,0.001) : si.smoo;
     drift = os.osc(driftRate)*driftAmount*driftConst : @(ma.SR/3);
 };
-oscThree = hgroup("[2]Osc-3",waveThree(drift))
+oscThree = hgroup("[2]osc-3",waveThree(drift))
 with{
-    driftRate = vslider("driftRate[style:knob]",0.15,0,1,0.001) : si.smoo;
-    driftAmount = vslider("driftAmount[style:knob]",.25,0,1,0.01) : si.smoo;
+    driftRate = vslider("drift_rate[style:knob]",0.15,0,1,0.001) : si.smoo;
+    driftAmount = vslider("drift_amount[style:knob]",.25,0,1,0.01) : si.smoo;
     drift = os.osc(driftRate)*driftAmount*driftConst : @(ma.SR/5);
 };
-envelope = vgroup("[1]Envelope",en.adsr(attack,decay,sustain,release,gate))
+envelope = vgroup("[1]envelope",en.adsr(attack,decay,sustain,release,gate))
 with{
-  attack = hslider("[0]Attack[style:knob]",50,1,1000,1) : si.smoo*0.001;
-  decay = hslider("[1]Decay[style:knob]",50,1,1000,1) : si.smoo*0.001;
-  sustain = hslider("[2]Sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
+  attack = hslider("[0]attack[style:knob]",50,1,1000,1) : si.smoo*0.001;
+  decay = hslider("[1]decay[style:knob]",50,1,1000,1) : si.smoo*0.001;
+  sustain = hslider("[2]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
   release = decay/2;
   gain = hslider("[4]gain[style:knob]",1,0,1,0.01) : si.smoo;
   gate = button("[5]gate") : si.smoo;
 };
 
 // add oscillators together and scale 
-oscillators = vgroup("[0]OscBank",(oscOne + oscTwo)/2 : (_ + oscThree)/2);
+oscillators = vgroup("[0]osc_bank",(oscOne + oscTwo)/2 : (_ + oscThree)/2);
 
-filter = hgroup("[2]Filter",ve.moogLadder(cutoffFreq, Q))
+filter = hgroup("[2]filter",ve.moogLadder(cutoffFreq, Q))
 with{
-    filterParams = vgroup("[0]Filter", cutoffFreq, Q);
+    filterParams = vgroup("[0]filter", cutoffFreq, Q);
     cutoffFreq = (vslider("[0]cutoff[style:knob]",440,10,32000,1)/32000) : si.smoo <: _, (1-_)*filterEnvelope : +;
-    Q = vslider("[1]Emphasis[style:knob]",1,0.707,25,0.001) : si.smoo;
-    reverse = hslider("[0]Contour Direction[style:radio{'+':0;'-':1}]",0,0,1,1) : si.smoo;
-    contourAmount = vslider("[2]Amount[style:knob]",10,0,10,0.01) : si.smoo/10;
+    Q = vslider("[1]emphasis[style:knob]",1,0.707,25,0.001) : si.smoo;
+    reverse = hslider("[0]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1) : si.smoo;
+    contourAmount = vslider("[2]amount[style:knob]",10,0,10,0.01) : si.smoo/10;
 
 
-    filterEnvelope = vgroup("[3]FilterContour",en.adsr(attack,decay,sustain,decay,gate)*contourAmount);
-    attack = hslider("[1]Attack[style:knob]",50,1,1000,1) : si.smoo*0.01;
-    decay = hslider("[2]Decay[style:knob]",50,1,1000,1) : si.smoo*0.01;
-    sustain = hslider("[3]Sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
+    filterEnvelope = vgroup("[3]filter_contour",en.adsr(attack,decay,sustain,decay,gate)*contourAmount);
+    attack = hslider("[1]attack[style:knob]",50,1,1000,1) : si.smoo*0.01;
+    decay = hslider("[2]decay[style:knob]",50,1,1000,1) : si.smoo*0.01;
+    sustain = hslider("[3]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
     gain = hslider("[4]gain[style:knob]",1,0,1,0.01) : si.smoo;
     gate = button("[5]gate") : si.smoo;
 };
 
 generateSound(fdb) = envelope*(oscillators+fdb) : filter;
 
-process = hgroup("Faug", generateSound ~ fdBackSignal ) : drive <: _,_
+process = hgroup("faug", generateSound ~ fdBackSignal ) : drive, gain : * <: _,_
 with {
     fdback = vslider("[0]feedback[style:knob]",0,0,1,0.01) : si.smoo;
     fdBackSignal = _*fdback;
