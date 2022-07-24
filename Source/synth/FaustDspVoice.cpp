@@ -1,15 +1,34 @@
-#include "../Source/faustExp/DspFaust.h"
+#include "../Source/faustExp/DspFaust.cpp"
+#include "FaustDspSound.cpp"
 #include "FaustDspVoice.h"
 
-FaustDspVoice::FaustDspVoice(DspFaust* faust)
+FaustDspVoice::FaustDspVoice()
 {
-	mFaust = faust;
-	level = std::make_unique<float>();
-	*level = 0.0;
     currentPitch = std::make_unique<int>();
-
 }
 FaustDspVoice::~FaustDspVoice(){}
+
+void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) {
+	mFaust = std::make_unique<mydsp>();
+	mFaust->init(sampleRate);
+	mUI = std::make_unique<MapUI>();
+	mFaust->buildUserInterface(mUI.get());
+
+	outputs = new float* [2];
+	for (int channel = 0; channel < 2; ++channel) {
+		outputs[channel] = new float[samplesPerBlock];
+	}
+}
+
+void FaustDspVoice::releaseResources()
+{
+	mFaust.reset();
+	mUI.reset();
+	for (int channel = 0; channel < 2; ++channel) {
+		delete[] outputs[channel];
+	}
+	delete[] outputs;
+}
 
 bool FaustDspVoice::canPlaySound(juce::SynthesiserSound* sound)
 {
@@ -20,7 +39,6 @@ void FaustDspVoice::startNote(int midiNoteNumber, float velocity,
 	juce::SynthesiserSound*, int /*currentPitchWheelPosition*/)
 {
     *currentPitch = midiNoteNumber;
-    *level = .15f * velocity;
     keyOn();
 }
 
@@ -28,11 +46,20 @@ void FaustDspVoice::stopNote(float /*velocity*/, bool allowTailOff)
 {
     *currentPitch = 0;
     keyOff();
+	if (!allowTailOff)
+	{
+		clearCurrentNote();
+	}
 }
 
 void FaustDspVoice::renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples)
 {
-	// This is all handled inside the faust dsp object
+	mFaust->compute(outputBuffer.getNumSamples(), NULL, outputs);
+
+	for (int i = 0; i < outputBuffer.getNumSamples(); i++) {
+		*outputBuffer.getWritePointer(0, i) = outputs[0][i]; // left
+		*outputBuffer.getWritePointer(1, i) = outputs[1][i]; // right
+	}
 }
 
 void FaustDspVoice::pitchWheelMoved(int newPitchWheelValue){}
@@ -46,26 +73,25 @@ void FaustDspVoice::keyOn() {
 
 void FaustDspVoice::keyOff() {
 	setGate(false);
-    *level = 0;
     *currentPitch = 0;
 }
 
-void FaustDspVoice::setGate(bool on) 
+void FaustDspVoice::setGate(bool on)
 {
 	if (on) {
-		mFaust->setParamValue(GATE, 1);
-		mFaust->setParamValue(F_ENV_GATE, 1);
+		mUI->setParamValue(GATE, 1);
+		mUI->setParamValue(F_ENV_GATE, 1);
 	}
 	else {
-		mFaust->setParamValue(GATE, 0);
-		mFaust->setParamValue(F_ENV_GATE, 0);
+		mUI->setParamValue(GATE, 0);
+		mUI->setParamValue(F_ENV_GATE, 0);
 	}
 
 }
 
 void FaustDspVoice::setFreq() {
     double freq = juce::MidiMessage::getMidiNoteInHertz(*currentPitch);
-	mFaust->setParamValue(OSC1_FREQ, freq);
-	mFaust->setParamValue(OSC2_FREQ, freq);
-	mFaust->setParamValue(OSC3_FREQ, freq);
+	mUI->setParamValue(OSC1_FREQ, freq);
+	mUI->setParamValue(OSC2_FREQ, freq);
+	mUI->setParamValue(OSC3_FREQ, freq);
 }

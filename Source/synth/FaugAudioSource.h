@@ -4,8 +4,7 @@
 
 #include <JuceHeader.h>
 
-class MapUI;
-class DspFaust;
+class FaustDspVoice;
 
 class FaugAudioSource : public juce::AudioSource,
 							   juce::MidiInputCallback,
@@ -18,7 +17,7 @@ class FaugAudioSource : public juce::AudioSource,
 		void setUsingSynthSound();
 
 		void prepareToPlay(int /*samplesPerBlockExpected*/, double sampleRate) override;
-		void releaseResources() override {};
+		void releaseResources() override;
 		void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
 
 		juce::MidiMessageCollector* getMidiCollector();
@@ -27,9 +26,8 @@ class FaugAudioSource : public juce::AudioSource,
 		void handleNoteOff(juce::MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override; //MidiKeyboardStateListener
 
 	private:
-		std::unique_ptr<DspFaust> mFaust;
-		std::unique_ptr<MapUI> mUI;
 		juce::MidiMessageCollector midiCollector;
 		juce::Synthesiser synth;
+		std::unique_ptr<FaustDspVoice> mVoice;
 		juce::MidiKeyboardState& keyboardState;
 };

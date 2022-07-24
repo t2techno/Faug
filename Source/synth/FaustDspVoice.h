@@ -1,15 +1,19 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "FaustDspSound.cpp"
 #include "ParamsList.h"
 
-class DspFaust;
+class mydsp;
+class MapUI;
+class SyntheSynthesiserSound;
 
 class FaustDspVoice : public juce::SynthesiserVoice {
 public:
-	FaustDspVoice(DspFaust* faust);
+	FaustDspVoice();
 	virtual ~FaustDspVoice() override;
+
+	void prepareToPlay(int sampleRate, int samplesPerBlock);
+	void releaseResources();
 
 	bool canPlaySound(juce::SynthesiserSound* sound) override;
 
@@ -26,7 +30,8 @@ public:
 	void setFreq();
 
 private:
-	DspFaust* mFaust;
-	std::unique_ptr<float> level;
+	std::unique_ptr<mydsp> mFaust;
+	std::unique_ptr<MapUI> mUI;
 	std::unique_ptr<int> currentPitch;
+	float** outputs;
 };
