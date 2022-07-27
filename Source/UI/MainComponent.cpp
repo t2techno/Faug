@@ -16,8 +16,9 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     addAndMakeVisible(&m_decaySlider);
     m_decaySlider.setRange(1, 1000, 0);
+    m_decaySlider.setBounds(200, 150, 100, 100);
     m_decaySlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    m_decaySlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
+    m_decaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 80, 20);
 
 
     addAndMakeVisible(&m_decayLabel);
@@ -26,8 +27,7 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     m_decayLabel.setJustificationType(juce::Justification::centred);
     m_decayLabel.setEditable(false, true, false);
     m_decayLabel.setColour(juce::Label::textColourId, juce::Colour(0xffff8917));
-    m_decayLabel.setColour(juce::TextEditor::textColourId, juce::Colours::black);
-    m_decayLabel.setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    m_decayLabel.attachToComponent(&m_decaySlider, false);
 
     m_decayAttach.reset(new SliderAttachment(m_vts, juce::String(DECAY), m_decaySlider));
 

@@ -23,7 +23,7 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     m_params(*this, nullptr, juce::Identifier("FAUG"),
         {
-            std::make_unique<juce::AudioParameterFloat>("decay", "decay", 1.0f, 1000.0f, 50.0f)
+            std::make_unique<juce::AudioParameterFloat>(DECAY, "decay", 1.0f, 1000.0f, 50.0f)
         }
     )
 {
