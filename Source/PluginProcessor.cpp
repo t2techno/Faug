@@ -7,6 +7,7 @@
 
 #include "PluginProcessor.h"
 #include "./UI/PluginEditor.h"
+#include "./synth/ParamsList.h"
 
 //==============================================================================
 FaugAudioProcessor::FaugAudioProcessor()
@@ -18,16 +19,21 @@ FaugAudioProcessor::FaugAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+    m_params(*this, nullptr, juce::Identifier("FAUG"),
+        {
+            std::make_unique<juce::AudioParameterFloat>("decay", "decay", 1.0f, 1000.0f, 50.0f)
+        }
+    )
 {
     m_keyState = std::make_unique <juce::MidiKeyboardState>();
-    audioSource = std::make_unique <FaugAudioSource>(*m_keyState.get());
+    m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params);
 }
 
 FaugAudioProcessor::~FaugAudioProcessor()
 {
-    audioSource.reset();
+    m_audioSource.reset();
 }
 
 //==============================================================================
@@ -95,12 +101,12 @@ void FaugAudioProcessor::changeProgramName (int index, const juce::String& newNa
 //==============================================================================
 void FaugAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    audioSource->prepareToPlay(samplesPerBlock, sampleRate);
+    m_audioSource->prepareToPlay(samplesPerBlock, sampleRate);
 }
 
 void FaugAudioProcessor::releaseResources()
 {
-    audioSource->releaseResources();
+    m_audioSource->releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -137,9 +143,9 @@ void FaugAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     bufferToFill.buffer = &buffer;
     bufferToFill.startSample = 0;
     bufferToFill.numSamples = buffer.getNumSamples();
-    audioSource->getNextAudioBlock(bufferToFill);
+    m_audioSource->getNextAudioBlock(bufferToFill);
 
-    // send bufferToFill to frequency display of output
+    // send bufferToFill.buffer to frequency display of output
 }
 
 //==============================================================================
@@ -150,7 +156,7 @@ bool FaugAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* FaugAudioProcessor::createEditor()
 {
-   return new FaugAudioProcessorEditor (*this, *m_keyState.get());
+   return new FaugAudioProcessorEditor (*this, *m_keyState.get(), m_params);
 }
 
 //==============================================================================

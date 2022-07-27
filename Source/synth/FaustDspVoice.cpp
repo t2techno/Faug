@@ -1,18 +1,19 @@
 #include "../Source/faustExp/DspFaust.cpp"
 #include "FaustDspSound.cpp"
 #include "FaustDspVoice.h"
+#include "../UI/FaustUIBridge.h"
 
-FaustDspVoice::FaustDspVoice()
+FaustDspVoice::FaustDspVoice(juce::AudioProcessorValueTreeState& valueTreeState) : vts(valueTreeState)
 {
     currentPitch = std::make_unique<int>();
 }
 FaustDspVoice::~FaustDspVoice(){}
 
 void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) {
+	mBridge = std::make_unique<FaustUIBridge>(vts);
 	mFaust = std::make_unique<mydsp>();
 	mFaust->init(sampleRate);
-	mUI = std::make_unique<MapUI>();
-	mFaust->buildUserInterface(mUI.get());
+	mFaust->buildUserInterface(mBridge.get());
 
 	outputs = new float* [2];
 	for (int channel = 0; channel < 2; ++channel) {
@@ -23,9 +24,9 @@ void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) {
 void FaustDspVoice::releaseResources()
 {
 	mFaust.reset();
-	mUI.reset();
+	mBridge.reset();
 	for (int channel = 0; channel < 2; ++channel) {
-		delete[] outputs[channel];
+		delete outputs[channel];
 	}
 	delete[] outputs;
 }
@@ -78,20 +79,20 @@ void FaustDspVoice::keyOff() {
 
 void FaustDspVoice::setGate(bool on)
 {
-	if (on) {
+	/*if (on) {
 		mUI->setParamValue(GATE, 1);
 		mUI->setParamValue(F_ENV_GATE, 1);
 	}
 	else {
 		mUI->setParamValue(GATE, 0);
 		mUI->setParamValue(F_ENV_GATE, 0);
-	}
+	}*/
 
 }
 
 void FaustDspVoice::setFreq() {
     double freq = juce::MidiMessage::getMidiNoteInHertz(*currentPitch);
-	mUI->setParamValue(OSC1_FREQ, freq);
-	mUI->setParamValue(OSC2_FREQ, freq);
-	mUI->setParamValue(OSC3_FREQ, freq);
+	//mUI->setParamValue(OSC1_FREQ, freq);
+	//mUI->setParamValue(OSC2_FREQ, freq);
+	//mUI->setParamValue(OSC3_FREQ, freq);
 }

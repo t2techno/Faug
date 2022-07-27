@@ -4,12 +4,12 @@
 #include "ParamsList.h"
 
 class mydsp;
-class MapUI;
+class FaustUIBridge;
 class SyntheSynthesiserSound;
 
 class FaustDspVoice : public juce::SynthesiserVoice {
 public:
-	FaustDspVoice();
+	FaustDspVoice(juce::AudioProcessorValueTreeState& valueTreeState);
 	virtual ~FaustDspVoice() override;
 
 	void prepareToPlay(int sampleRate, int samplesPerBlock);
@@ -30,8 +30,9 @@ public:
 	void setFreq();
 
 private:
+	juce::AudioProcessorValueTreeState& vts;
 	std::unique_ptr<mydsp> mFaust;
-	std::unique_ptr<MapUI> mUI;
+	std::unique_ptr<FaustUIBridge> mBridge;
 	std::unique_ptr<int> currentPitch;
 	float** outputs;
 };

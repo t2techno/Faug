@@ -11,7 +11,7 @@ class FaugAudioSource : public juce::AudioSource,
 					   private juce::MidiKeyboardStateListener 
 {
 	public:
-		FaugAudioSource(juce::MidiKeyboardState& keyState);
+		FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts);
 		virtual ~FaugAudioSource() override;
 
 		void setUsingSynthSound();

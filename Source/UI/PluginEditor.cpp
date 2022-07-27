@@ -11,15 +11,15 @@
 #include "MainComponent.h"
 
 //==============================================================================
-FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce::MidiKeyboardState& state)
+FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce::MidiKeyboardState& state, juce::AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    m_main = std::make_unique<MainComponent>(state);
+    m_main = std::make_unique<MainComponent>(state, vts);
 
     addAndMakeVisible(*m_main.get());
-    setSize (700, 200);
+    setSize (700, 300);
 }
 
 FaugAudioProcessorEditor::~FaugAudioProcessorEditor()

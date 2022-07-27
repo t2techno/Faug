@@ -1,7 +1,6 @@
 #pragma once
 
 // Main Component, holds the primary synth UI
-// Todo: Move MidiKeyboardComponent to it's own class to be added/removed
 
 #include <JuceHeader.h>
 
@@ -9,8 +8,8 @@ class MainComponent : public juce::Component,
 							 juce::Timer
 {
 public:
-	MainComponent(juce::MidiKeyboardState& keyboardState);
-	virtual ~MainComponent();
+	MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts);
+	virtual ~MainComponent() override;
 
 	 void  timerCallback() override; // timer
 
@@ -19,6 +18,14 @@ public:
 
 private:
 	juce::MidiKeyboardComponent keyboardComponent;
+    juce::AudioProcessorValueTreeState& m_vts;
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_decayAttach;
+    //[/UserVariables]
+
+    //==============================================================================
+    juce::Slider m_decaySlider;
+    juce::Label m_decayLabel;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

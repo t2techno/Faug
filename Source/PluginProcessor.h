@@ -64,6 +64,7 @@ public:
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FaugAudioProcessor)
-    std::unique_ptr<FaugAudioSource> audioSource;
+    juce::AudioProcessorValueTreeState m_params;
+    std::unique_ptr<FaugAudioSource> m_audioSource;
     std::unique_ptr<juce::MidiKeyboardState> m_keyState;
 };

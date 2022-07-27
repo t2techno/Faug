@@ -20,7 +20,7 @@ class MainComponent;
 class FaugAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    FaugAudioProcessorEditor (FaugAudioProcessor&, juce::MidiKeyboardState& state);
+    FaugAudioProcessorEditor (FaugAudioProcessor&, juce::MidiKeyboardState& state, juce::AudioProcessorValueTreeState& vts);
     ~FaugAudioProcessorEditor() override;
 
     //==============================================================================
