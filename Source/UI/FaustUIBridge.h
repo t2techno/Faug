@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../FaustSource/gui/UI.h"
+#include "../FaustInclude/UI.h"
 
 //==============================================================================
 /**
