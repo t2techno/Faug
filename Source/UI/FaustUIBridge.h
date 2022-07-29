@@ -76,15 +76,6 @@ class  FaustUIBridge : public UI
 
 private:
     juce::AudioProcessorValueTreeState& vts;
-
-    struct ParamListenerPair {
-        ParamListenerPair(juce::String paramId, FaustUIBridgeListener* listener)
-            : paramId(paramId), listener(listener) {};
-
-        juce::String paramId;
-        FaustUIBridgeListener* listener;
-    };
-
-    juce::OwnedArray<juce::AudioProcessorValueTreeState::Listener> listeners;
-    juce::Array<ParamListenerPair> listenerAssignments;
+    juce::Array<juce::String> labels;
+    juce::HashMap<juce::String, FaustUIBridgeListener*> listenerAssignments;
 };

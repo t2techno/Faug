@@ -67,9 +67,8 @@ void FaustDspVoice::pitchWheelMoved(int newPitchWheelValue){}
 void FaustDspVoice::controllerMoved(int controllerNumber, int newControllerValue){}
 
 void FaustDspVoice::keyOn() {
-	setGate(true);
 	setFreq();
-	
+	setGate(true);
 }
 
 void FaustDspVoice::keyOff() {
@@ -79,20 +78,10 @@ void FaustDspVoice::keyOff() {
 
 void FaustDspVoice::setGate(bool on)
 {
-	/*if (on) {
-		mUI->setParamValue(GATE, 1);
-		mUI->setParamValue(F_ENV_GATE, 1);
-	}
-	else {
-		mUI->setParamValue(GATE, 0);
-		mUI->setParamValue(F_ENV_GATE, 0);
-	}*/
-
+	vts.getParameterAsValue(GATE).setValue(on);
 }
 
 void FaustDspVoice::setFreq() {
     double freq = juce::MidiMessage::getMidiNoteInHertz(*currentPitch);
-	//mUI->setParamValue(OSC1_FREQ, freq);
-	//mUI->setParamValue(OSC2_FREQ, freq);
-	//mUI->setParamValue(OSC3_FREQ, freq);
+	vts.getParameterAsValue(FREQ).setValue(freq);
 }

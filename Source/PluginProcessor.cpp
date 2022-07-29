@@ -12,18 +12,21 @@
 //==============================================================================
 FaugAudioProcessor::FaugAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
+    : AudioProcessor(BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", juce::AudioChannelSet::stereo(), true)
+#endif
+        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+    ),
 #endif
     m_params(*this, nullptr, juce::Identifier("FAUG"),
         {
-            std::make_unique<juce::AudioParameterFloat>(DECAY, "decay", 1.0f, 1000.0f, 50.0f)
+            std::make_unique<juce::AudioParameterBool>(GATE, "Gate",false),
+            std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq",1.f,20000.f,440.f),
+            std::make_unique<juce::AudioParameterFloat>(DECAY, "Decay", 1.f, 1000.f, 50.f),
+            
         }
     )
 {
