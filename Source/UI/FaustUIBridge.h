@@ -33,7 +33,7 @@ class  FaustUIBridge : public UI
             FaustUIBridgeListener to propagate changes back to the corresponding
             zone.
         */
-        virtual void addButton(const char* label, FAUSTFLOAT* zone) override {};
+        virtual void addButton(const char* label, FAUSTFLOAT* zone) override;
         virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) override {};
         virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override {};
         virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
