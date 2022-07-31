@@ -4,14 +4,42 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               companyName="t2tech" companyWebsite="t2tech.info" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="NOdcBF" name="Faug">
+    <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
+      <FILE id="w3JNzT" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
+    </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
+      <GROUP id="{945315F8-3E98-51C0-3E36-09D01E7A5E4E}" name="faustExp">
+        <FILE id="fHzsxN" name="DspFaust.cpp" compile="1" resource="0" file="Source/faustExp/DspFaust.cpp"/>
+        <FILE id="PCeKVw" name="DspFaust.h" compile="0" resource="0" file="Source/faustExp/DspFaust.h"/>
+        <FILE id="whnbwV" name="README.md" compile="0" resource="1" file="Source/faustExp/README.md"/>
+      </GROUP>
+      <GROUP id="{5A9A1819-7DD7-1F3E-3700-C43CF7595875}" name="synth">
+        <FILE id="fMHUhN" name="FaugAudioSource.cpp" compile="1" resource="0"
+              file="Source/synth/FaugAudioSource.cpp"/>
+        <FILE id="SJLObh" name="FaugAudioSource.h" compile="0" resource="0"
+              file="Source/synth/FaugAudioSource.h"/>
+        <FILE id="xEE8ae" name="FaustDspSound.cpp" compile="1" resource="0"
+              file="Source/synth/FaustDspSound.cpp"/>
+        <FILE id="x5tCPx" name="FaustDspVoice.cpp" compile="1" resource="0"
+              file="Source/synth/FaustDspVoice.cpp"/>
+        <FILE id="VZMZyU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/synth/FaustDspVoice.h"/>
+      </GROUP>
+      <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
+        <FILE id="G8XUu0" name="FaustUIBridge.cpp" compile="1" resource="0"
+              file="Source/UI/FaustUIBridge.cpp"/>
+        <FILE id="nMv9oL" name="FaustUIBridge.h" compile="0" resource="0" file="Source/UI/FaustUIBridge.h"/>
+        <FILE id="MxkRlI" name="MainComponent.cpp" compile="1" resource="0"
+              file="Source/UI/MainComponent.cpp"/>
+        <FILE id="H9o1om" name="MainComponent.h" compile="0" resource="0" file="Source/UI/MainComponent.h"/>
+        <FILE id="uRVcWg" name="PluginEditor.cpp" compile="1" resource="0"
+              file="Source/UI/PluginEditor.cpp"/>
+        <FILE id="dRZ62N" name="PluginEditor.h" compile="0" resource="0" file="Source/UI/PluginEditor.h"/>
+      </GROUP>
+      <FILE id="H82bMi" name="ParamsList.h" compile="0" resource="0" file="Source/ParamsList.h"/>
       <FILE id="Skb0Ql" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="yEThbj" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="UYc5yV" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="cq4UCe" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
@@ -37,6 +65,26 @@
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="C:\dev\JUCE\modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
