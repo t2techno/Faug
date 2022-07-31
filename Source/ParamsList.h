@@ -1,5 +1,8 @@
 #pragma once
 
+const int HEIGHT = 720;
+const int WIDTH = 1280;
+
 // String constants pointing to their respective parameter paths in Faust
 const char * const PANIC       = "Panic";
 
@@ -9,17 +12,26 @@ const char* const FREQ         = "freq";
 // FEEDBACK PARAMS
 const char* const FEEDBACK     = "feedback";
 
-// OSC1 PARAMS
+// GLOBAL DETUNE
+const char* const GLOBAL_DETUNE  = "globalDetune";
+
+
+// OSC1 PARAMS The way down - cult documentary - Revenant Church
+const char * const OSC1_POWER  = "oscOnePower";
+const char * const OSC1_GAIN   = "oscOneGain";
 const char * const OSC1_RANGE  = "rangeOne";
-const char * const OSC1_DETUNE = "detuneOne";
 const char * const OSC1_WAVE   = "waveOne";
 
 // OSC2 PARAMS
+const char * const OSC2_POWER  = "oscTwoPower";
+const char * const OSC2_GAIN   = "oscTwoGain";
 const char * const OSC2_RANGE  = "rangeTwo";
 const char * const OSC2_DETUNE = "detuneTwo";
 const char * const OSC2_WAVE   = "waveTwo";
 
 // OSC3 PARAMS
+const char * const OSC3_POWER  = "oscThreePower";
+const char * const OSC3_GAIN   = "oscThreeGain";
 const char * const OSC3_RANGE  = "rangeThree";
 const char * const OSC3_DETUNE = "detuneThree";
 const char * const OSC3_WAVE   = "waveThree";
@@ -41,7 +53,7 @@ const char * const F_DECAY     = "fDecay";
 const char * const F_SUSTAIN   = "fSustain";
 
 const char * const PARAMS_LIST[] = { 
-	OSC1_RANGE, OSC1_DETUNE, OSC1_WAVE,
+	OSC1_RANGE, GLOBAL_DETUNE, OSC1_WAVE,
 	OSC2_RANGE, OSC2_DETUNE, OSC2_WAVE,
 	OSC3_RANGE, OSC3_DETUNE, OSC3_WAVE,
 	ATTACK, DECAY, SUSTAIN, GATE, FREQ,
