@@ -25,9 +25,6 @@ void FaustDspVoice::releaseResources()
 {
 	mFaust.reset();
 	mBridge.reset();
-	for (int channel = 0; channel < 2; ++channel) {
-		delete outputs[channel];
-	}
 	delete[] outputs;
 }
 
@@ -45,7 +42,6 @@ void FaustDspVoice::startNote(int midiNoteNumber, float velocity,
 
 void FaustDspVoice::stopNote(float /*velocity*/, bool allowTailOff)
 {
-    *currentPitch = 0;
     keyOff();
 	if (!allowTailOff)
 	{

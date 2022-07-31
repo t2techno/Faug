@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "ParamsList.h"
+#include "../ParamsList.h"
 
 class mydsp;
 class FaustUIBridge;
