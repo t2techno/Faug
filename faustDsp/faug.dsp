@@ -1,41 +1,51 @@
 import("stdfaust.lib");
 
-oscillators = vgroup("[0]osc_bank", (oscOne + oscTwo + oscThree)/2.5)
+oscillators = vgroup("[0]osc_bank", (oscOne + oscTwo + oscThree)/scale)
 with{
     driftConst = 0.25;
 
+    scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
+
+    oscOnePower   = checkbox("[0]oscOnePower");
+    oscTwoPower   = checkbox("[1]oscTwoPower");
+    oscThreePower = checkbox("[2]oscThreePower");
+
+    oscOneGain   = hslider("[3]oscOneGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+    oscTwoGain   = hslider("[4]oscTwoGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+    oscThreeGain = hslider("[5]oscThreeGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+
     // oscillators
-    oscOne = waveOneTwo(freqOne, rangeOne, waveSelectOne);
-    oscTwo = waveOneTwo(freqTwo, rangeTwo, waveSelectTwo);
-    oscThree = waveThree(freqThree, rangeThree, waveSelectThree);
+    oscOne = waveOneTwo(freqOne, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
+    oscTwo = waveOneTwo(freqTwo, rangeTwo, waveSelectTwo)*oscTwoGain*oscTwoPower;
+    oscThree = waveThree(freqThree, rangeThree, waveSelectThree)*oscThreeGain*oscThreePower;
 
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
-    waveSelectOne = hslider("[1]waveOne[style:knob]",1,0,5,1);
-    waveSelectTwo = hslider("[2]waveTwo[style:knob]",1,0,5,1);
-    waveSelectThree = hslider("[3]waveThree[style:knob]",1,0,5,1);
+    waveSelectOne = hslider("[6]waveOne[style:knob]",1,0,5,1);
+    waveSelectTwo = hslider("[7]waveTwo[style:knob]",1,0,5,1);
+    waveSelectThree = hslider("[8]waveThree[style:knob]",1,0,5,1);
     waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
 
-    freq = hslider("[0]freq[style:knob]",440,50,5000,0.01) : si.smoo;
+    freq = hslider("[9]freq[style:knob]",440,50,8000,0.01) : si.smoo;
 
-    freqOne = freq, 2^(rangeOne-4) : * : _, ba.semi2ratio(detuneOne) : * : _, driftOne : +;
-    freqTwo = freq, 2^(rangeTwo-4) : * : _, ba.semi2ratio(detuneTwo) : * : _, driftTwo : +;
-    freqThree = freq, 2^(rangeThree-4) : * : _, ba.semi2ratio(detuneThree) : * : _, driftThree : +;
+    freqOne = freq, 2^(rangeOne-4) : * : _, globalDetune : * : _, driftOne : +;
+    freqTwo = freq, 2^(rangeTwo-4) : * : _, detuneTwo : * : _, driftTwo : +;
+    freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree : * : _, driftThree : +;
 
-    driftOne = os.osc(0.05)*0.5*driftConst : @(ma.SR/2);
+    driftOne = os.osc(0.05)*0.15*driftConst : @(ma.SR/2);
     driftTwo = os.osc(0.1)*0.1*driftConst : @(ma.SR/3);
     driftThree = os.osc(0.25)*0.05*driftConst : @(ma.SR/5);
 
-    rangeOne = hslider("[4]rangeOne[style:knob]",2,0,6,1);
-    rangeTwo = hslider("[5]rangeTwo[style:knob]",2,0,6,1);
-    rangeThree = hslider("[6]rangeThree[style:knob]",2,0,6,1);
+    rangeOne = hslider("[10]rangeOne[style:knob]",2,0,6,1);
+    rangeTwo = hslider("[11]rangeTwo[style:knob]",2,0,6,1);
+    rangeThree = hslider("[12]rangeThree[style:knob]",2,0,6,1);
 
-    detuneOne = hslider("[7]detuneOne[style:knob]", 0, -7.5, 7.5, 0.01) : si.smoo;
-    detuneTwo = hslider("[8]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : si.smoo;
-    detuneThree = hslider("[9]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : si.smoo;
+    globalDetune = hslider("[13]globalDetune[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo; 
+    detuneTwo = hslider("[14]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
+    detuneThree = hslider("[15]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
 
     tri(f,type)    = os.lf_triangle(f), os.triangle(f) : select2(type);
     saw(f,type)    = os.lf_saw(f), os.sawtooth(f) : select2(type);
