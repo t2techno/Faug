@@ -40,28 +40,34 @@ In case you would like to use the built-in accelerometer or gyroscope of your de
 
 ### Main Parameters
 
-* **0**: `/faug/osc_bank/freq`
-* **1**: `/faug/osc_bank/waveOne`
-* **2**: `/faug/osc_bank/waveTwo`
-* **3**: `/faug/osc_bank/waveThree`
-* **4**: `/faug/osc_bank/rangeOne`
-* **5**: `/faug/osc_bank/rangeTwo`
-* **6**: `/faug/osc_bank/rangeThree`
-* **7**: `/faug/osc_bank/detuneOne`
-* **8**: `/faug/osc_bank/detuneTwo`
-* **9**: `/faug/osc_bank/detuneThree`
-* **10**: `/faug/envelope/eAttack`
-* **11**: `/faug/envelope/eDecay`
-* **12**: `/faug/envelope/eSustain`
-* **13**: `/faug/envelope/gate`
-* **14**: `/faug/filter/cutoff`
-* **15**: `/faug/filter/emphasis`
-* **16**: `/faug/filter/contourAmount`
-* **17**: `/faug/filter/fAttack`
-* **18**: `/faug/filter/fDecay`
-* **19**: `/faug/filter/fSustain`
-* **20**: `/faug/filter/gate`
-* **21**: `/faug/feedback`
+* **0**: `/faug/osc_bank/oscOnePower`
+* **1**: `/faug/osc_bank/rangeOne`
+* **2**: `/faug/osc_bank/rangeTwo`
+* **3**: `/faug/osc_bank/rangeThree`
+* **4**: `/faug/osc_bank/globalDetune`
+* **5**: `/faug/osc_bank/detuneTwo`
+* **6**: `/faug/osc_bank/detuneThree`
+* **7**: `/faug/osc_bank/oscTwoPower`
+* **8**: `/faug/osc_bank/oscThreePower`
+* **9**: `/faug/osc_bank/oscOneGain`
+* **10**: `/faug/osc_bank/oscTwoGain`
+* **11**: `/faug/osc_bank/oscThreeGain`
+* **12**: `/faug/osc_bank/waveOne`
+* **13**: `/faug/osc_bank/waveTwo`
+* **14**: `/faug/osc_bank/waveThree`
+* **15**: `/faug/osc_bank/freq`
+* **16**: `/faug/envelope/eAttack`
+* **17**: `/faug/envelope/eDecay`
+* **18**: `/faug/envelope/eSustain`
+* **19**: `/faug/envelope/gate`
+* **20**: `/faug/filter/cutoff`
+* **21**: `/faug/filter/emphasis`
+* **22**: `/faug/filter/contourAmount`
+* **23**: `/faug/filter/fAttack`
+* **24**: `/faug/filter/fDecay`
+* **25**: `/faug/filter/fSustain`
+* **26**: `/faug/filter/gate`
+* **27**: `/faug/feedback`
 
 
 ## API Reference
