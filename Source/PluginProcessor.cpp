@@ -7,7 +7,7 @@
 
 #include "PluginProcessor.h"
 #include "./UI/PluginEditor.h"
-#include "./synth/ParamsList.h"
+#include "ParamsList.h"
 
 //==============================================================================
 FaugAudioProcessor::FaugAudioProcessor()
@@ -23,8 +23,16 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     m_params(*this, nullptr, juce::Identifier("FAUG"),
         {
-            std::make_unique<juce::AudioParameterBool>(GATE, "Gate",false),
-            std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq",1.f,20000.f,440.f),
+            std::make_unique<juce::AudioParameterBool>(GATE, "Gate", false),
+            std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq", 1.f,8000.f, 440.f),
+
+            std::make_unique<juce::AudioParameterBool>(OSC1_POWER, "OscOnePower", false),
+            std::make_unique<juce::AudioParameterFloat>(OSC1_GAIN, "OscOneGain", 0.f,10.f, 10.f),
+            std::make_unique<juce::AudioParameterBool>(OSC2_POWER, "OscTwoPower", false),
+            std::make_unique<juce::AudioParameterFloat>(OSC2_GAIN, "OscTwoGain", 0.f,10.f, 0.f),
+            std::make_unique<juce::AudioParameterBool>(OSC3_POWER, "OscThreePower", false),
+            std::make_unique<juce::AudioParameterFloat>(OSC3_GAIN, "OscThreeGain", 0.f,10.f, 0.f),
+
             std::make_unique<juce::AudioParameterFloat>(DECAY, "Decay", 1.f, 1000.f, 50.f),
             
         }

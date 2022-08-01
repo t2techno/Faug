@@ -7,6 +7,7 @@
 */
 
 #include "../PluginProcessor.h"
+#include "../ParamsList.h"
 #include "PluginEditor.h"
 #include "MainComponent.h"
 
@@ -19,7 +20,7 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_main = std::make_unique<MainComponent>(state, vts);
 
     addAndMakeVisible(*m_main.get());
-    setSize (700, 300);
+    setSize (WIDTH, HEIGHT);
 }
 
 FaugAudioProcessorEditor::~FaugAudioProcessorEditor()

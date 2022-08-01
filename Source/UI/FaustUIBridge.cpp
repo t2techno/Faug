@@ -15,25 +15,44 @@ void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAU
     if (vts.getParameter(stringLabel))
     {
         // Attach the listener to keep the internal dsp values up to date
-        FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
-        labels.add(stringLabel);
-        vts.addParameterListener(stringLabel, l);
+        addNormalComponent(label, zone);
     }
 }
 
 void FaustUIBridge::addButton(const char* label, FAUSTFLOAT* zone)
 {
     juce::String stringLabel = juce::String(label);
-    FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
-    if (!labels.contains(stringLabel))
+    if (vts.getParameter(stringLabel))
     {
-        listenerAssignments.set(stringLabel, l);
+        FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
+        if (!labels.contains(stringLabel))
+        {
+            listenerAssignments.set(stringLabel, l);
+            labels.add(stringLabel);
+        }
+        else
+        {
+            // Should be the only param this happens with
+            listenerAssignments.set(juce::String("fGate"), l);
+        }
+        vts.addParameterListener(stringLabel, l);
+    }
+}
+
+void FaustUIBridge::addCheckButton(const char* label, FAUSTFLOAT* zone)
+{
+    // Create the AudioProcessor parameter if not exists
+    addNormalComponent(label, zone);
+}
+
+void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone)
+{
+    juce::String stringLabel = juce::String(label);
+    if (vts.getParameter(stringLabel))
+    {
+        // Attach the listener to keep the internal dsp values up to date
+        FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
         labels.add(stringLabel);
+        vts.addParameterListener(stringLabel, l);
     }
-    else
-    {
-        // Should be the only param this happens with
-        listenerAssignments.set(juce::String("fGate"), l);
-    }
-    vts.addParameterListener(stringLabel, l);
 }

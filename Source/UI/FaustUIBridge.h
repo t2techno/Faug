@@ -34,7 +34,7 @@ class  FaustUIBridge : public UI
             zone.
         */
         virtual void addButton(const char* label, FAUSTFLOAT* zone) override;
-        virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) override {};
+        virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) override;
         virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override {};
         virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
         virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override {};
@@ -51,6 +51,8 @@ class  FaustUIBridge : public UI
         // -- soundfiles
 
         virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) override {};
+
+        void addNormalComponent(const char* label, FAUSTFLOAT* zone);
 
         //==============================================================================
         /** Metadata declarations
