@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "./synth/FaugAudioSource.h"
+#include "./UI/SplashAnimation.h"
+
 
 class FaugAudioSource;
 
@@ -67,4 +69,5 @@ private:
     juce::AudioProcessorValueTreeState m_params;
     std::unique_ptr<FaugAudioSource> m_audioSource;
     std::unique_ptr<juce::MidiKeyboardState> m_keyState;
+    SplashAnimation* splash;
 };

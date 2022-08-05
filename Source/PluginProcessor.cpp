@@ -23,21 +23,34 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     m_params(*this, nullptr, juce::Identifier("FAUG"),
         {
-            std::make_unique<juce::AudioParameterBool>(GATE, "Gate", false),
+            std::make_unique<juce::AudioParameterBool> (GATE, "Gate", false),
             std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq", 1.f,8000.f, 440.f),
 
-            std::make_unique<juce::AudioParameterBool>(OSC1_POWER, "OscOnePower", false),
+            std::make_unique<juce::AudioParameterInt>  (OSC1_RANGE, "OscOneRange",0,6,2),
+            std::make_unique<juce::AudioParameterInt>  (OSC1_WAVE, "OscOneWave",0,5,1),
             std::make_unique<juce::AudioParameterFloat>(OSC1_GAIN, "OscOneGain", 0.f,10.f, 10.f),
-            std::make_unique<juce::AudioParameterBool>(OSC2_POWER, "OscTwoPower", false),
+            std::make_unique<juce::AudioParameterBool> (OSC1_POWER, "OscOnePower", false),
+
+            std::make_unique<juce::AudioParameterInt>  (OSC2_RANGE, "OscTwoRange",0,6,2),
+            std::make_unique<juce::AudioParameterFloat>(OSC2_DETUNE, "OscTwoDetune", -7.5,7.5, 0.f),
+            std::make_unique<juce::AudioParameterInt>  (OSC2_WAVE, "OscTwoWave",0,5,1),
             std::make_unique<juce::AudioParameterFloat>(OSC2_GAIN, "OscTwoGain", 0.f,10.f, 0.f),
-            std::make_unique<juce::AudioParameterBool>(OSC3_POWER, "OscThreePower", false),
+            std::make_unique<juce::AudioParameterBool> (OSC2_POWER, "OscTwoPower", false),
+
+            std::make_unique<juce::AudioParameterInt>(OSC3_RANGE, "OscThreeRange",0,6,2),
+            std::make_unique<juce::AudioParameterFloat>(OSC3_DETUNE, "OscThreeDetune", -7.5,7.5, 0.f),
+            std::make_unique<juce::AudioParameterInt>(OSC3_WAVE, "OscThreeWave",0,5,1),
             std::make_unique<juce::AudioParameterFloat>(OSC3_GAIN, "OscThreeGain", 0.f,10.f, 0.f),
+            std::make_unique<juce::AudioParameterBool> (OSC3_POWER, "OscThreePower", false),
 
             std::make_unique<juce::AudioParameterFloat>(DECAY, "Decay", 1.f, 1000.f, 50.f),
             
         }
     )
 {
+
+    splash = new SplashAnimation("FAUG", 720, 720, true);
+
     m_keyState = std::make_unique <juce::MidiKeyboardState>();
     m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params);
 }
@@ -113,6 +126,7 @@ void FaugAudioProcessor::changeProgramName (int index, const juce::String& newNa
 void FaugAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     m_audioSource->prepareToPlay(samplesPerBlock, sampleRate);
+    splash->deleteAfterDelay(juce::RelativeTime::seconds(4), false);
 }
 
 void FaugAudioProcessor::releaseResources()
