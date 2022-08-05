@@ -21,7 +21,7 @@ class FaugAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
     FaugAudioProcessorEditor (FaugAudioProcessor&, juce::MidiKeyboardState& state, juce::AudioProcessorValueTreeState& vts);
-    ~FaugAudioProcessorEditor() override;
+    virtual ~FaugAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;

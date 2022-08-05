@@ -2,7 +2,14 @@
 // Todo: Move MidiKeyboardComponent to it's own class to be added/removed
 
 #include "MainComponent.h"
+#include "Knob.h"
 #include "../ParamsList.h"
+
+const int MainComponent::UPL_X = 225;
+const int MainComponent::UPL_Y = 105;
+const int MainComponent::COL_W = 100;
+const int MainComponent::ROW_H = 100;
+const int buttonSize = 65;
 
 MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts)
     : m_vts(vts),
@@ -10,83 +17,30 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
 {
     background = juce::Drawable::createFromImageData(BinaryData::background_png, BinaryData::background_pngSize);
-    setSize(WIDTH, HEIGHT);
 
     setOpaque(true);
     addAndMakeVisible(keyboardComponent);
     keyboardComponent.setKeyWidth(52);
 
     // OSCILLATORS
-    // 
-    // OSC ONE
-    m_oscOnePowerButton = std::make_unique<juce::ToggleButton>("Osc1");
-    createButtonAndLabel(NULL, "Osc1", m_oscOnePowerButton.get(),
-        725, 80, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscOnePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC1_POWER), *m_oscOnePowerButton.get()));
-
-    m_oscOneGainSlider = std::make_unique<juce::Slider>();
-    m_oscOneGainLabel = std::make_unique<juce::Label>();
-    createSliderAndLabel(m_oscOneGainLabel.get(), "Osc1 Gain", m_oscOneGainSlider.get(),
-        625, 80, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscOneGainAttach.reset(new SliderAttachment(m_vts, juce::String(OSC1_GAIN), *m_oscOneGainSlider.get()));
-
-    // OSC TWO
-    m_oscTwoPowerButton = std::make_unique<juce::ToggleButton>("Osc2");
-    createButtonAndLabel(NULL, "Osc2", m_oscTwoPowerButton.get(),
-        725, 180, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscTwoPowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC2_POWER), *m_oscTwoPowerButton.get()));
-
-    m_oscTwoGainSlider = std::make_unique<juce::Slider>();
-    m_oscTwoGainLabel = std::make_unique<juce::Label>();
-    createSliderAndLabel(m_oscTwoGainLabel.get(), "Osc2 Gain", m_oscTwoGainSlider.get(),
-        625, 180, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscTwoGainAttach.reset(new SliderAttachment(m_vts, juce::String(OSC2_GAIN), *m_oscTwoGainSlider.get()));
-
-
-
-    // OSC THREE
-    m_oscThreePowerButton = std::make_unique<juce::ToggleButton>("Osc3");
-    createButtonAndLabel(NULL, "Osc3", m_oscThreePowerButton.get(),
-        725, 280, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscThreePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC3_POWER), *m_oscThreePowerButton.get()));
-
-    m_oscThreeGainSlider = std::make_unique<juce::Slider>();
-    m_oscThreeGainLabel = std::make_unique<juce::Label>();
-    createSliderAndLabel(m_oscThreeGainLabel.get(), "Osc3 Gain", m_oscThreeGainSlider.get(),
-        625, 280, SLIDE_SIZE, SLIDE_SIZE);
-    m_oscThreeGainAttach.reset(new SliderAttachment(m_vts, juce::String(OSC3_GAIN), *m_oscThreeGainSlider.get()));
+    //
+    createOscBank();
 
     // ENVELOPE
-    m_decaySlider = std::make_unique<juce::Slider>();
+    /*m_decaySlider = std::make_unique<juce::Slider>();
     m_decayLabel = std::make_unique<juce::Label>();
     createSliderAndLabel(m_decayLabel.get(), "Decay", m_decaySlider.get(),
-        970, 265, SLIDE_SIZE, SLIDE_SIZE);
-    m_decayAttach.reset(new SliderAttachment(m_vts, juce::String(DECAY), *m_decaySlider.get()));
+        970, 265, SLIDER_SIZE, SLIDER_SIZE);
+    m_decayAttach.reset(new SliderAttachment(m_vts, juce::String(DECAY), *m_decaySlider.get()));*/
 
 
     // wait .4 seconds, then grab keyboard focus to use as potential midi-input
+    setSize(WIDTH, HEIGHT);
     startTimer(400);
 }
 
 MainComponent::~MainComponent()
 {}
-
-void MainComponent::createSliderAndLabel(juce::Label* label, std::string labelText, juce::Slider* slider,
-                                         int x, int y, int width, int height)
-{
-    addAndMakeVisible(slider);
-    slider->setBounds(x, y, width, height);
-    slider->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
-
-    addAndMakeVisible(label);
-    label->setFont(juce::Font(15.00f, juce::Font::plain));
-    label->setText(labelText, juce::dontSendNotification);
-    label->setJustificationType(juce::Justification::centred);
-    label->setEditable(false, true, false);
-    label->setColour(juce::Label::textColourId, juce::Colour(0xffff8917));
-    label->attachToComponent(slider, false);
-}
 
 void MainComponent::createButtonAndLabel(juce::Label* label, std::string labelText, juce::Button* button,
     int x, int y, int width, int height) 
@@ -103,6 +57,59 @@ void MainComponent::createButtonAndLabel(juce::Label* label, std::string labelTe
     label->setEditable(false, true, false);
     label->setColour(juce::Label::textColourId, juce::Colour(0xffff8917));
     label->attachToComponent(button, false);
+}
+
+void MainComponent::createOscBank()
+{
+    // OSC ONE
+    // col 1
+    m_oscOneRange = std::make_unique<Knob>(m_vts, "Osc1 Range", juce::String(OSC1_RANGE));
+    m_oscOneRange->setBounds(UPL_X, UPL_Y, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscOneRange.get());
+
+    // col 3
+    m_oscOneWaveForm = std::make_unique<Knob>(m_vts, "Osc1 Wave", juce::String(OSC1_WAVE));
+    m_oscOneWaveForm->setBounds(UPL_X + 2 * COL_W, UPL_Y, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscOneWaveForm.get());
+
+    // col 4
+    m_oscOneGain = std::make_unique<Knob>(m_vts, "Osc1 Gain", juce::String(OSC1_GAIN));
+    m_oscOneGain->setBounds(UPL_X + 3*COL_W, UPL_Y, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscOneGain.get());
+
+    // col 5
+    m_oscOnePowerButton = std::make_unique<juce::ToggleButton>("Osc1");
+    createButtonAndLabel(NULL, "Osc1", m_oscOnePowerButton.get(),
+        UPL_X+4*COL_W, UPL_Y, buttonSize, buttonSize);
+    m_oscOnePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC1_POWER), *m_oscOnePowerButton.get()));
+
+
+    // OSC Two
+    // col 1
+    m_oscTwoRange = std::make_unique<Knob>(m_vts, "Osc2 Range", juce::String(OSC2_RANGE));
+    m_oscTwoRange->setBounds(UPL_X, UPL_Y+ROW_H, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscTwoRange.get());
+
+    //col 2
+    m_oscTwoDetune = std::make_unique<Knob>(m_vts, "Osc2 Detune", juce::String(OSC2_DETUNE));
+    m_oscTwoDetune->setBounds(UPL_X + COL_W, UPL_Y+ROW_H, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscTwoDetune.get());
+
+    // col 3
+    m_oscTwoWaveForm = std::make_unique<Knob>(m_vts, "Osc2 Wave", juce::String(OSC2_WAVE));
+    m_oscTwoWaveForm->setBounds(UPL_X + 2 * COL_W, UPL_Y+ROW_H, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscTwoWaveForm.get());
+
+    // col 4
+    m_oscTwoGain = std::make_unique<Knob>(m_vts, "Osc2 Gain", juce::String(OSC2_GAIN));
+    m_oscTwoGain->setBounds(UPL_X + 3 * COL_W, UPL_Y+ROW_H, buttonSize, buttonSize);
+    addAndMakeVisible(m_oscTwoGain.get());
+
+    // col 5
+    m_oscTwoPowerButton = std::make_unique<juce::ToggleButton>("Osc2");
+    createButtonAndLabel(NULL, "Osc2", m_oscTwoPowerButton.get(),
+        UPL_X + 4 * COL_W, UPL_Y+ROW_H, buttonSize, buttonSize);
+    m_oscTwoPowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC2_POWER), *m_oscTwoPowerButton.get()));
 }
 
 void MainComponent::paint(juce::Graphics& g)

@@ -4,10 +4,10 @@
 
 #include <JuceHeader.h>
 
-typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
+typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
-const int SLIDE_SIZE = 65;
+class Knob;
 
 class MainComponent : public juce::Component,
 							 juce::Timer
@@ -21,54 +21,56 @@ public:
 	 void paint(juce::Graphics& g) override; //Component
 	 void resized() override; //Component
 
-	 void createSliderAndLabel(juce::Label* label, std::string labelText, juce::Slider* slider,
-		 int x, int y, int width, int height);
 	 void createButtonAndLabel(juce::Label* label, std::string labelText, juce::Button* slider,
 		 int x, int y, int width, int height);
+	 void createOscBank();
 
 private:
+
+	// Constants
+	static const int UPL_X;
+	static const int UPL_Y;
+	static const int COL_W;
+	static const int ROW_H;
+
 	juce::MidiKeyboardComponent keyboardComponent;
     juce::AudioProcessorValueTreeState& m_vts;
-
-    
 	std::unique_ptr<juce::Drawable> background;
 
 	// OSC PARAMS
-	// 
 	// OSC ONE
 	std::unique_ptr<juce::ToggleButton> m_oscOnePowerButton;
 	std::unique_ptr<ButtonAttachment>   m_oscOnePowerAttach;
 
-	std::unique_ptr<juce::Slider>       m_oscOneGainSlider;
-	std::unique_ptr<juce::Label>        m_oscOneGainLabel;
-	std::unique_ptr<SliderAttachment>   m_oscOneGainAttach;
+	std::unique_ptr<Knob> m_oscOneGain;
+	std::unique_ptr<Knob> m_oscOneRange;
+	std::unique_ptr<Knob> m_oscOneWaveForm;
 
 	// OSC TWO
 	std::unique_ptr<juce::ToggleButton> m_oscTwoPowerButton;
 	std::unique_ptr<ButtonAttachment>   m_oscTwoPowerAttach;
 
-	std::unique_ptr<juce::Slider>       m_oscTwoGainSlider;
-	std::unique_ptr<juce::Label>        m_oscTwoGainLabel;
-	std::unique_ptr<SliderAttachment>   m_oscTwoGainAttach;
+	std::unique_ptr<Knob> m_oscTwoGain;
+	std::unique_ptr<Knob> m_oscTwoRange;
+	std::unique_ptr<Knob> m_oscTwoWaveForm;
+	std::unique_ptr<Knob> m_oscTwoDetune;
 
 	// OSC THREE
-
 	std::unique_ptr<juce::ToggleButton> m_oscThreePowerButton;
 	std::unique_ptr<ButtonAttachment>   m_oscThreePowerAttach;
 
-	std::unique_ptr<juce::Slider>       m_oscThreeGainSlider;
-	std::unique_ptr<juce::Label>        m_oscThreeGainLabel;
-	std::unique_ptr<SliderAttachment>   m_oscThreeGainAttach;
+	std::unique_ptr<Knob> m_oscThreeGain;
+	std::unique_ptr<Knob> m_oscThreeRange;
+	std::unique_ptr<Knob> m_oscThreeWaveForm;
+	std::unique_ptr<Knob> m_oscThreeDetune;
 
 	// ENVELOPE
-    std::unique_ptr<juce::Slider>       m_decaySlider;
-	std::unique_ptr<juce::Label>        m_decayLabel;
-	std::unique_ptr<SliderAttachment>   m_decayAttach;
+	std::unique_ptr<Knob> m_Decay;
 
 	// GLOBAL
 	std::unique_ptr<juce::Slider>       m_globalDetuneSlider;
 	std::unique_ptr <juce::Label>       m_globalDetuneLabel;
-	std::unique_ptr<SliderAttachment>   m_globalDetuneAttach;
+	//std::unique_ptr<SliderAttachment>   m_globalDetuneAttach;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
