@@ -28,6 +28,6 @@ class FaugAudioSource : public juce::AudioSource,
 	private:
 		juce::MidiMessageCollector midiCollector;
 		juce::Synthesiser synth;
-		std::unique_ptr<FaustDspVoice> mVoice;
+		FaustDspVoice* mVoice;
 		juce::MidiKeyboardState& keyboardState;
 };

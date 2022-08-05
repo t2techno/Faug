@@ -25,7 +25,6 @@ void FaustDspVoice::releaseResources()
 {
 	mFaust.reset();
 	mBridge.reset();
-	delete[] outputs;
 }
 
 bool FaustDspVoice::canPlaySound(juce::SynthesiserSound* sound)

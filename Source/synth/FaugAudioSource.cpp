@@ -8,8 +8,8 @@ FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioP
     : keyboardState(keyState)
 {
     // This is a mono-synth, only one voice needed
-    mVoice = std::make_unique<FaustDspVoice>(vts);
-    synth.addVoice(mVoice.get());
+    mVoice = new FaustDspVoice(vts);
+    synth.addVoice(mVoice);
     synth.addSound(new FaustDspSound());
     keyboardState.addListener(this);
 }
