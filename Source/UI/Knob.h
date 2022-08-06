@@ -18,7 +18,7 @@ typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 class Knob : public juce::Component
 {
 public:
-    Knob(juce::AudioProcessorValueTreeState& vts, juce::String label, juce::String paramId);
+    Knob(juce::AudioProcessorValueTreeState& vts, juce::String label, juce::String paramId, int sliderSize);
     virtual ~Knob() override;
     void paint(juce::Graphics& g) override; //Component
     void resized() override; //Component
@@ -26,8 +26,7 @@ public:
 private:
     void createSliderAndLabel(juce::String labelText);
 
-    static const int SLIDER_SIZE;
-
+    int m_sliderSize;
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<juce::Label>      label;
     std::unique_ptr<SliderAttachment> attach;
