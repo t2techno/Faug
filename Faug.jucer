@@ -10,6 +10,11 @@
       <FILE id="NAPl59" name="swizzel_one.jpg" compile="0" resource="1" file="imageWork/swizzel_one.jpg"/>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
+      <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">
+        <FILE id="qWkN7i" name="Spectroscope.cpp" compile="1" resource="0"
+              file="Source/Scope/Spectroscope.cpp"/>
+        <FILE id="puzHDR" name="Spectroscope.h" compile="0" resource="0" file="Source/Scope/Spectroscope.h"/>
+      </GROUP>
       <GROUP id="{945315F8-3E98-51C0-3E36-09D01E7A5E4E}" name="faustExp">
         <FILE id="fHzsxN" name="DspFaust.cpp" compile="1" resource="0" file="Source/faustExp/DspFaust.cpp"/>
         <FILE id="PCeKVw" name="DspFaust.h" compile="0" resource="0" file="Source/faustExp/DspFaust.h"/>
@@ -71,6 +76,8 @@
         <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -91,6 +98,8 @@
         <MODULEPATH id="juce_graphics" path="C:\dev\JUCE\modules"/>
         <MODULEPATH id="juce_gui_basics" path="C:\dev\JUCE\modules"/>
         <MODULEPATH id="juce_gui_extra" path="C:\dev\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -104,9 +113,11 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
 </JUCERPROJECT>
