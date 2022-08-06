@@ -1,42 +1,36 @@
 #include "FaustUIBridge.h"
 
-FaustUIBridge::FaustUIBridge(juce::AudioProcessorValueTreeState& valueTreeState) : vts(valueTreeState)
+FaustUIBridge::FaustUIBridge(juce::AudioProcessorValueTreeState& valueTreeState) : vts(valueTreeState), 
+                                                                                   listenerAssignments(),
+                                                                                   listeners(),
+                                                                                   labels()
 {
 }
 
 FaustUIBridge::~FaustUIBridge()
 {
+    for (int i = 0; i < listenerAssignments.size(); ++i)
+    {
+        ParameterListenerPair p = listenerAssignments.getUnchecked(i);
+        juce::String paramId = p.paramId;
+        FaustUIBridgeListener* listener = p.listener;
+        vts.removeParameterListener(paramId, listener);
+    }
+    labels.clear();
+    listenerAssignments.clear();
 }
 
 void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
     // Create the AudioProcessor parameter if not exists
-    juce::String stringLabel = juce::String(label);
-    if (vts.getParameter(stringLabel))
-    {
-        // Attach the listener to keep the internal dsp values up to date
-        addNormalComponent(label, zone);
-    }
+    // Attach the listener to keep the internal dsp values up to date
+    addNormalComponent(label, zone);
+    
 }
 
 void FaustUIBridge::addButton(const char* label, FAUSTFLOAT* zone)
 {
-    juce::String stringLabel = juce::String(label);
-    if (vts.getParameter(stringLabel))
-    {
-        FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
-        if (!labels.contains(stringLabel))
-        {
-            listenerAssignments.set(stringLabel, l);
-            labels.add(stringLabel);
-        }
-        else
-        {
-            // Should be the only param this happens with
-            listenerAssignments.set(juce::String("fGate"), l);
-        }
-        vts.addParameterListener(stringLabel, l);
-    }
+    addNormalComponent(label, zone);
 }
 
 void FaustUIBridge::addCheckButton(const char* label, FAUSTFLOAT* zone)
@@ -51,7 +45,10 @@ void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone)
     if (vts.getParameter(stringLabel))
     {
         // Attach the listener to keep the internal dsp values up to date
+
         FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
+        listeners.add(l);
+        listenerAssignments.add(ParameterListenerPair(stringLabel, l));
         labels.add(stringLabel);
         vts.addParameterListener(stringLabel, l);
     }
