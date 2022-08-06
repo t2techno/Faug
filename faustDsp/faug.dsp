@@ -2,17 +2,18 @@ import("stdfaust.lib");
 
 oscillators = vgroup("[0]osc_bank", (oscOne + oscTwo + oscThree)/scale)
 with{
+    freq = hslider("[00]freq[style:knob]",440,50,8000,0.01) : si.smoo;
     driftConst = 0.25;
 
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
 
-    oscOnePower   = checkbox("[0]oscOnePower");
-    oscTwoPower   = checkbox("[1]oscTwoPower");
-    oscThreePower = checkbox("[2]oscThreePower");
+    oscOnePower   = checkbox("[01]oscOnePower");
+    oscTwoPower   = checkbox("[02]oscTwoPower");
+    oscThreePower = checkbox("[03]oscThreePower");
 
-    oscOneGain   = hslider("[3]oscOneGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
-    oscTwoGain   = hslider("[4]oscTwoGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
-    oscThreeGain = hslider("[5]oscThreeGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+    oscOneGain   = hslider("[04]oscOneGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+    oscTwoGain   = hslider("[05]oscTwoGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
+    oscThreeGain = hslider("[06]oscThreeGain",10.0,0.0,10.0,0.01)/10 : si.smoo;
 
     // oscillators
     oscOne = waveOneTwo(freqOne, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
@@ -21,15 +22,13 @@ with{
 
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
-    waveSelectOne = hslider("[6]waveOne[style:knob]",1,0,5,1);
-    waveSelectTwo = hslider("[7]waveTwo[style:knob]",1,0,5,1);
-    waveSelectThree = hslider("[8]waveThree[style:knob]",1,0,5,1);
+    waveSelectOne = hslider("[07]waveOne[style:knob]",1,0,5,1);
+    waveSelectTwo = hslider("[08]waveTwo[style:knob]",1,0,5,1);
+    waveSelectThree = hslider("[09]waveThree[style:knob]",1,0,5,1);
     waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
-
-    freq = hslider("[9]freq[style:knob]",440,50,8000,0.01) : si.smoo;
 
     freqOne = freq, 2^(rangeOne-4) : * : _, globalDetune : * : _, driftOne : +;
     freqTwo = freq, 2^(rangeTwo-4) : * : _, detuneTwo : * : _, driftTwo : +;
