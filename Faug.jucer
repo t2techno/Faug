@@ -5,9 +5,8 @@
               companyName="t2tech" companyWebsite="t2tech.info" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="NOdcBF" name="Faug">
     <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
-      <FILE id="w3JNzT" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
+      <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
       <FILE id="tBii8A" name="loadingCoin.png" compile="0" resource="1" file="imageWork/loadingCoin.png"/>
-      <FILE id="NAPl59" name="swizzel_one.jpg" compile="0" resource="1" file="imageWork/swizzel_one.jpg"/>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
       <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">

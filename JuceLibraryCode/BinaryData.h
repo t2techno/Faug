@@ -9,19 +9,16 @@
 namespace BinaryData
 {
     extern const char*   background_png;
-    const int            background_pngSize = 83706;
+    const int            background_pngSize = 3242524;
 
     extern const char*   loadingCoin_png;
     const int            loadingCoin_pngSize = 51551;
-
-    extern const char*   swizzel_one_jpg;
-    const int            swizzel_one_jpgSize = 2838559;
 
     extern const char*   README_md;
     const int            README_mdSize = 14022;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 4;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
