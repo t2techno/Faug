@@ -16,7 +16,7 @@ const char* const FEEDBACK     = "feedback";
 const char* const GLOBAL_DETUNE  = "globalDetune";
 
 
-// OSC1 PARAMS The way down - cult documentary - Revenant Church
+// OSC1 PARAMS
 const char * const OSC1_POWER  = "oscOnePower";
 const char * const OSC1_GAIN   = "oscOneGain";
 const char * const OSC1_RANGE  = "rangeOne";

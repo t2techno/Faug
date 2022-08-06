@@ -56,7 +56,7 @@ FaugAudioProcessor::FaugAudioProcessor()
     )
 {
 
-    splash = new SplashAnimation("FAUG", 720, 720, true);
+    //splash = new SplashAnimation("FAUG", 720, 720, true);
 
     m_keyState = std::make_unique <juce::MidiKeyboardState>();
     m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params);
@@ -133,7 +133,7 @@ void FaugAudioProcessor::changeProgramName (int index, const juce::String& newNa
 void FaugAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     m_audioSource->prepareToPlay(samplesPerBlock, sampleRate);
-    splash->deleteAfterDelay(juce::RelativeTime::seconds(4), false);
+    //splash->deleteAfterDelay(juce::RelativeTime::seconds(4), false);
 }
 
 void FaugAudioProcessor::releaseResources()
