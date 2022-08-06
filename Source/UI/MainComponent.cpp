@@ -83,7 +83,7 @@ void MainComponent::createOscBank()
         UPL_X+4*COL_W, UPL_Y, COMP_SIZE, COMP_SIZE);
     m_oscOnePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC1_POWER), *m_oscOnePowerButton.get()));
 
-
+    /*
     // OSC Two
     // col 1
     m_oscTwoRange = std::make_unique<Knob>(m_vts, "Osc2 Range", juce::String(OSC2_RANGE));
@@ -137,7 +137,7 @@ void MainComponent::createOscBank()
     m_oscThreePowerButton = std::make_unique<juce::ToggleButton>("Osc3");
     createButtonAndLabel(NULL, "Osc3", m_oscThreePowerButton.get(),
         UPL_X + 4 * COL_W, UPL_Y + 2*ROW_H, COMP_SIZE, COMP_SIZE);
-    m_oscThreePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC3_POWER), *m_oscThreePowerButton.get()));
+    m_oscThreePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC3_POWER), *m_oscThreePowerButton.get()));*/
 }
 
 void MainComponent::createFilterBank()
