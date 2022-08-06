@@ -26,6 +26,7 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_scope->setColors(juce::Colour::fromRGBA(255, 186, 34, 255),
         juce::Colour::fromRGBA(253, 174, 25, 255).withAlpha(0.7f),
         juce::Colour::fromRGBA(255, 126, 0, 255).withAlpha(0.7f));
+    m_scope->setBounds(780, 420, 500, 300);
 
 
     m_glContext.setComponentPaintingEnabled(true);
