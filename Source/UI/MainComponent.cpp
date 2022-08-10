@@ -4,8 +4,8 @@
 #include "MainComponent.h"
 #include "../ParamsList.h"
 
-MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts, juce::Rectangle<int> screen)
-    : m_vts(vts), screenWidth(screen.getWidth()), screenHeight(screen.getHeight()),
+MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts, int windowWidth, int windowHeight)
+    : m_vts(vts), windowWidth(windowWidth), windowHeight(windowHeight),
     keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 
 {
@@ -15,35 +15,35 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     addAndMakeVisible(keyboardComponent);
     keyboardComponent.setKeyWidth(40);
 
-    int oscBank_x = screenWidth * 0.1825;
-    int oscBank_y = screenHeight * 0.175;
-    int oscBankCol_w = screenWidth * 0.085;
-    int oscBankRow_h = screenHeight * 0.138;
+    int oscBank_x = windowWidth * 0.1825;
+    int oscBank_y = windowHeight * 0.175;
+    int oscBankCol_w = windowWidth * 0.085;
+    int oscBankRow_h = windowHeight * 0.138;
 
-    knob_size = screenHeight * 0.095;
-    small_knob_size = screenHeight * 0.08;
+    knob_size = windowHeight * 0.095;
+    small_knob_size = windowHeight * 0.08;
     
     createOscBank(oscBank_x, oscBank_y, oscBankCol_w, oscBankRow_h);
 
-    int mixer_x = screenWidth * 0.45;
-    int mixer_y = screenHeight * 0.175;
-    int mixerCol_w = screenWidth * 0.085;
+    int mixer_x = windowWidth * 0.45;
+    int mixer_y = windowHeight * 0.175;
+    int mixerCol_w = windowWidth * 0.065;
     int mixerRow_h = oscBankRow_h/2;
     createMixer(mixer_x, mixer_y, mixerCol_w, mixerRow_h);
 
-    int filter_x = screenWidth * 0.675;
-    int filter_y = screenHeight * 0.175;
-    int filterCol_w = screenWidth * 0.085;
+    int filter_x = windowWidth * 0.675;
+    int filter_y = windowHeight * 0.175;
+    int filterCol_w = windowWidth * 0.085;
     int filterRow_h = oscBankRow_h;
     createFilterBank(filter_x, filter_y, filterCol_w, filterRow_h);
 
-    int envelope_x = screenWidth * 0.675;
+    int envelope_x = windowWidth * 0.675;
     int envelope_y = mixer_y + 2* oscBankRow_h;
-    int envelopeCol_w = screenWidth * 0.085;
+    int envelopeCol_w = windowWidth * 0.085;
     createEnvelope(envelope_x, envelope_y, envelopeCol_w);
 
     // wait .4 seconds, then grab keyboard focus to use as potential midi-input
-    setSize(screenWidth, screenHeight);
+    setSize(windowWidth, windowHeight);
     startTimer(400);
 }
 
@@ -103,27 +103,47 @@ void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
     m_oscOneGain->setBounds(upl_x, upl_y, small_knob_size, small_knob_size);
     addAndMakeVisible(m_oscOneGain.get());
 
-    m_oscOnePowerButton = std::make_unique<juce::ToggleButton>("Osc1");
+    m_oscOnePowerButton = std::make_unique<juce::ToggleButton>();
     addAndMakeVisible(m_oscOnePowerButton.get());
     m_oscOnePowerButton->setBounds(upl_x + col_w, upl_y, knob_size, knob_size);
     m_oscOnePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC1_POWER), *m_oscOnePowerButton.get()));
+
+    // row 2
+    m_feedbackOn = std::make_unique<juce::ToggleButton>();
+    addAndMakeVisible(m_feedbackOn.get());
+    m_feedbackOn->setBounds(upl_x + col_w, upl_y+row_h, knob_size, knob_size);
+    m_feedbackOnAttach.reset(new ButtonAttachment(m_vts, juce::String(FEEDBACK_ON), *m_feedbackOn.get()));
+
+    m_feedbackGain = std::make_unique<KnobThree>(m_vts, "FeedbackGain", juce::String(FEEDBACK_GAIN), small_knob_size);
+    m_feedbackGain->setBounds(upl_x+2*col_w, upl_y+row_h, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_feedbackGain.get());
 
     // row 3
     m_oscTwoGain = std::make_unique<KnobThree>(m_vts, "Osc2 Gain", juce::String(OSC2_GAIN), small_knob_size);
     m_oscTwoGain->setBounds(upl_x, upl_y + 2*row_h, small_knob_size, small_knob_size);
     addAndMakeVisible(m_oscTwoGain.get());
 
-    m_oscTwoPowerButton = std::make_unique<juce::ToggleButton>("Osc2");
+    m_oscTwoPowerButton = std::make_unique<juce::ToggleButton>("");
     addAndMakeVisible(m_oscTwoPowerButton.get());
     m_oscTwoPowerButton->setBounds(upl_x + col_w, upl_y + 2 * row_h, knob_size, knob_size);
     m_oscTwoPowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC2_POWER), *m_oscTwoPowerButton.get()));
+
+    // row 4
+    m_noiseOn = std::make_unique<juce::ToggleButton>();
+    addAndMakeVisible(m_noiseOn.get());
+    m_noiseOn->setBounds(upl_x+col_w, upl_y+3*row_h, knob_size, knob_size);
+    m_noiseOnAttach.reset(new ButtonAttachment(m_vts, juce::String(NOISE_ON), *m_noiseOn.get()));
+
+    m_noiseGain = std::make_unique<KnobThree>(m_vts, "Noise Gain", juce::String(NOISE_GAIN), small_knob_size);
+    m_noiseGain->setBounds(upl_x+2*col_w, upl_y+3*row_h, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_noiseGain.get());
 
     // row 5
     m_oscThreeGain = std::make_unique<KnobThree>(m_vts, "Osc3 Gain", juce::String(OSC3_GAIN), small_knob_size);
     m_oscThreeGain->setBounds(upl_x, upl_y + 4 * row_h, small_knob_size, small_knob_size);
     addAndMakeVisible(m_oscThreeGain.get());
 
-    m_oscThreePowerButton = std::make_unique<juce::ToggleButton>("Osc3");
+    m_oscThreePowerButton = std::make_unique<juce::ToggleButton>();
     addAndMakeVisible(m_oscThreePowerButton.get());
     m_oscThreePowerButton->setBounds(upl_x + col_w, upl_y + 4 * row_h, knob_size, knob_size);
     m_oscThreePowerAttach.reset(new ButtonAttachment(m_vts, juce::String(OSC3_POWER), *m_oscThreePowerButton.get()));
@@ -188,14 +208,14 @@ void MainComponent::paint(juce::Graphics& g)
     jassert(background != 0);
     if (background != 0)
     {
-        background->drawWithin(g, juce::Rectangle<float>(0, 0, screenWidth, screenHeight),
+        background->drawWithin(g, juce::Rectangle<float>(0, 0, windowWidth, windowHeight),
             juce::RectanglePlacement::stretchToFit, 1.000f);
     }
 
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(screenWidth-40).removeFromLeft(screenWidth - 550);
+{    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(windowWidth-40).removeFromLeft(windowWidth - 550);
     keyboardComponent.setBounds(area);
 }
 

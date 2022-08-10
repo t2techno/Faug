@@ -12,7 +12,7 @@ class MainComponent : public juce::Component,
 							 juce::Timer
 {
 public:
-	MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts, juce::Rectangle<int> screen);
+	MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts, int windowWidth, int windowHeight);
 	virtual ~MainComponent() override;
 
 	 void  timerCallback() override; // timer
@@ -29,8 +29,8 @@ public:
 
 	 void createEnvelope(int upl_x, int upl_y, int col_w);
 private:
-	int screenWidth;
-	int screenHeight;
+	int windowWidth;
+	int windowHeight;
 	int knob_size;
 	int small_knob_size;
 
@@ -44,26 +44,26 @@ private:
 	std::unique_ptr<ButtonAttachment>   m_oscOnePowerAttach;
 
 	std::unique_ptr<KnobThree> m_oscOneGain;
-	std::unique_ptr<KnobTwo> m_oscOneRange;
-	std::unique_ptr<KnobTwo> m_oscOneWaveForm;
+	std::unique_ptr<KnobTwo>   m_oscOneRange;
+	std::unique_ptr<KnobTwo>   m_oscOneWaveForm;
 
 	// OSC TWO
 	std::unique_ptr<juce::ToggleButton> m_oscTwoPowerButton;
 	std::unique_ptr<ButtonAttachment>   m_oscTwoPowerAttach;
 
 	std::unique_ptr<KnobThree> m_oscTwoGain;
-	std::unique_ptr<KnobTwo> m_oscTwoRange;
-	std::unique_ptr<KnobTwo> m_oscTwoWaveForm;
-	std::unique_ptr<KnobOne> m_oscTwoDetune;
+	std::unique_ptr<KnobTwo>   m_oscTwoRange;
+	std::unique_ptr<KnobTwo>   m_oscTwoWaveForm;
+	std::unique_ptr<KnobOne>   m_oscTwoDetune;
 
 	// OSC THREE
 	std::unique_ptr<juce::ToggleButton> m_oscThreePowerButton;
 	std::unique_ptr<ButtonAttachment>   m_oscThreePowerAttach;
 
 	std::unique_ptr<KnobThree> m_oscThreeGain;
-	std::unique_ptr<KnobTwo> m_oscThreeRange;
-	std::unique_ptr<KnobTwo> m_oscThreeWaveForm;
-	std::unique_ptr<KnobOne> m_oscThreeDetune;
+	std::unique_ptr<KnobTwo>   m_oscThreeRange;
+	std::unique_ptr<KnobTwo>   m_oscThreeWaveForm;
+	std::unique_ptr<KnobOne>   m_oscThreeDetune;
 
 	// FILTER
 	std::unique_ptr<KnobThree> m_filterCutoff;
@@ -78,10 +78,15 @@ private:
 	std::unique_ptr<KnobThree> m_decay;
 	std::unique_ptr<KnobThree> m_sustain;
 
-	// GLOBAL
-	std::unique_ptr<juce::Slider>       m_globalDetuneSlider;
-	std::unique_ptr <juce::Label>       m_globalDetuneLabel;
-	//std::unique_ptr<SliderAttachment>   m_globalDetuneAttach;
+	// MIXER
+	std::unique_ptr<KnobThree> m_load;
+	std::unique_ptr<KnobThree> m_feedbackGain;
+	std::unique_ptr<juce::ToggleButton> m_feedbackOn;
+	std::unique_ptr<ButtonAttachment> m_feedbackOnAttach;
+	std::unique_ptr<KnobThree> m_noiseGain;
+	std::unique_ptr<juce::ToggleButton> m_noiseOn;
+	std::unique_ptr<ButtonAttachment> m_noiseOnAttach;
+	std::unique_ptr<juce::ToggleButton> m_noiseType;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)

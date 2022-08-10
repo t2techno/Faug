@@ -3,7 +3,7 @@ import("stdfaust.lib");
 oscillators = vgroup("[0]osc_bank", (oscOne + oscTwo + oscThree)/scale)
 with{
     freq = hslider("[00]freq[style:knob]",440,50,8000,0.01) : si.smoo;
-    driftConst = 0.25;
+    driftConst = 0.15;
 
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
 
@@ -34,9 +34,9 @@ with{
     freqTwo = freq, 2^(rangeTwo-4) : * : _, detuneTwo : * : _, driftTwo : +;
     freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree : * : _, driftThree : +;
 
-    driftOne = os.osc(0.05)*0.15*driftConst : @(ma.SR/2);
-    driftTwo = os.osc(0.1)*0.1*driftConst : @(ma.SR/3);
-    driftThree = os.osc(0.25)*0.05*driftConst : @(ma.SR/5);
+    driftOne = os.osc(0.05)*0.1*driftConst : @(ma.SR/2);
+    driftTwo = os.osc(0.1)*0.05*driftConst : @(ma.SR/3);
+    driftThree = os.osc(0.25)*0.025*driftConst : @(ma.SR/5);
 
     rangeOne = hslider("[10]rangeOne[style:knob]",2,0,5,1);
     rangeTwo = hslider("[11]rangeTwo[style:knob]",2,0,5,1);
@@ -61,7 +61,7 @@ with{
   decay = hslider("[1]eDecay[style:knob]",50,1,1000,1) : si.smoo*0.001;
   sustain = hslider("[2]eSustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
   release = decay/2;
-  gain = hslider("[4]gain[style:knob]",1,0,1,0.01) : si.smoo;
+  gain = hslider("[4]gain[style:knob]",1,0,1,0.01);
   gate = button("[5]gate");
 };
 
@@ -76,7 +76,7 @@ with{
     attack = hslider("[3]fAttack[style:knob]",50,1,1000,1) : si.smoo*0.01;
     decay = hslider("[4]fDecay[style:knob]",50,1,1000,1) : si.smoo*0.01;
     sustain = hslider("[5]fSustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
-    gain = hslider("[6]gain[style:knob]",1,0,1,0.01) : si.smoo;
+    gain = hslider("[6]gain[style:knob]",1,0,1,0.01);
     gate = button("[7]gate");
 };
 
@@ -84,7 +84,7 @@ noise = hgroup("[3]noise", noiseOut)
 with {
     noiseSelect = checkbox("[0]noiseType");
     noiseOn = checkbox("[1]noiseOn");
-    noiseGain = hslider("[2]noiseGain[style:knob]", 0, 0, 1, 0.01);
+    noiseGain = hslider("[2]noiseGain[style:knob]", 0.0, 0.0, 1.0, 0.01);
     noiseOut = no.noise, no.pink_noise : select2(noiseSelect)*noiseGain*noiseOn;
 
 };
@@ -95,13 +95,14 @@ with{
     load = hslider("load",1.0,1.0,3.0,0.01);
 };
 
-process = hgroup("faug", (generateSound ~ fdBackSignal) : drive) <: _,_
+process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive) <: _,_
 with {
-    fdback = hslider("feedback[style:knob]",0,0,1,0.01) : si.smoo;
+    fdback = hslider("feedbackGain[style:knob]",0,0,1,0.01) : si.smoo;
+    fdbackOn = checkbox("feedbackOn");
     fdBackSignal = _*fdback;
     drive = _ <: drySig, wetSig : +;
-    drySig = (1-fdback)*_ : aa.tanh1;
-    wetSig = fdback*_ : histeresis : aa.tanh1;
+    drySig = _, (1-fdback)*_ : select2(fdbackOn) : aa.tanh1;
+    wetSig = fdback*fdbackOn*_ : histeresis : aa.tanh1;
 
     histeresis = firpart : + ~ backPart;
     firpart(x) = 0.1*x' + 0.5*x''';

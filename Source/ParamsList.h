@@ -7,13 +7,14 @@ const char * const PANIC       = "Panic";
 const char * const FREQ        = "freq";
 
 // FEEDBACK PARAMS
-const char * const FEEDBACK    = "feedback";
-const char * const LOAD        = "load";
+const char * const FEEDBACK_ON = "feedbackOn";
+const char * const FEEDBACK_GAIN   = "feedbackGain";
+const char * const LOAD            = "load";
 
 // GLOBAL DETUNE
 const char * const GLOBAL_DETUNE = "globalDetune";
 
-const char * const NOISE       = "noiseOn";
+const char * const NOISE_ON    = "noiseOn";
 const char * const NOISE_GAIN  = "noiseGain";
 const char * const NOISE_TYPE  = "noiseType";
 
@@ -52,17 +53,3 @@ const char * const F_ENV_AMOUNT= "contourAmount";
 const char * const F_ATTACK    = "fAttack";
 const char * const F_DECAY     = "fDecay";
 const char * const F_SUSTAIN   = "fSustain";
-
-const char * const PARAMS_LIST[] = { 
-	OSC1_RANGE, GLOBAL_DETUNE, OSC1_WAVE,
-	OSC2_RANGE, OSC2_DETUNE, OSC2_WAVE,
-	OSC3_RANGE, OSC3_DETUNE, OSC3_WAVE,
-	ATTACK, DECAY, SUSTAIN, GATE, FREQ,
-	F_CUTOFF, F_Q, F_ATTACK, F_ENV_AMOUNT, F_DECAY, F_SUSTAIN,
-	FEEDBACK
-};
-
-const char * const KEY_PARAMS[] = {
-	GATE, FREQ
-};
-const int NUM_KEY = 2;

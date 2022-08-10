@@ -23,6 +23,7 @@ Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String label, juce::St
 
 Knob::~Knob()
 {
+    slider->setLookAndFeel(nullptr);
 }
 
 void Knob::paint(juce::Graphics& g)

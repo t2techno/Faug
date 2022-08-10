@@ -23,10 +23,12 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     m_params(*this, nullptr, juce::Identifier("FAUG"),
         {
-            std::make_unique<juce::AudioParameterBool> (GATE, "Gate", false),
+            std::make_unique<juce::AudioParameterBool>(GATE, "Gate", false),
             std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq", 1.f,8000.f, 440.f),
-            std::make_unique<juce::AudioParameterFloat>(FEEDBACK, "Feedback", 0.f, 1.f, 0.8),
-            std::make_unique<juce::AudioParameterBool> (NOISE, "Noise", false),
+            std::make_unique<juce::AudioParameterFloat>(LOAD, "Load",1.f, 3.f, 1.f),
+            std::make_unique<juce::AudioParameterFloat>(FEEDBACK_GAIN, "FeedbackGain", 0.f, 1.f, 0.f),
+            std::make_unique<juce::AudioParameterBool> (FEEDBACK_ON, "FeedbackOn", false),
+            std::make_unique<juce::AudioParameterBool> (NOISE_ON, "NoiseOn", false),
             std::make_unique<juce::AudioParameterBool> (NOISE_TYPE, "NoiseType", false),
             std::make_unique<juce::AudioParameterFloat>(NOISE_GAIN, "NoiseGain", 0.f, 1.f, 0.f),
 

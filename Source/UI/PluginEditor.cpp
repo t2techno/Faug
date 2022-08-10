@@ -16,11 +16,13 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    screen = juce::Desktop::getInstance().getDisplays().getMainDisplay().userArea;
-    int x = screen.getWidth();
-    int y = screen.getHeight();
+    double ratio = 16.0 / 9.0;
 
-    m_main = std::make_unique<MainComponent>(state, vts, screen);
+    originalScreen = juce::Desktop::getInstance().getDisplays().getMainDisplay().userArea;
+    int width = originalScreen.getWidth();
+    int height = originalScreen.getHeight();
+
+    m_main = std::make_unique<MainComponent>(state, vts, height * ratio, height);
     addAndMakeVisible(*m_main.get());
 
     m_scope = std::make_unique<Spectroscope>();
@@ -33,9 +35,11 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_glContext.setComponentPaintingEnabled(true);
     m_glContext.attachTo(*this);
 
-    setSize (x, y);
     setResizable(true, false);
-    setResizeLimits(1280,720,3840,2160);
+    setResizeLimits(1280,1280/ratio,3840,3840/ratio);
+    getConstrainer()->setFixedAspectRatio(ratio);
+    setSize(height*ratio, height);
+
 }
 
 FaugAudioProcessorEditor::~FaugAudioProcessorEditor()
@@ -56,14 +60,14 @@ void FaugAudioProcessorEditor::paint (juce::Graphics& g)
 
 void FaugAudioProcessorEditor::resized()
 {
-    juce::Rectangle<int> currentScreen = getLocalBounds();
+    juce::Rectangle<int> resizedWindow = getLocalBounds();
+
     // keep my aspect ratio
-    float scaleAmount = juce::jmin(float(currentScreen.getWidth()) / float(screen.getWidth()),
-                                   float(currentScreen.getHeight()) / float(screen.getHeight()));
+    float scaleAmount = float(resizedWindow.getWidth()) / float(originalScreen.getWidth());
     juce::AffineTransform transform = juce::AffineTransform().scale(scaleAmount);
     m_main->setTransform(transform);
 
-    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(screen.getWidth() * .35).removeFromLeft(screen.getWidth());
+    auto area = getLocalBounds().removeFromBottom(originalScreen.getHeight()*.27).removeFromRight(originalScreen.getWidth() * .35).removeFromLeft(originalScreen.getWidth());
     m_scope->setBounds(area);
 }
 
