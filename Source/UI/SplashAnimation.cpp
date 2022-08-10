@@ -17,7 +17,6 @@ SplashAnimation::SplashAnimation(const juce::String& title, int width, int heigh
 {
     juce::AnimatedAppComponent::setSize(width, height);
     juce::AnimatedAppComponent::setFramesPerSecond(60);
-    loadingCoin = juce::Drawable::createFromImageData(BinaryData::loadingCoin_png, BinaryData::loadingCoin_pngSize);
     coinWidth = 100;
     coinHeight = 100;
 }
@@ -33,12 +32,6 @@ void SplashAnimation::paint (juce::Graphics& g)
     auto fishLength = 15;
 
     juce::Path spinePath;
-
-    if (loadingCoin != 0)
-    {
-        loadingCoin->drawWithin(g, juce::Rectangle<float>(getFrameCounter()%300, getFrameCounter()%300, 720, 720),
-            juce::RectanglePlacement::stretchToFit, 1.000f);
-    }
 
     for (auto i = 0; i < fishLength; ++i)
     {

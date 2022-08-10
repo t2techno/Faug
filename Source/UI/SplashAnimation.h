@@ -30,7 +30,6 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SplashAnimation)
 
-    std::unique_ptr<juce::Drawable> loadingCoin;
     juce::Path spinePath;
     int coinWidth;
     int coinHeight;
