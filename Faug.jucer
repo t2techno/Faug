@@ -6,7 +6,8 @@
   <MAINGROUP id="NOdcBF" name="Faug">
     <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
       <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
-      <FILE id="tBii8A" name="loadingCoin.png" compile="0" resource="1" file="imageWork/loadingCoin.png"/>
+      <FILE id="oLMbDr" name="knobOne.png" compile="0" resource="1" file="imageWork/knobOne.png"/>
+      <FILE id="KTsLnU" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobTwo.png"/>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
       <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">
@@ -31,6 +32,15 @@
         <FILE id="VZMZyU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/synth/FaustDspVoice.h"/>
       </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
+        <GROUP id="{670D16E6-CD1F-215A-76A0-E627481DB3C8}" name="Knobs">
+          <FILE id="HEoDtF" name="Knob.cpp" compile="1" resource="0" file="Source/UI/Knobs/Knob.cpp"/>
+          <FILE id="UZyXGO" name="Knob.h" compile="0" resource="0" file="Source/UI/Knobs/Knob.h"/>
+          <FILE id="gSRgEm" name="KnobImage.h" compile="0" resource="0" file="Source/UI/Knobs/KnobImage.h"/>
+          <FILE id="KlMUzd" name="KnobLookAndFeel.cpp" compile="1" resource="0"
+                file="Source/UI/Knobs/KnobLookAndFeel.cpp"/>
+          <FILE id="AKmIME" name="KnobLookAndFeel.h" compile="0" resource="0"
+                file="Source/UI/Knobs/KnobLookAndFeel.h"/>
+        </GROUP>
         <FILE id="PxqXZG" name="SplashAnimation.cpp" compile="1" resource="0"
               file="Source/UI/SplashAnimation.cpp"/>
         <FILE id="qFQGNv" name="SplashAnimation.h" compile="0" resource="0"
@@ -44,8 +54,6 @@
         <FILE id="uRVcWg" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/UI/PluginEditor.cpp"/>
         <FILE id="dRZ62N" name="PluginEditor.h" compile="0" resource="0" file="Source/UI/PluginEditor.h"/>
-        <FILE id="oqBNpR" name="Knob.cpp" compile="1" resource="0" file="Source/UI/Knob.cpp"/>
-        <FILE id="ljJUGZ" name="Knob.h" compile="0" resource="0" file="Source/UI/Knob.h"/>
       </GROUP>
       <FILE id="H82bMi" name="ParamsList.h" compile="0" resource="0" file="Source/ParamsList.h"/>
       <FILE id="Skb0Ql" name="PluginProcessor.cpp" compile="1" resource="0"

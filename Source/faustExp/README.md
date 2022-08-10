@@ -67,7 +67,11 @@ In case you would like to use the built-in accelerometer or gyroscope of your de
 * **24**: `/faug/filter/fDecay`
 * **25**: `/faug/filter/fSustain`
 * **26**: `/faug/filter/gate`
-* **27**: `/faug/feedback`
+* **27**: `/faug/noise/noiseType`
+* **28**: `/faug/noise/noiseOn`
+* **29**: `/faug/noise/noiseGain`
+* **30**: `/faug/feedback`
+* **31**: `/faug/load`
 
 
 ## API Reference
