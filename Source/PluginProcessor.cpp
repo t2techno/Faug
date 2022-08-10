@@ -25,22 +25,26 @@ FaugAudioProcessor::FaugAudioProcessor()
         {
             std::make_unique<juce::AudioParameterBool> (GATE, "Gate", false),
             std::make_unique<juce::AudioParameterFloat>(FREQ, "Freq", 1.f,8000.f, 440.f),
+            std::make_unique<juce::AudioParameterFloat>(FEEDBACK, "Feedback", 0.f, 1.f, 0.8),
+            std::make_unique<juce::AudioParameterBool> (NOISE, "Noise", false),
+            std::make_unique<juce::AudioParameterBool> (NOISE_TYPE, "NoiseType", false),
+            std::make_unique<juce::AudioParameterFloat>(NOISE_GAIN, "NoiseGain", 0.f, 1.f, 0.f),
 
-            std::make_unique<juce::AudioParameterInt>  (OSC1_RANGE, "OscOneRange",0,6,2),
+            std::make_unique<juce::AudioParameterInt>  (OSC1_RANGE, "OscOneRange",0,5,2),
             std::make_unique<juce::AudioParameterInt>  (OSC1_WAVE, "OscOneWave",0,5,1),
-            std::make_unique<juce::AudioParameterFloat>(OSC1_GAIN, "OscOneGain", 0.f,10.f, 10.f),
+            std::make_unique<juce::AudioParameterFloat>(OSC1_GAIN, "OscOneGain", 0.f,1.f, 1.f),
             std::make_unique<juce::AudioParameterBool> (OSC1_POWER, "OscOnePower", false),
 
-            std::make_unique<juce::AudioParameterInt>  (OSC2_RANGE, "OscTwoRange",0,6,2),
+            std::make_unique<juce::AudioParameterInt>  (OSC2_RANGE, "OscTwoRange",0,5,2),
             std::make_unique<juce::AudioParameterFloat>(OSC2_DETUNE, "OscTwoDetune", -7.5,7.5, 0.f),
             std::make_unique<juce::AudioParameterInt>  (OSC2_WAVE, "OscTwoWave",0,5,1),
-            std::make_unique<juce::AudioParameterFloat>(OSC2_GAIN, "OscTwoGain", 0.f,10.f, 10.f),
+            std::make_unique<juce::AudioParameterFloat>(OSC2_GAIN, "OscTwoGain", 0.f,1.f, 1.f),
             std::make_unique<juce::AudioParameterBool> (OSC2_POWER, "OscTwoPower", false),
 
-            std::make_unique<juce::AudioParameterInt>  (OSC3_RANGE, "OscThreeRange",0,6,2),
+            std::make_unique<juce::AudioParameterInt>  (OSC3_RANGE, "OscThreeRange",0,5,2),
             std::make_unique<juce::AudioParameterFloat>(OSC3_DETUNE, "OscThreeDetune", -7.5,7.5, 0.f),
             std::make_unique<juce::AudioParameterInt>  (OSC3_WAVE, "OscThreeWave",0,5,1),
-            std::make_unique<juce::AudioParameterFloat>(OSC3_GAIN, "OscThreeGain", 0.f,10.f, 10.f),
+            std::make_unique<juce::AudioParameterFloat>(OSC3_GAIN, "OscThreeGain", 0.f,1.f, 1.f),
             std::make_unique<juce::AudioParameterBool> (OSC3_POWER, "OscThreePower", false),
 
             std::make_unique<juce::AudioParameterFloat>(F_CUTOFF, "FilterCutoff", 10.f,32000.f,440.f),
@@ -50,8 +54,9 @@ FaugAudioProcessor::FaugAudioProcessor()
             std::make_unique<juce::AudioParameterFloat>(F_DECAY, "FilterDecay", 1.f, 1000.f, 50.f),
             std::make_unique<juce::AudioParameterFloat>(F_SUSTAIN, "FilterSustain", 0.01, 1.f, 0.8),
 
+            std::make_unique<juce::AudioParameterFloat>(ATTACK, "Attack", 1.f, 1000.f, 50.f),
             std::make_unique<juce::AudioParameterFloat>(DECAY, "Decay", 1.f, 1000.f, 50.f),
-            
+            std::make_unique<juce::AudioParameterFloat>(SUSTAIN, "Sustain", 0.1, 1.f, 0.8),
         }
     )
 {
