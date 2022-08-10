@@ -1,20 +1,21 @@
 #pragma once
 
-const int HEIGHT = 720;
-const int WIDTH = 1280;
-
 // String constants pointing to their respective parameter paths in Faust
 const char * const PANIC       = "Panic";
 
 // FREQ
-const char* const FREQ         = "freq";
+const char * const FREQ        = "freq";
 
 // FEEDBACK PARAMS
-const char* const FEEDBACK     = "feedback";
+const char * const FEEDBACK    = "feedback";
+const char * const LOAD        = "load";
 
 // GLOBAL DETUNE
-const char* const GLOBAL_DETUNE  = "globalDetune";
+const char * const GLOBAL_DETUNE = "globalDetune";
 
+const char * const NOISE       = "noiseOn";
+const char * const NOISE_GAIN  = "noiseGain";
+const char * const NOISE_TYPE  = "noiseType";
 
 // OSC1 PARAMS
 const char * const OSC1_POWER  = "oscOnePower";
@@ -41,7 +42,7 @@ const char * const ATTACK      = "eAttack";
 const char * const DECAY       = "eDecay";
 const char * const SUSTAIN     = "eSustain";
 const char * const GATE        = "gate";
-//const char* const F_GATE       = "gate";
+//const char* const F_GATE     = "gate";
 
 
 // FILTER PARAMS

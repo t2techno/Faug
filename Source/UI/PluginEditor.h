@@ -39,6 +39,7 @@ private:
     std::unique_ptr<Spectroscope> m_scope;
 
     juce::OpenGLContext m_glContext;
+    juce::Rectangle<int> screen;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FaugAudioProcessorEditor)

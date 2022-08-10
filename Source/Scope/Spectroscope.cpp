@@ -23,7 +23,7 @@ Spectroscope::Spectroscope() :  m_fifoIndex(0),
                                 m_fillStopColor(juce::Colours::white.withAlpha(0.8f))
 {
     juce::zeromem(m_outputData, sizeof(m_outputData));
-    setSize(700, 200);
+    setSize(600, 150);
     startTimerHz(30);
 }
 

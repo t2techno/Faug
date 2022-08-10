@@ -6,7 +6,6 @@
   ==============================================================================
 */
 
-#include "../PluginProcessor.h"
 #include "../ParamsList.h"
 #include "PluginEditor.h"
 #include "MainComponent.h"
@@ -17,7 +16,11 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    m_main = std::make_unique<MainComponent>(state, vts);
+    screen = juce::Desktop::getInstance().getDisplays().getMainDisplay().userArea;
+    int x = screen.getWidth();
+    int y = screen.getHeight();
+
+    m_main = std::make_unique<MainComponent>(state, vts, screen);
     addAndMakeVisible(*m_main.get());
 
     m_scope = std::make_unique<Spectroscope>();
@@ -26,13 +29,13 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_scope->setColors(juce::Colour::fromRGBA(255, 186, 34, 255),
         juce::Colour::fromRGBA(253, 174, 25, 255).withAlpha(0.7f),
         juce::Colour::fromRGBA(255, 126, 0, 255).withAlpha(0.7f));
-    m_scope->setBounds(780, 420, 500, 300);
-
 
     m_glContext.setComponentPaintingEnabled(true);
     m_glContext.attachTo(*this);
 
-    setSize (WIDTH, HEIGHT);
+    setSize (x, y);
+    setResizable(true, false);
+    setResizeLimits(1280,720,3840,2160);
 }
 
 FaugAudioProcessorEditor::~FaugAudioProcessorEditor()
@@ -53,8 +56,15 @@ void FaugAudioProcessorEditor::paint (juce::Graphics& g)
 
 void FaugAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    juce::Rectangle<int> currentScreen = getLocalBounds();
+    // keep my aspect ratio
+    float scaleAmount = juce::jmin(float(currentScreen.getWidth()) / float(screen.getWidth()),
+                                   float(currentScreen.getHeight()) / float(screen.getHeight()));
+    juce::AffineTransform transform = juce::AffineTransform().scale(scaleAmount);
+    m_main->setTransform(transform);
+
+    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(screen.getWidth() * .35).removeFromLeft(screen.getWidth());
+    m_scope->setBounds(area);
 }
 
 Spectroscope* FaugAudioProcessorEditor::getScope() {
