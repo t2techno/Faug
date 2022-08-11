@@ -13,13 +13,15 @@
 #include <JuceHeader.h>
 #include "ToggleLookAndFeel.h"
 
+typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
+
 //==============================================================================
 /*
 */
 class Toggle  : public juce::Component
 {
 public:
-    Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, const int toggleSize);
+    Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight);
     virtual ~Toggle() override;
 
     void setLaf(ToggleLookAndFeel* laf);
@@ -34,9 +36,9 @@ private:
 class OrangeToggle : public Toggle
 {
     public:
-        OrangeToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleSize) : Toggle(vts, paramId, toggleSize)
+        OrangeToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight) : Toggle(vts, paramId, toggleWidth, toggleHeight)
         {
-            toggleLaf->setToggleImage(BinaryData::orangeToggle_png, BinaryData::orangeToggle_pngSize, toggleSize);
+            toggleLaf->setToggleImage(BinaryData::orangeToggle_png, BinaryData::orangeToggle_pngSize, toggleWidth, toggleHeight);
             setLaf(toggleLaf.get());
         }
         virtual ~OrangeToggle() override {};
@@ -48,9 +50,9 @@ class OrangeToggle : public Toggle
 class BlueToggle : public Toggle
 {
     public:
-        BlueToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleSize) : Toggle(vts, paramId, toggleSize)
+        BlueToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight) : Toggle(vts, paramId, toggleWidth, toggleHeight)
         {
-            toggleLaf->setToggleImage(BinaryData::blueToggle_png, BinaryData::blueToggle_pngSize, toggleSize);
+            toggleLaf->setToggleImage(BinaryData::blueToggle_png, BinaryData::blueToggle_pngSize, toggleWidth, toggleHeight);
             setLaf(toggleLaf.get());
         }
         virtual ~BlueToggle() override {};
@@ -62,9 +64,9 @@ class BlueToggle : public Toggle
 class BrownToggle : public Toggle
 {
 public:
-    BrownToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleSize) : Toggle(vts, paramId, toggleSize)
+    BrownToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight) : Toggle(vts, paramId, toggleWidth, toggleHeight)
     {
-        toggleLaf->setToggleImage(BinaryData::brownToggle_png, BinaryData::brownToggle_pngSize, toggleSize);
+        toggleLaf->setToggleImage(BinaryData::brownToggle_png, BinaryData::brownToggle_pngSize, toggleWidth, toggleHeight);
         setLaf(toggleLaf.get());
     }
     virtual ~BrownToggle() override {};

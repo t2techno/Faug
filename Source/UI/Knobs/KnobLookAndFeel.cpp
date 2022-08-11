@@ -16,11 +16,6 @@ KnobLookAndFeel::KnobLookAndFeel()
 {
 }
 
-KnobLookAndFeel::KnobLookAndFeel(const char* knobData, const int knobDataSize, const int knobSize)
-{
-    knobImage = std::make_unique<KnobImage>(knobData, knobDataSize, knobSize);
-}
-
 KnobLookAndFeel::~KnobLookAndFeel()
 {}
 

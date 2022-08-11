@@ -21,10 +21,10 @@ class ToggleLookAndFeel  : public juce::LookAndFeel_V4
 {
 public:
     ToggleLookAndFeel();
-    ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, const int toggleSize);
-    ~ToggleLookAndFeel() override;
+    ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight);
+    virtual ~ToggleLookAndFeel() override;
 
-    void setToggleImage(const char* toggleData, const int toggleDataSize, const int toggleSize);
+    void setToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight);
 
     juce::Font getBaseFont();
     juce::Font getLabelFont(juce::Label&) override;

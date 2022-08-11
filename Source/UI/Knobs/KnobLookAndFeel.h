@@ -21,7 +21,6 @@ class KnobLookAndFeel  : public juce::LookAndFeel_V4
 {
     public:
         KnobLookAndFeel();
-        KnobLookAndFeel(const char* knobData, const int knobDataSize, const int knobSize);
         virtual ~KnobLookAndFeel() override;
 
         void setKnobImage(const char* knobData, const int knobDataSize, const int knobSize);

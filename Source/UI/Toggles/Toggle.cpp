@@ -11,12 +11,11 @@
 #include <JuceHeader.h>
 #include "Toggle.h"
 
-typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
 
-Toggle::Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, const int toggleSize)
+Toggle::Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight)
 {
     toggle = std::make_unique<juce::ToggleButton>();
-    toggle->setBounds(0, 0, toggleSize, toggleSize);
+    toggle->setBounds(0, 0, toggleWidth, toggleHeight);
     addAndMakeVisible(toggle.get());
     attach.reset(new ButtonAttachment(vts, paramId, *toggle.get()));
 }

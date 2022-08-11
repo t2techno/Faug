@@ -17,16 +17,30 @@
 ToggleLookAndFeel::ToggleLookAndFeel()
 {}
 
-ToggleLookAndFeel::ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, const int toggleSize)
-{
-    setToggleImage(toggleData, toggleDataSize, toggleSize);
-}
-
 ToggleLookAndFeel::~ToggleLookAndFeel()
+{}
+
+ToggleLookAndFeel::ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
 {
+    setToggleImage(toggleData, toggleDataSize, toggleWidth, toggleHeight);
 }
 
-void ToggleLookAndFeel::setToggleImage(const char* toggleData, const int toggleDataSize, const int toggleSize)
+void ToggleLookAndFeel::setToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
 {
-    toggleImage = std::make_unique<ToggleImage>(toggleData, toggleDataSize, toggleSize);
+    toggleImage = std::make_unique<ToggleImage>(toggleData, toggleDataSize, toggleWidth, toggleHeight);
+}
+
+juce::Font ToggleLookAndFeel::getBaseFont()
+{
+    return juce::Font::bold;
+}
+
+juce::Font ToggleLookAndFeel::getLabelFont(juce::Label&)
+{
+    return getBaseFont().withPointHeight(10);
+}
+
+juce::Font ToggleLookAndFeel::getSliderReadoutFont()
+{
+    return getBaseFont().withPointHeight(14);
 }

@@ -4,6 +4,7 @@
 
 #include <JuceHeader.h>
 #include "./Knobs/Knob.h"
+#include "./Toggles/Toggle.h"
 
 class MainComponent : public juce::Component,
 							 juce::Timer
@@ -26,8 +27,10 @@ public:
 
 	 void createEnvelope(int upl_x, int upl_y, int col_w);
 private:
-	int windowWidth;
-	int windowHeight;
+	int window_width;
+	int window_height;
+	int toggle_width;
+	int toggle_height;
 	int knob_size;
 	int small_knob_size;
 
@@ -37,26 +40,20 @@ private:
 
 	// OSC PARAMS
 	// OSC ONE
-	std::unique_ptr<juce::ToggleButton> m_oscOnePowerButton;
-	std::unique_ptr<ButtonAttachment>   m_oscOnePowerAttach;
-
+	std::unique_ptr<BlueToggle> m_oscOnePowerButton;
 	std::unique_ptr<KnobThree> m_oscOneGain;
 	std::unique_ptr<KnobTwo>   m_oscOneRange;
 	std::unique_ptr<KnobTwo>   m_oscOneWaveForm;
 
 	// OSC TWO
-	std::unique_ptr<juce::ToggleButton> m_oscTwoPowerButton;
-	std::unique_ptr<ButtonAttachment>   m_oscTwoPowerAttach;
-
+	std::unique_ptr<BlueToggle> m_oscTwoPowerButton;
 	std::unique_ptr<KnobThree> m_oscTwoGain;
 	std::unique_ptr<KnobTwo>   m_oscTwoRange;
 	std::unique_ptr<KnobTwo>   m_oscTwoWaveForm;
 	std::unique_ptr<KnobOne>   m_oscTwoDetune;
 
 	// OSC THREE
-	std::unique_ptr<juce::ToggleButton> m_oscThreePowerButton;
-	std::unique_ptr<ButtonAttachment>   m_oscThreePowerAttach;
-
+	std::unique_ptr<BlueToggle> m_oscThreePowerButton;
 	std::unique_ptr<KnobThree> m_oscThreeGain;
 	std::unique_ptr<KnobTwo>   m_oscThreeRange;
 	std::unique_ptr<KnobTwo>   m_oscThreeWaveForm;
@@ -78,12 +75,10 @@ private:
 	// MIXER
 	std::unique_ptr<KnobThree> m_load;
 	std::unique_ptr<KnobThree> m_feedbackGain;
-	std::unique_ptr<juce::ToggleButton> m_feedbackOn;
-	std::unique_ptr<ButtonAttachment> m_feedbackOnAttach;
+	std::unique_ptr<BlueToggle> m_feedbackOn;
 	std::unique_ptr<KnobThree> m_noiseGain;
-	std::unique_ptr<juce::ToggleButton> m_noiseOn;
-	std::unique_ptr<ButtonAttachment> m_noiseOnAttach;
-	std::unique_ptr<juce::ToggleButton> m_noiseType;
+	std::unique_ptr<BlueToggle> m_noiseOn;
+	std::unique_ptr<BlueToggle> m_noiseType;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)

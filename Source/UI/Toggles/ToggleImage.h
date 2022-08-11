@@ -18,11 +18,11 @@
 class ToggleImage  : public juce::DrawableImage
 {
 public:
-    ToggleImage(const char* toggleData, const int toggleDataSize, const int toggleSize)
+    ToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
     {
         toggleImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(toggleData, toggleDataSize));
         setSize(toggleDataSize, toggleDataSize);
-        setImage(toggleImage->rescaled(toggleSize, toggleSize));
+        setImage(toggleImage->rescaled(toggleWidth, toggleHeight));
     }
 
     ~ToggleImage() override
