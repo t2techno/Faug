@@ -5,9 +5,6 @@
 #include <JuceHeader.h>
 #include "./Knobs/Knob.h"
 
-typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
-typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
-
 class MainComponent : public juce::Component,
 							 juce::Timer
 {

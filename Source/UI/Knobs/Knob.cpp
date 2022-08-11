@@ -10,12 +10,11 @@
 
 #include "Knob.h"
 
-Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String label, juce::String paramId, int knobSize)
+Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize)
 {
-    m_sliderSize = knobSize;
     slider = std::make_unique<juce::Slider>();
     addAndMakeVisible(slider.get());
-    slider->setBounds(0, 0, m_sliderSize, m_sliderSize);
+    slider->setBounds(0, 0, knobSize, knobSize);
     slider->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
     attach.reset(new SliderAttachment(vts, juce::String(paramId), *slider.get()));
@@ -24,14 +23,6 @@ Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String label, juce::St
 Knob::~Knob()
 {
     slider->setLookAndFeel(nullptr);
-}
-
-void Knob::paint(juce::Graphics& g)
-{
-}
-
-void Knob::resized()
-{
 }
 
 void Knob::setLaf(KnobLookAndFeel* laf) {

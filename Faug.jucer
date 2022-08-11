@@ -5,9 +5,17 @@
               companyName="t2tech" companyWebsite="t2tech.info" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="NOdcBF" name="Faug">
     <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
+      <GROUP id="{29766A75-040E-BEE0-DB29-607DE52B43DD}" name="toggles">
+        <FILE id="I36KeA" name="blueToggle.png" compile="0" resource="1" file="imageWork/toggles/blueToggle.png"/>
+        <FILE id="eWogrQ" name="brownToggle.png" compile="0" resource="1" file="imageWork/toggles/brownToggle.png"/>
+        <FILE id="xAKdIn" name="orangeToggle.png" compile="0" resource="1"
+              file="imageWork/toggles/orangeToggle.png"/>
+      </GROUP>
+      <GROUP id="{15A861F6-9811-8423-343A-4F63F8149AAF}" name="knobs">
+        <FILE id="NKxNQh" name="knobOne.png" compile="0" resource="1" file="imageWork/knobs/knobOne.png"/>
+        <FILE id="tWMkQ8" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobs/knobTwo.png"/>
+      </GROUP>
       <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
-      <FILE id="oLMbDr" name="knobOne.png" compile="0" resource="1" file="imageWork/knobOne.png"/>
-      <FILE id="KTsLnU" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobTwo.png"/>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
       <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">
@@ -32,6 +40,15 @@
         <FILE id="VZMZyU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/synth/FaustDspVoice.h"/>
       </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
+        <GROUP id="{78B36E4E-225D-C158-D484-E5B6F8E89E94}" name="Toggles">
+          <FILE id="LutJMt" name="Toggle.cpp" compile="1" resource="0" file="Source/UI/Toggles/Toggle.cpp"/>
+          <FILE id="xH4FmF" name="Toggle.h" compile="0" resource="0" file="Source/UI/Toggles/Toggle.h"/>
+          <FILE id="NiUqcA" name="ToggleImage.h" compile="0" resource="0" file="Source/UI/Toggles/ToggleImage.h"/>
+          <FILE id="GScc6R" name="ToggleLookAndFeel.cpp" compile="1" resource="0"
+                file="Source/UI/Toggles/ToggleLookAndFeel.cpp"/>
+          <FILE id="L7ZW4E" name="ToggleLookAndFeel.h" compile="0" resource="0"
+                file="Source/UI/Toggles/ToggleLookAndFeel.h"/>
+        </GROUP>
         <GROUP id="{670D16E6-CD1F-215A-76A0-E627481DB3C8}" name="Knobs">
           <FILE id="HEoDtF" name="Knob.cpp" compile="1" resource="0" file="Source/UI/Knobs/Knob.cpp"/>
           <FILE id="UZyXGO" name="Knob.h" compile="0" resource="0" file="Source/UI/Knobs/Knob.h"/>
