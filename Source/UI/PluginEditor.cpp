@@ -22,7 +22,7 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     int width = originalScreen.getWidth();
     int height = originalScreen.getHeight();
 
-    m_main = std::make_unique<MainComponent>(state, vts, height * ratio, height);
+    m_main = std::make_unique<MainComponent>(state, vts, height*ratio, height);
     addAndMakeVisible(*m_main.get());
 
     m_scope = std::make_unique<Spectroscope>();
@@ -35,10 +35,11 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_glContext.setComponentPaintingEnabled(true);
     m_glContext.attachTo(*this);
 
-    setResizable(true, false);
+    setResizable(true, true);
     setResizeLimits(1280,1280/ratio,3840,3840/ratio);
     getConstrainer()->setFixedAspectRatio(ratio);
     setSize(height*ratio, height);
+    currentWindow = juce::Rectangle<int>(0, 0, height * ratio, height);
 
 }
 
@@ -60,15 +61,17 @@ void FaugAudioProcessorEditor::paint (juce::Graphics& g)
 
 void FaugAudioProcessorEditor::resized()
 {
-    juce::Rectangle<int> resizedWindow = getLocalBounds();
+    juce::Rectangle<int> resizedWindow = getBounds();
 
     // keep my aspect ratio
     float scaleAmount = float(resizedWindow.getWidth()) / float(originalScreen.getWidth());
     juce::AffineTransform transform = juce::AffineTransform().scale(scaleAmount);
     m_main->setTransform(transform);
 
-    auto area = getLocalBounds().removeFromBottom(originalScreen.getHeight()*.27).removeFromRight(originalScreen.getWidth() * .35).removeFromLeft(originalScreen.getWidth());
-    m_scope->setBounds(area);
+    auto scopeArea = getLocalBounds().removeFromBottom(currentWindow.getHeight()*.27).removeFromRight(resizedWindow.getWidth() * .4).removeFromLeft(resizedWindow.getWidth());
+    m_scope->setBounds(scopeArea);
+    currentWindow.setWidth(resizedWindow.getWidth());
+    currentWindow.setHeight(resizedWindow.getHeight());
 }
 
 Spectroscope* FaugAudioProcessorEditor::getScope() {

@@ -23,11 +23,16 @@ public:
         toggleImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(toggleData, toggleDataSize));
         setSize(toggleDataSize, toggleDataSize);
         setImage(toggleImage->rescaled(toggleWidth, toggleHeight));
+        pivot_x = toggleWidth / 2;
+        pivot_y = toggleHeight / 2;
     }
 
     ~ToggleImage() override
     {
     }
+
+    int pivot_x;
+    int pivot_y;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToggleImage)

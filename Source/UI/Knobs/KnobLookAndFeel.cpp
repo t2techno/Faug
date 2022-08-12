@@ -66,9 +66,7 @@ void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int widt
     const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
 
     // Draw the readout
-    // Change this to hint box?
-    juce::AffineTransform transform = juce::AffineTransform();
-    
+    // Change this to hint box?    
     g.drawImageTransformed(knobImage->getImage(), transform.rotation(angle, knobImage->pivotPoint, knobImage->pivotPoint));
 
     juce::Colour readoutColour = juce::Colour::fromRGB(254, 173, 29).withAlpha(isMouseOver ? 1.0f : 0.9f);

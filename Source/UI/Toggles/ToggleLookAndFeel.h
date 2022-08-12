@@ -24,6 +24,11 @@ public:
     ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight);
     virtual ~ToggleLookAndFeel() override;
 
+    void drawTickBox(juce::Graphics&, juce::Component&,
+        float x, float y, float w, float h,
+        bool ticked, bool isEnabled,
+        bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
     void setToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight);
 
     juce::Font getBaseFont();
@@ -33,4 +38,5 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToggleLookAndFeel)
     std::unique_ptr<ToggleImage> toggleImage;
+    juce::AffineTransform transform = juce::AffineTransform();
 };

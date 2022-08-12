@@ -21,10 +21,11 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     int oscBankCol_w = windowWidth * 0.085;
     int oscBankRow_h = windowHeight * 0.138;
 
-    toggle_height = windowHeight * 0.095;
-    toggle_width = toggle_height * 1.86;
     knob_size = windowHeight * 0.095;
     small_knob_size = windowHeight * 0.08;
+
+    toggle_width = small_knob_size;
+    toggle_height = toggle_width * 0.538;
     
     createOscBank(oscBank_x, oscBank_y, oscBankCol_w, oscBankRow_h);
 
@@ -101,50 +102,59 @@ void MainComponent::createOscBank(int upl_x, int upl_y, int col_w, int row_h)
 
 void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
 {
-    // row 1
+    int button_upl_y = upl_y + (window_height * 0.0253);
+    
+    // Oscillators
     m_oscOneGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC1_GAIN), small_knob_size);
     m_oscOneGain->setBounds(upl_x, upl_y, small_knob_size, small_knob_size);
     addAndMakeVisible(m_oscOneGain.get());
 
     m_oscOnePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC1_POWER), toggle_width, toggle_height);
-    m_oscOnePowerButton->setBounds(upl_x + col_w, upl_y, toggle_width, toggle_height);
+    m_oscOnePowerButton->setBounds(upl_x + col_w, button_upl_y, toggle_width, toggle_height);
     addAndMakeVisible(m_oscOnePowerButton.get());
 
-    // row 2
+    m_oscTwoGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC2_GAIN), small_knob_size);
+    m_oscTwoGain->setBounds(upl_x, upl_y + 2 * row_h, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_oscTwoGain.get());
+
+    m_oscTwoPowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC2_POWER), toggle_width, toggle_height);
+    m_oscTwoPowerButton->setBounds(upl_x + col_w, button_upl_y + 2 * row_h, toggle_width, toggle_height);
+    addAndMakeVisible(m_oscTwoPowerButton.get());
+
+    m_oscThreeGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC3_GAIN), small_knob_size);
+    m_oscThreeGain->setBounds(upl_x, upl_y + 4 * row_h, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_oscThreeGain.get());
+
+    m_oscThreePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC3_POWER), toggle_width, toggle_height);
+    m_oscThreePowerButton->setBounds(upl_x + col_w, button_upl_y + 4 * row_h, toggle_width, toggle_height);
+    addAndMakeVisible(m_oscThreePowerButton.get());
+
+
+    // Saturation/Drive
+    m_load = std::make_unique<KnobThree>(m_vts, juce::String(LOAD), small_knob_size);
+    m_load->setBounds(upl_x + 2 * col_w, upl_y - 0.75*row_h, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_load.get());
+
     m_feedbackOn = std::make_unique<BlueToggle>(m_vts, juce::String(FEEDBACK_ON), toggle_width, toggle_height);
-    m_feedbackOn->setBounds(upl_x + col_w, upl_y + row_h, knob_size, knob_size);
+    m_feedbackOn->setBounds(upl_x + col_w, button_upl_y + row_h, toggle_width, toggle_height);
     addAndMakeVisible(m_feedbackOn.get());
 
     m_feedbackGain = std::make_unique<KnobThree>(m_vts,  juce::String(FEEDBACK_GAIN), small_knob_size);
     m_feedbackGain->setBounds(upl_x+2*col_w, upl_y+row_h, small_knob_size, small_knob_size);
     addAndMakeVisible(m_feedbackGain.get());
 
-    // row 3
-    m_oscTwoGain = std::make_unique<KnobThree>(m_vts,  juce::String(OSC2_GAIN), small_knob_size);
-    m_oscTwoGain->setBounds(upl_x, upl_y + 2*row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_oscTwoGain.get());
-
-    m_oscTwoPowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC2_POWER), toggle_width, toggle_height);
-    m_oscTwoPowerButton->setBounds(upl_x + col_w, upl_y + 2 * row_h, knob_size, knob_size);
-    addAndMakeVisible(m_oscTwoPowerButton.get());
-
-    // row 4
+    // Noise
     m_noiseOn = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_ON), toggle_width, toggle_height);
-    m_noiseOn->setBounds(upl_x + col_w, upl_y + 3 * row_h, knob_size, knob_size);
+    m_noiseOn->setBounds(upl_x + col_w, button_upl_y + 3 * row_h, toggle_width, toggle_height);
     addAndMakeVisible(m_noiseOn.get());
 
     m_noiseGain = std::make_unique<KnobThree>(m_vts,  juce::String(NOISE_GAIN), small_knob_size);
     m_noiseGain->setBounds(upl_x+2*col_w, upl_y+3*row_h, small_knob_size, small_knob_size);
     addAndMakeVisible(m_noiseGain.get());
 
-    // row 5
-    m_oscThreeGain = std::make_unique<KnobThree>(m_vts,  juce::String(OSC3_GAIN), small_knob_size);
-    m_oscThreeGain->setBounds(upl_x, upl_y + 4 * row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_oscThreeGain.get());
-
-    m_oscThreePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_ON), toggle_width, toggle_height);
-    m_oscThreePowerButton->setBounds(upl_x + col_w, upl_y + 4 * row_h, knob_size, knob_size);
-    addAndMakeVisible(m_oscThreePowerButton.get());
+    m_noiseType = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_TYPE), toggle_width, toggle_height);
+    m_noiseType->setBounds(upl_x + 2 * col_w, button_upl_y + 4 * row_h, toggle_width, toggle_height);
+    addAndMakeVisible(m_noiseType.get());
 }
 
 void MainComponent::createFilterBank(int upl_x, int upl_y, int col_w, int row_h)
@@ -213,7 +223,7 @@ void MainComponent::paint(juce::Graphics& g)
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(window_width-40).removeFromLeft(window_width - 550);
+{    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(window_width-40).removeFromLeft(window_width - 600);
     keyboardComponent.setBounds(area);
 }
 

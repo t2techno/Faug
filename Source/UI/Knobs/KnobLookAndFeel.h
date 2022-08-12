@@ -36,4 +36,5 @@ class KnobLookAndFeel  : public juce::LookAndFeel_V4
 
     private:
         std::unique_ptr<KnobImage> knobImage;
+        juce::AffineTransform transform = juce::AffineTransform();
 };

@@ -44,3 +44,12 @@ juce::Font ToggleLookAndFeel::getSliderReadoutFont()
 {
     return getBaseFont().withPointHeight(14);
 }
+
+void ToggleLookAndFeel::drawTickBox(juce::Graphics& g, juce::Component& button,
+    float x, float y, float w, float h,
+    bool ticked, bool isEnabled,
+    bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+{
+    bool flipped = (ticked && !shouldDrawButtonAsDown) || (shouldDrawButtonAsDown && !ticked);
+    g.drawImageTransformed(toggleImage->getImage(), transform.rotation(flipped * juce::MathConstants<float>::pi, toggleImage->pivot_x, toggleImage->pivot_y));
+}
