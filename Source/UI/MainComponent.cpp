@@ -16,10 +16,10 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     addAndMakeVisible(keyboardComponent);
     keyboardComponent.setKeyWidth(40);
 
-    int oscBank_x = windowWidth * 0.1825;
-    int oscBank_y = windowHeight * 0.175;
-    int oscBankCol_w = windowWidth * 0.085;
-    int oscBankRow_h = windowHeight * 0.138;
+    int oscBank_x = windowWidth * 0.1775;
+    int oscBank_y = windowHeight * 0.157;
+    int oscBankCol_w = windowWidth * 0.09;
+    int oscBankRow_h = windowHeight * 0.1625;
 
     knob_size = windowHeight * 0.095;
     small_knob_size = windowHeight * 0.08;
@@ -30,20 +30,20 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     createOscBank(oscBank_x, oscBank_y, oscBankCol_w, oscBankRow_h);
 
     int mixer_x = windowWidth * 0.45;
-    int mixer_y = windowHeight * 0.175;
-    int mixerCol_w = windowWidth * 0.065;
-    int mixerRow_h = oscBankRow_h/2;
+    int mixer_y = windowHeight * 0.15;
+    int mixerCol_w = windowWidth * 0.082;
+    int mixerRow_h = windowHeight * 0.085;
     createMixer(mixer_x, mixer_y, mixerCol_w, mixerRow_h);
 
-    int filter_x = windowWidth * 0.675;
-    int filter_y = windowHeight * 0.175;
-    int filterCol_w = windowWidth * 0.085;
-    int filterRow_h = oscBankRow_h;
+    int filter_x = windowWidth * 0.71;
+    int filter_y = windowHeight * 0.15;
+    int filterCol_w = windowWidth * 0.09;
+    int filterRow_h = windowHeight * 0.178;
     createFilterBank(filter_x, filter_y, filterCol_w, filterRow_h);
 
-    int envelope_x = windowWidth * 0.675;
-    int envelope_y = mixer_y + 2* oscBankRow_h;
-    int envelopeCol_w = windowWidth * 0.085;
+    int envelope_x = filter_x;
+    int envelope_y = windowHeight * 0.5;
+    int envelopeCol_w = filterCol_w;
     createEnvelope(envelope_x, envelope_y, envelopeCol_w);
 
     // wait .4 seconds, then grab keyboard focus to use as potential midi-input
@@ -102,7 +102,7 @@ void MainComponent::createOscBank(int upl_x, int upl_y, int col_w, int row_h)
 
 void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
 {
-    int button_upl_y = upl_y + (window_height * 0.0253);
+    int button_upl_y = upl_y + (window_height * 0.018);
     
     // Oscillators
     m_oscOneGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC1_GAIN), small_knob_size);
@@ -131,9 +131,9 @@ void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
 
 
     // Saturation/Drive
-    m_load = std::make_unique<KnobThree>(m_vts, juce::String(LOAD), small_knob_size);
-    m_load->setBounds(upl_x + 2 * col_w, upl_y - 0.75*row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_load.get());
+    //m_load = std::make_unique<KnobThree>(m_vts, juce::String(LOAD), small_knob_size);
+    //m_load->setBounds(upl_x + 2 * col_w, upl_y - 0.75*row_h, small_knob_size, small_knob_size);
+    //addAndMakeVisible(m_load.get());
 
     m_feedbackOn = std::make_unique<BlueToggle>(m_vts, juce::String(FEEDBACK_ON), toggle_width, toggle_height);
     m_feedbackOn->setBounds(upl_x + col_w, button_upl_y + row_h, toggle_width, toggle_height);
@@ -223,7 +223,7 @@ void MainComponent::paint(juce::Graphics& g)
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(200).removeFromRight(window_width-40).removeFromLeft(window_width - 600);
+{    auto area = getLocalBounds().removeFromBottom(window_height * .3).removeFromRight(window_width * 0.98).removeFromLeft(window_width * .7);
     keyboardComponent.setBounds(area);
 }
 

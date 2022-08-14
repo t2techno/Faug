@@ -9,22 +9,22 @@
 namespace BinaryData
 {
     extern const char*   blueToggle_png;
-    const int            blueToggle_pngSize = 40345;
+    const int            blueToggle_pngSize = 59816;
 
     extern const char*   brownToggle_png;
-    const int            brownToggle_pngSize = 39863;
+    const int            brownToggle_pngSize = 59734;
 
     extern const char*   orangeToggle_png;
-    const int            orangeToggle_pngSize = 37263;
+    const int            orangeToggle_pngSize = 58265;
 
     extern const char*   knobOne_png;
-    const int            knobOne_pngSize = 51589;
+    const int            knobOne_pngSize = 178191;
 
     extern const char*   knobTwo_png;
-    const int            knobTwo_pngSize = 40538;
+    const int            knobTwo_pngSize = 146036;
 
     extern const char*   background_png;
-    const int            background_pngSize = 4060566;
+    const int            background_pngSize = 4444874;
 
     extern const char*   README_md;
     const int            README_mdSize = 14178;
