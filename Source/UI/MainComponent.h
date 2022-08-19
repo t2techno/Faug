@@ -80,6 +80,9 @@ private:
 	std::unique_ptr<BlueToggle> m_noiseOn;
 	std::unique_ptr<BlueToggle> m_noiseType;
 
+	// NON-FAUST
+	std::unique_ptr<KnobThree> m_glide;
+	std::unique_ptr<KnobThree> master_volume;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

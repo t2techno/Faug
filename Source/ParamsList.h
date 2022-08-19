@@ -5,14 +5,17 @@ const char * const PANIC       = "Panic";
 
 // FREQ
 const char * const FREQ        = "freq";
+const char * const PREV_FREQ   = "prevFreq";
+const char * const GLIDE       = "glide";
+const char * const PITCH_BEND  = "pitchBend";
 
 // FEEDBACK PARAMS
-const char * const FEEDBACK_ON = "feedbackOn";
+const char * const FEEDBACK_ON     = "feedbackOn";
 const char * const FEEDBACK_GAIN   = "feedbackGain";
 const char * const LOAD            = "load";
 
 // GLOBAL DETUNE
-const char * const GLOBAL_DETUNE = "globalDetune";
+const char * const GLOBAL_DETUNE   = "globalDetune";
 
 const char * const NOISE_ON    = "noiseOn";
 const char * const NOISE_GAIN  = "noiseGain";
@@ -39,12 +42,10 @@ const char * const OSC3_DETUNE = "detuneThree";
 const char * const OSC3_WAVE   = "waveThree";
 
 // ENVELOPE PARAMS
-const char * const ATTACK      = "eAttack";
-const char * const DECAY       = "eDecay";
-const char * const SUSTAIN     = "eSustain";
+const char * const ATTACK      = "attack";
+const char * const DECAY       = "decay";
+const char * const SUSTAIN     = "sustain";
 const char * const GATE        = "gate";
-//const char* const F_GATE     = "gate";
-
 
 // FILTER PARAMS
 const char * const F_CUTOFF    = "cutoff";

@@ -1,21 +1,18 @@
-#include "../Source/faustExp/DspFaust.cpp"
 #include "FaustDspSound.cpp"
 #include "FaustDspVoice.h"
-#include "../UI/FaustUIBridge.h"
+#include "../FaustExp/FaugExp.cpp"
 
-FaustDspVoice::FaustDspVoice(juce::AudioProcessorValueTreeState& valueTreeState) : vts(valueTreeState)
+FaustDspVoice::FaustDspVoice(juce::AudioProcessorValueTreeState& valueTreeState, mydsp& faustDsp) : vts(valueTreeState), 
+																									currentFreq(0.f), 
+																									mFaust(faustDsp),
+																									outputs(new float* [2])
 {
-    currentPitch = std::make_unique<int>();
+
 }
 FaustDspVoice::~FaustDspVoice(){}
 
-void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) {
-	mBridge = std::make_unique<FaustUIBridge>(vts);
-	mFaust = std::make_unique<mydsp>();
-	mFaust->init(sampleRate);
-	mFaust->buildUserInterface(mBridge.get());
-
-	outputs = new float* [2];
+void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) 
+{
 	for (int channel = 0; channel < 2; ++channel) {
 		outputs[channel] = new float[samplesPerBlock];
 	}
@@ -23,8 +20,7 @@ void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) {
 
 void FaustDspVoice::releaseResources()
 {
-	mFaust.reset();
-	mBridge.reset();
+	
 }
 
 bool FaustDspVoice::canPlaySound(juce::SynthesiserSound* sound)
@@ -35,7 +31,7 @@ bool FaustDspVoice::canPlaySound(juce::SynthesiserSound* sound)
 void FaustDspVoice::startNote(int midiNoteNumber, float velocity,
 	juce::SynthesiserSound*, int /*currentPitchWheelPosition*/)
 {
-    *currentPitch = midiNoteNumber;
+	currentFreq = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
     keyOn();
 }
 
@@ -50,8 +46,7 @@ void FaustDspVoice::stopNote(float /*velocity*/, bool allowTailOff)
 
 void FaustDspVoice::renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples)
 {
-	mFaust->compute(outputBuffer.getNumSamples(), NULL, outputs);
-
+	mFaust.compute(outputBuffer.getNumSamples(), NULL, outputs);
 	for (int i = 0; i < outputBuffer.getNumSamples(); i++) {
 		*outputBuffer.getWritePointer(0, i) = outputs[0][i]; // left
 		*outputBuffer.getWritePointer(1, i) = outputs[1][i]; // right
@@ -68,7 +63,6 @@ void FaustDspVoice::keyOn() {
 
 void FaustDspVoice::keyOff() {
 	setGate(false);
-    *currentPitch = 0;
 }
 
 void FaustDspVoice::setGate(bool on)
@@ -77,6 +71,5 @@ void FaustDspVoice::setGate(bool on)
 }
 
 void FaustDspVoice::setFreq() {
-    double freq = juce::MidiMessage::getMidiNoteInHertz(*currentPitch);
-	vts.getParameterAsValue(FREQ).setValue(freq);
+	vts.getParameterAsValue(FREQ).setValue(currentFreq);
 }

@@ -20,9 +20,14 @@ FaustUIBridge::~FaustUIBridge()
     listenerAssignments.clear();
 }
 
+void FaustUIBridge::addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
+{
+    addNormalComponent(label, zone);
+}
+
 void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
-    // Create the AudioProcessor parameter if not exists
+    // Create the AudioProcessor parameter if non-existant
     // Attach the listener to keep the internal dsp values up to date
     addNormalComponent(label, zone);
     
@@ -45,7 +50,6 @@ void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone)
     if (vts.getParameter(stringLabel))
     {
         // Attach the listener to keep the internal dsp values up to date
-
         FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
         listeners.add(l);
         listenerAssignments.add(ParameterListenerPair(stringLabel, l));

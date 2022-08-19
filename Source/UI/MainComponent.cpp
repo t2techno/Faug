@@ -3,7 +3,6 @@
 
 #include "MainComponent.h"
 #include "../ParamsList.h"
-#include "Toggles/Toggle.h"
 
 MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::AudioProcessorValueTreeState& vts, int windowWidth, int windowHeight)
     : m_vts(vts), window_width(windowWidth), window_height(windowHeight),
@@ -31,7 +30,7 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     int mixer_x = windowWidth * 0.45;
     int mixer_y = windowHeight * 0.15;
-    int mixerCol_w = windowWidth * 0.082;
+    int mixerCol_w = windowWidth * 0.075;
     int mixerRow_h = windowHeight * 0.085;
     createMixer(mixer_x, mixer_y, mixerCol_w, mixerRow_h);
 
@@ -42,11 +41,15 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     createFilterBank(filter_x, filter_y, filterCol_w, filterRow_h);
 
     int envelope_x = filter_x;
-    int envelope_y = windowHeight * 0.5;
+    int envelope_y = windowHeight * 0.52;
     int envelopeCol_w = filterCol_w;
     createEnvelope(envelope_x, envelope_y, envelopeCol_w);
 
     // wait .4 seconds, then grab keyboard focus to use as potential midi-input
+    m_glide = std::make_unique<KnobThree>(m_vts, juce::String(GLIDE), small_knob_size);
+    m_glide->setBounds(0, 0, small_knob_size, small_knob_size);
+    addAndMakeVisible(m_glide.get());
+
     setSize(windowWidth, windowHeight);
     startTimer(400);
 }
@@ -152,8 +155,13 @@ void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
     m_noiseGain->setBounds(upl_x+2*col_w, upl_y+3*row_h, small_knob_size, small_knob_size);
     addAndMakeVisible(m_noiseGain.get());
 
+    //vertical
     m_noiseType = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_TYPE), toggle_width, toggle_height);
-    m_noiseType->setBounds(upl_x + 2 * col_w, button_upl_y + 4 * row_h, toggle_width, toggle_height);
+    float noiseType_x = upl_x + 2.25 * col_w;
+    float noiseType_y = button_upl_y + 5 * row_h;
+    m_noiseType->setTransform(juce::AffineTransform().rotated(juce::MathConstants<float>::halfPi, 
+                                                            noiseType_x+(toggle_width/2), noiseType_y+(toggle_height/2)));
+    m_noiseType->setBounds(noiseType_x, noiseType_y, toggle_width, toggle_height);
     addAndMakeVisible(m_noiseType.get());
 }
 
@@ -223,7 +231,7 @@ void MainComponent::paint(juce::Graphics& g)
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(window_height * .3).removeFromRight(window_width * 0.98).removeFromLeft(window_width * .7);
+{    auto area = getLocalBounds().removeFromBottom(window_height * .28).removeFromRight(window_width * 0.98).removeFromLeft(window_width * .6);
     keyboardComponent.setBounds(area);
 }
 

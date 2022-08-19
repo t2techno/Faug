@@ -9,11 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "./synth/FaugAudioSource.h"
-
 
 class FaugAudioSource;
-
 
 //==============================================================================
 /**
