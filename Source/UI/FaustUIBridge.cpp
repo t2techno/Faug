@@ -22,38 +22,41 @@ FaustUIBridge::~FaustUIBridge()
 
 void FaustUIBridge::addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
-    addNormalComponent(label, zone);
+    addNormalComponent(label, zone, init, min, max);
 }
 
 void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
     // Create the AudioProcessor parameter if non-existant
     // Attach the listener to keep the internal dsp values up to date
-    addNormalComponent(label, zone);
+    addNormalComponent(label, zone, init, min, max);
     
 }
 
 void FaustUIBridge::addButton(const char* label, FAUSTFLOAT* zone)
 {
-    addNormalComponent(label, zone);
+    addNormalComponent(label, zone, 0.0, 0.0, 1.0);
 }
 
 void FaustUIBridge::addCheckButton(const char* label, FAUSTFLOAT* zone)
 {
     // Create the AudioProcessor parameter if not exists
-    addNormalComponent(label, zone);
+    addNormalComponent(label, zone, 0.0, 0.0, 1.0);
 }
 
-void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone)
+void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max)
 {
-    juce::String stringLabel = juce::String(label);
-    if (vts.getParameter(stringLabel))
+    if (!vts.getParameter(label))
     {
-        // Attach the listener to keep the internal dsp values up to date
-        FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
-        listeners.add(l);
-        listenerAssignments.add(ParameterListenerPair(stringLabel, l));
-        labels.add(stringLabel);
-        vts.addParameterListener(stringLabel, l);
+        vts.createAndAddParameter(label, label, juce::String(),
+            juce::NormalisableRange<float>(min, max), init, nullptr, nullptr);
     }
+
+    juce::String stringLabel = juce::String(label);
+    // Attach the listener to keep the internal dsp values up to date
+    FaustUIBridgeListener* l = new FaustUIBridgeListener(zone);
+    listeners.add(l);
+    listenerAssignments.add(ParameterListenerPair(stringLabel, l));
+    labels.add(stringLabel);
+    vts.addParameterListener(stringLabel, l);
 }

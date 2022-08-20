@@ -52,7 +52,7 @@ class  FaustUIBridge : public UI
 
         virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) override {};
 
-        void addNormalComponent(const char* label, FAUSTFLOAT* zone);
+        void addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max);
 
         //==============================================================================
         /** Metadata declarations

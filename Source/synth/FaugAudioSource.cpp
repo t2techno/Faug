@@ -4,12 +4,12 @@
 
 #include "FaugAudioSource.h"
 #include "FaustDspSound.cpp"
-#include "../UI/FaustUIBridge.h"
 #include "FaustDspVoice.h"
+#include "../UI/FaustUIBridge.h"
 #include "../FaustExp/FaugExp.cpp"
 
 FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts)
-    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes()
+    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes(), currentNote(0)
 {
     // This is a mono-synth, only one voice needed
     mFaust = std::make_unique<mydsp>();
@@ -77,9 +77,10 @@ void FaugAudioSource::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, in
     //If the voice is active, it's currently playing currentNote. Move it to prev_freq for glide
         //If the voice isn't active, set prev_freq to new note so there is no glide
 
-    mVts.getParameterAsValue(PREV_FREQ).setValue(mVoice->isVoiceActive() ? currentNote : midiNoteNumber);
-    heldNotes[numHeldNotes++] = midiNoteNumber;
+    mVts.getParameterAsValue(PREV_FREQ).setValue(mVoice->isVoiceActive() ? juce::MidiMessage::getMidiNoteInHertz(currentNote) :
+                                                                                            juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
     currentNote = midiNoteNumber;
+    heldNotes[numHeldNotes++] = midiNoteNumber;
     synth.noteOn(midiChannel, midiNoteNumber, velocity);
 }
 
@@ -98,15 +99,15 @@ void FaugAudioSource::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, i
         if (shift)
         {
             heldNotes[i - 1] = heldNotes[i];
+            heldNotes[i] = 0;
         }
     }
-
     numHeldNotes--;
     bool triggerNewNote = (mVoice->getCurrentlyPlayingNote() == midiNoteNumber && numHeldNotes > 0);
-    synth.noteOff(midiChannel, midiNoteNumber, 0, false);
+   synth.noteOff(midiChannel, midiNoteNumber, 0, false);
     if (triggerNewNote)
     {
-        mVts.getParameterAsValue(PREV_FREQ).setValue(midiNoteNumber);
+        mVts.getParameterAsValue(PREV_FREQ).setValue(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
         currentNote = heldNotes[numHeldNotes-1];
         if (currentNote != 0) {
             synth.noteOn(midiChannel, currentNote, velocity);
