@@ -29,11 +29,14 @@ namespace BinaryData
     extern const char*   Faug_dsp;
     const int            Faug_dspSize = 5612;
 
+    extern const char*   glideError_dsp;
+    const int            glideError_dspSize = 1076;
+
     extern const char*   FaugExp_dsp;
     const int            FaugExp_dspSize = 1916844;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 8;
+    const int namedResourceListSize = 9;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -20,6 +20,7 @@
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
       <GROUP id="{F27B6B61-07D6-880A-6FF7-40C557C455AA}" name="FaustDsp">
         <FILE id="jN6Kd1" name="Faug.dsp" compile="0" resource="1" file="faustDsp/Faug.dsp"/>
+        <FILE id="Mps5RO" name="glideError.dsp" compile="0" resource="1" file="faustDsp/glideError.dsp"/>
       </GROUP>
       <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">
         <FILE id="qWkN7i" name="Spectroscope.cpp" compile="1" resource="0"
