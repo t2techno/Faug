@@ -6,12 +6,13 @@ import("stdfaust.lib");
 generateSound(fdb) = output(fdb) : filter*envelope
 with{
 // Base playing frequency and gate
+    gain = hslider("gain",1.0,0.0,1.0,0.01);
     gate = button("[00]gate");
-    frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 1);
-    prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 1);
+    frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.1);
+    prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.1);
     glide = hslider("[03]glide[style:knob]", 0.01,0.001,9.25,0.001); // not quite 10 sec
     pitchbend = hslider("[04]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
-    start_time = ba.latch(gate, ba.time); 
+    start_time = ba.latch(frequencyIn != frequencyIn', ba.time); 
     dt = ba.time - start_time;
     expo(tau) = exp(0-dt/(tau*ma.SR));
     blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate)+pitchbend;
@@ -20,7 +21,7 @@ with{
 
 // Oscillators
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
-
+    
     oscOnePower   = checkbox("[05]oscOnePower");
     oscTwoPower   = checkbox("[06]oscTwoPower");
     oscThreePower = checkbox("[07]oscThreePower");
@@ -35,6 +36,10 @@ with{
     oscThree = waveThree(freqThree, rangeThree, waveSelectThree)*oscThreeGain*oscThreePower;
     oscillators = (oscOne + oscTwo + oscThree)/scale;
 
+    freqOne = freq, 2^(rangeOne-4) : * : _, globalDetune : *;
+    freqTwo = freq, 2^(rangeTwo-4) : * : _, detuneTwo : * : _, driftTwo : +;
+    freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree : * : _, driftThree : +;
+
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
     waveSelectOne = hslider("[11]waveOne[style:knob]",1,0,5,1);
@@ -44,10 +49,6 @@ with{
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
-
-    freqOne = freq, 2^(rangeOne-4) : * : _, globalDetune : *;
-    freqTwo = freq, 2^(rangeTwo-4) : * : _, detuneTwo : * : _, driftTwo : +;
-    freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree : * : _, driftThree : +;
 
     driftOne = os.osc(0.05)*0.1 : @(ma.SR/2);
     driftTwo = os.osc(0.1)*0.05 + driftOne : @(ma.SR/3);
