@@ -27,10 +27,10 @@ namespace BinaryData
     const int            background_pngSize = 4444874;
 
     extern const char*   Faug_dsp;
-    const int            Faug_dspSize = 5612;
+    const int            Faug_dspSize = 6025;
 
     extern const char*   FaugExp_dsp;
-    const int            FaugExp_dspSize = 1916844;
+    const int            FaugExp_dspSize = 26753405;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 8;

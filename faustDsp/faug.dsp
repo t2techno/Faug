@@ -2,22 +2,29 @@ import("stdfaust.lib");
 
 // add AlphaScale tuning mode
 // many modulations things to add yet
+// tuning variance on a per note basis
+// tuning variance on a per note press basis
 
 generateSound(fdb) = output(fdb) : filter*envelope
 with{
 // Base playing frequency and gate
     gain = hslider("gain",1.0,0.0,1.0,0.01);
     gate = button("[00]gate");
-    frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.1);
-    prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.1);
-    glide = hslider("[03]glide[style:knob]", 0.01,0.001,9.25,0.001); // not quite 10 sec
+    frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.01);
+    prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
+
+    //upglide is about half of downglide
+    glide = hslider("[03]glide[style:knob]", 0.01, 0.001, 3.0, 0.001);
     pitchbend = hslider("[04]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
-    start_time = ba.latch(frequencyIn != frequencyIn', ba.time); 
+    start_time = ba.latch(frequencyIn != frequencyIn', ba.time);
     dt = ba.time - start_time;
-    expo(tau) = exp(0-dt/(tau*ma.SR));
+    epsilon = 0.01;
+    expo(tau) = exp((0-dt)/(tau*ma.SR)), epsilon : max;
+
     blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate)+pitchbend;
 
-    freq = blend(glide, frequencyIn, prevfreq) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
+    // mini-moogs generally had longer glide times down vs up 
+    freq = blend(ba.if(frequencyIn > prevfreq, glide/1.8, glide), frequencyIn, prevfreq) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
@@ -31,7 +38,7 @@ with{
     oscThreeGain = hslider("[10]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
 
     // oscillators
-    oscOne = waveOneTwo(freqOne, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
+    oscOne = waveOneTwo(freqOne+oscTwo*0.001, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
     oscTwo = waveOneTwo(freqTwo, rangeTwo, waveSelectTwo)*oscTwoGain*oscTwoPower;
     oscThree = waveThree(freqThree, rangeThree, waveSelectThree)*oscThreeGain*oscThreePower;
     oscillators = (oscOne + oscTwo + oscThree)/scale;
@@ -50,9 +57,9 @@ with{
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
 
-    driftOne = os.osc(0.05)*0.1 : @(ma.SR/2);
-    driftTwo = os.osc(0.1)*0.05 + driftOne : @(ma.SR/3);
-    driftThree = os.osc(0.25)*0.025 + driftOne: @(ma.SR/5);
+    driftOne = os.osc(0.05)*0.01 : @(ma.SR/2);
+    driftTwo = os.osc(0.1)*0.005 + driftOne : @(ma.SR/3);
+    driftThree = os.osc(0.25)*0.0025 + driftTwo: @(ma.SR/5);
 
     rangeOne = hslider("[14]rangeOne[style:knob]",2,0,5,1);
     rangeTwo = hslider("[15]rangeTwo[style:knob]",2,0,5,1);
