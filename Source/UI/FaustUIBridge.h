@@ -46,19 +46,21 @@ class  FaustUIBridge : public UI
             visual aspect of the plugin, these methods are no-ops.
         */
         virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override {};
-        virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override {};
+        virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
 
         // -- soundfiles
 
         virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) override {};
 
-        void addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max);
+        void addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
 
         //==============================================================================
         /** Metadata declarations
             An additional no-op to implement the last piece of the Faust UI interface.
         */
         virtual void declare(FAUSTFLOAT*, const char*, const char*) override {};
+
+        float getCurrentFreq();
 
         class FaustUIBridgeListener : public juce::AudioProcessorValueTreeState::Listener
         {
@@ -79,6 +81,7 @@ class  FaustUIBridge : public UI
 private:
     juce::AudioProcessorValueTreeState& vts;
     juce::Array<juce::String> labels;
+    float* currentFreqZone;
 
     struct ParameterListenerPair
     {

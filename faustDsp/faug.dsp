@@ -17,7 +17,7 @@ with{
     expo(tau) = exp(0-dt/(tau*ma.SR));
     blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate)+pitchbend;
 
-    freq = blend(glide, frequencyIn, prevfreq);
+    freq = blend(glide, frequencyIn, prevfreq) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;

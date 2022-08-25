@@ -22,34 +22,46 @@ FaustUIBridge::~FaustUIBridge()
 
 void FaustUIBridge::addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
-    addNormalComponent(label, zone, init, min, max);
+    addNormalComponent(label, zone, init, min, max, step);
 }
 
 void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
-    // Create the AudioProcessor parameter if non-existant
-    // Attach the listener to keep the internal dsp values up to date
-    addNormalComponent(label, zone, init, min, max);
+    addNormalComponent(label, zone, init, min, max, step);
     
 }
 
 void FaustUIBridge::addButton(const char* label, FAUSTFLOAT* zone)
 {
-    addNormalComponent(label, zone, 0.0, 0.0, 1.0);
+    addNormalComponent(label, zone, 0.0, 0.0, 1.0, -1.0);
 }
 
 void FaustUIBridge::addCheckButton(const char* label, FAUSTFLOAT* zone)
 {
-    // Create the AudioProcessor parameter if not exists
-    addNormalComponent(label, zone, 0.0, 0.0, 1.0);
+    addNormalComponent(label, zone, 0.0, 0.0, 1.0, -1.0);
 }
 
-void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max)
+void FaustUIBridge::addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max)
+{
+    currentFreqZone = zone;
+}
+
+float FaustUIBridge::getCurrentFreq()
+{
+    return *currentFreqZone;
+}
+
+void FaustUIBridge::addNormalComponent(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
 {
     if (!vts.getParameter(label))
     {
+        // -1 is a button
+        bool isDiscrete = (step*step == 1.0);
+        bool isBoolean  = (step == -1.0);
+
         vts.createAndAddParameter(label, label, juce::String(),
-            juce::NormalisableRange<float>(min, max), init, nullptr, nullptr);
+            juce::NormalisableRange<float>(min, max), init, nullptr, nullptr,
+            false,true, isDiscrete,juce::AudioProcessorParameter::Category::genericParameter, isBoolean);
     }
 
     juce::String stringLabel = juce::String(label);

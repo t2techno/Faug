@@ -5,6 +5,7 @@ const char * const PANIC       = "Panic";
 
 // FREQ
 const char * const FREQ        = "freq";
+const char * const FINAL_FREQ  = "finalFreq";
 const char * const PREV_FREQ   = "prevFreq";
 const char * const GLIDE       = "glide";
 const char * const PITCH_BEND  = "pitchBend";
