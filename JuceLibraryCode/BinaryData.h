@@ -8,11 +8,14 @@
 
 namespace BinaryData
 {
+    extern const char*   backgroundExample_png;
+    const int            backgroundExample_pngSize = 4123490;
+
     extern const char*   blueToggle_png;
     const int            blueToggle_pngSize = 59816;
 
     extern const char*   brownToggle_png;
-    const int            brownToggle_pngSize = 59734;
+    const int            brownToggle_pngSize = 54207;
 
     extern const char*   orangeToggle_png;
     const int            orangeToggle_pngSize = 58265;
@@ -24,7 +27,7 @@ namespace BinaryData
     const int            knobTwo_pngSize = 146036;
 
     extern const char*   background_png;
-    const int            background_pngSize = 4444874;
+    const int            background_pngSize = 4450986;
 
     extern const char*   Faug_dsp;
     const int            Faug_dspSize = 6025;
@@ -33,7 +36,7 @@ namespace BinaryData
     const int            FaugExp_dspSize = 26753405;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 8;
+    const int namedResourceListSize = 9;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

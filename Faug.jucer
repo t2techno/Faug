@@ -5,6 +5,8 @@
               companyName="t2tech" companyWebsite="t2tech.info" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="NOdcBF" name="Faug">
     <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
+      <FILE id="LfPswK" name="backgroundExample.png" compile="0" resource="1"
+            file="imageWork/backgroundExample.png"/>
       <GROUP id="{29766A75-040E-BEE0-DB29-607DE52B43DD}" name="toggles">
         <FILE id="I36KeA" name="blueToggle.png" compile="0" resource="1" file="imageWork/toggles/blueToggle.png"/>
         <FILE id="eWogrQ" name="brownToggle.png" compile="0" resource="1" file="imageWork/toggles/brownToggle.png"/>

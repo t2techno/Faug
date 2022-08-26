@@ -30,8 +30,8 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     int mixer_x = windowWidth * 0.45;
     int mixer_y = windowHeight * 0.15;
-    int mixerCol_w = windowWidth * 0.075;
-    int mixerRow_h = windowHeight * 0.085;
+    int mixerCol_w = windowWidth * 0.077;
+    int mixerRow_h = windowHeight * 0.083;
     createMixer(mixer_x, mixer_y, mixerCol_w, mixerRow_h);
 
     int filter_x = windowWidth * 0.71;
@@ -157,8 +157,8 @@ void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
 
     //vertical
     m_noiseType = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_TYPE), toggle_width, toggle_height);
-    float noiseType_x = upl_x + 2.25 * col_w;
-    float noiseType_y = button_upl_y + 5 * row_h;
+    float noiseType_x = upl_x + 2.05 * col_w;
+    float noiseType_y = button_upl_y + 4.80 * row_h;
     m_noiseType->setTransform(juce::AffineTransform().rotated(juce::MathConstants<float>::halfPi, 
                                                             noiseType_x+(toggle_width/2), noiseType_y+(toggle_height/2)));
     m_noiseType->setBounds(noiseType_x, noiseType_y, toggle_width, toggle_height);
