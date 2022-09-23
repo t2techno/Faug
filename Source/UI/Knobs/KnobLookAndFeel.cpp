@@ -68,7 +68,8 @@ void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int widt
     // Draw the readout
     // Change this to hint box?    
     g.drawImageTransformed(knobImage->getImage(), transform.rotation(angle, knobImage->pivotPoint, knobImage->pivotPoint));
-
+    
+    /*
     juce::Colour readoutColour = juce::Colour::fromRGB(254, 173, 29).withAlpha(isMouseOver ? 1.0f : 0.9f);
     const double value = slider.getValue();
     juce::String readoutValue = (value >= 1000.0 ? juce::String(value / 1000.0, 1) + "k" : juce::String(value, 2));
@@ -77,29 +78,7 @@ void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int widt
     g.setColour(readoutColour);
     g.setFont(getSliderReadoutFont());
     g.drawText(readout, centreX - radius, centreY - 10.0f, rw, 24.0f, juce::Justification::centred);
-
+    */
     // Draw the track
     g.setColour(slider.findColour(juce::Slider::rotarySliderOutlineColourId));
-    /*
-    juce::Path track;
-    track.addArc(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, true);
-    g.strokePath(track, juce::PathStrokeType(3.0f));
-
-    // Draw the slider position
-    juce::Colour sliderFillStart = juce::Colour::fromRGBA(245, 121, 35, 255).withAlpha(isMouseOver ? 1.0f : 0.9f);
-    juce::Colour sliderFillStop = juce::Colour::fromRGBA(255, 184, 23, 255).withAlpha(isMouseOver ? 1.0f : 0.9f);
-    juce::ColourGradient sliderFill = juce::ColourGradient(sliderFillStart,
-        (float)x,
-        (float)0,
-        sliderFillStop,
-        (float)width,
-        (float)0,
-        false);
-
-    g.setGradientFill(sliderFill);
-
-    juce::Path filledArc;
-    filledArc.addArc(rx, ry, rw, rw, rotaryStartAngle, angle, true);
-    juce::PathStrokeType(3.0f).createStrokedPath(filledArc, filledArc);
-    g.fillPath(filledArc);*/
 }

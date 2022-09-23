@@ -35,7 +35,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::createController()
 {
-    m_glide = std::make_unique<KnobThree>(m_vts, juce::String(GLIDE_RATE), getElWidth(GLIDE_RATE));
+    m_glide = std::make_unique<KnobOne>(m_vts, juce::String(GLIDE_RATE), getElWidth(GLIDE_RATE));
     placeElement(*m_glide.get(), GLIDE_RATE);
 }
 
@@ -52,7 +52,7 @@ void MainComponent::createOscBank()
     m_oscTwoRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_RANGE), getElWidth(OSC2_RANGE));
     placeElement(*m_oscTwoRange.get(), OSC2_RANGE);
 
-    m_oscTwoDetune = std::make_unique<KnobOne>(m_vts, juce::String(OSC2_DETUNE), getElWidth(OSC2_DETUNE));
+    m_oscTwoDetune = std::make_unique<BigKnobOne>(m_vts, juce::String(OSC2_DETUNE), getElWidth(OSC2_DETUNE));
     placeElement(*m_oscTwoDetune.get(), OSC2_DETUNE);
 
     m_oscTwoWaveForm = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_WAVE), getElWidth(OSC2_WAVE));
@@ -62,7 +62,7 @@ void MainComponent::createOscBank()
     m_oscThreeRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC3_RANGE), getElWidth(OSC3_RANGE));
     placeElement(*m_oscThreeRange.get(), OSC3_RANGE);
 
-    m_oscThreeDetune = std::make_unique<KnobOne>(m_vts, juce::String(OSC3_DETUNE), getElWidth(OSC3_DETUNE));
+    m_oscThreeDetune = std::make_unique<BigKnobOne>(m_vts, juce::String(OSC3_DETUNE), getElWidth(OSC3_DETUNE));
     placeElement(*m_oscThreeDetune.get(), OSC3_DETUNE);
 
     m_oscThreeWaveForm = std::make_unique<KnobTwo>(m_vts,  juce::String(OSC3_WAVE), getElWidth(OSC3_WAVE));
@@ -79,28 +79,28 @@ void MainComponent::createMixer()
     //addAndMakeVisible(m_load.get());
 
     // Oscillators
-    m_oscOneGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC1_GAIN), getElWidth(OSC3_WAVE));
+    m_oscOneGain = std::make_unique<KnobOne>(m_vts, juce::String(OSC1_GAIN), getElWidth(OSC3_WAVE));
     placeElement(*m_oscOneGain.get(), OSC1_GAIN);
 
     m_oscOnePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC1_ON), getElWidth(OSC1_ON),
                                                                                      getElHeight(OSC1_ON));
     placeElement(*m_oscOnePowerButton.get(), OSC1_ON);
 
-    m_oscTwoGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC2_GAIN), getElWidth(OSC2_GAIN));
+    m_oscTwoGain = std::make_unique<KnobOne>(m_vts, juce::String(OSC2_GAIN), getElWidth(OSC2_GAIN));
     placeElement(*m_oscTwoGain.get(), OSC2_GAIN);
 
     m_oscTwoPowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC2_ON), getElWidth(OSC2_ON),
                                                                                      getElHeight(OSC2_ON));
     placeElement(*m_oscTwoPowerButton.get(), OSC2_ON);
 
-    m_oscThreeGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC3_GAIN), getElWidth(OSC3_GAIN));
+    m_oscThreeGain = std::make_unique<KnobOne>(m_vts, juce::String(OSC3_GAIN), getElWidth(OSC3_GAIN));
     placeElement(*m_oscThreeGain.get(), OSC3_GAIN);
 
     m_oscThreePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC3_ON), getElWidth(OSC3_ON),
                                                                                        getElHeight(OSC3_ON));
     placeElement(*m_oscThreePowerButton.get(), OSC3_ON);
 
-    m_feedbackGain = std::make_unique<KnobThree>(m_vts, juce::String(FEEDBACK_GAIN), getElWidth(FEEDBACK_GAIN));
+    m_feedbackGain = std::make_unique<KnobOne>(m_vts, juce::String(FEEDBACK_GAIN), getElWidth(FEEDBACK_GAIN));
     placeElement(*m_feedbackGain.get(), FEEDBACK_GAIN);
 
     m_feedbackOn = std::make_unique<BlueToggle>(m_vts, juce::String(FEEDBACK_ON), getElWidth(FEEDBACK_ON),
@@ -108,7 +108,7 @@ void MainComponent::createMixer()
     placeElement(*m_feedbackOn.get(), FEEDBACK_ON);
 
     // Noise
-    m_noiseGain = std::make_unique<KnobThree>(m_vts, juce::String(NOISE_GAIN), getElWidth(NOISE_GAIN));
+    m_noiseGain = std::make_unique<KnobOne>(m_vts, juce::String(NOISE_GAIN), getElWidth(NOISE_GAIN));
     placeElement(*m_noiseGain.get(), NOISE_GAIN);
 
     m_noiseOn = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_ON), getElWidth(NOISE_ON),
@@ -131,36 +131,36 @@ void MainComponent::createMixer()
 void MainComponent::createFilterBank()
 {
     // Row One - Filter Frequency
-    m_filterCutoff = std::make_unique<KnobThree>(m_vts,  juce::String(F_CUTOFF), getElWidth(F_CUTOFF));
+    m_filterCutoff = std::make_unique<KnobOne>(m_vts,  juce::String(F_CUTOFF), getElWidth(F_CUTOFF));
     placeElement(*m_filterCutoff.get(), F_CUTOFF);
 
-    m_filterQ = std::make_unique<KnobThree>(m_vts,  juce::String(F_Q), getElWidth(F_Q));
+    m_filterQ = std::make_unique<KnobOne>(m_vts,  juce::String(F_Q), getElWidth(F_Q));
     placeElement(*m_filterQ.get(), F_Q);
 
-    m_filterContourAmount = std::make_unique<KnobThree>(m_vts,  juce::String(F_ENV_AMOUNT), getElWidth(F_ENV_AMOUNT));
+    m_filterContourAmount = std::make_unique<KnobOne>(m_vts,  juce::String(F_ENV_AMOUNT), getElWidth(F_ENV_AMOUNT));
     placeElement(*m_filterContourAmount.get(), F_ENV_AMOUNT);
 
 
     // Row Two - Filter Envelope
-    m_filterAttack = std::make_unique<KnobThree>(m_vts,  juce::String(F_ATTACK), getElWidth(F_ATTACK));
+    m_filterAttack = std::make_unique<KnobOne>(m_vts,  juce::String(F_ATTACK), getElWidth(F_ATTACK));
     placeElement(*m_filterAttack.get(), F_ATTACK);
 
-    m_filterDecay = std::make_unique<KnobThree>(m_vts,  juce::String(F_DECAY), getElWidth(F_DECAY));
+    m_filterDecay = std::make_unique<KnobOne>(m_vts,  juce::String(F_DECAY), getElWidth(F_DECAY));
     placeElement(*m_filterDecay.get(), F_DECAY);
 
-    m_filterSustain = std::make_unique<KnobThree>(m_vts,  juce::String(F_SUSTAIN), getElWidth(F_SUSTAIN));
+    m_filterSustain = std::make_unique<KnobOne>(m_vts,  juce::String(F_SUSTAIN), getElWidth(F_SUSTAIN));
     placeElement(*m_filterSustain.get(), F_SUSTAIN);
 }
 
 void MainComponent::createEnvelope()
 {
-    m_attack = std::make_unique<KnobThree>(m_vts,  juce::String(ATTACK), getElWidth(ATTACK));
+    m_attack = std::make_unique<KnobOne>(m_vts,  juce::String(ATTACK), getElWidth(ATTACK));
     placeElement(*m_attack.get(), ATTACK);
 
-    m_decay = std::make_unique<KnobThree>(m_vts,  juce::String(DECAY), getElWidth(DECAY));
+    m_decay = std::make_unique<KnobOne>(m_vts,  juce::String(DECAY), getElWidth(DECAY));
     placeElement(*m_decay.get(), DECAY);
 
-    m_sustain = std::make_unique<KnobThree>(m_vts,  juce::String(SUSTAIN), getElWidth(SUSTAIN));
+    m_sustain = std::make_unique<KnobOne>(m_vts,  juce::String(SUSTAIN), getElWidth(SUSTAIN));
     placeElement(*m_sustain.get(), SUSTAIN);
 }
 

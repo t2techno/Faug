@@ -29,16 +29,32 @@ private:
     std::unique_ptr<SliderAttachment> attach;
 };
 
+
 class KnobOne : public Knob
+{
+public:
+
+    KnobOne(juce::AudioProcessorValueTreeState& vts, juce::String paramId, float knobSize) : Knob(vts, paramId, knobSize)
+    {
+        knobLaf->setKnobImage(BinaryData::knobOne_png, BinaryData::knobOne_pngSize, knobSize);
+        setLaf(knobLaf.get());
+    }
+    virtual ~KnobOne() override {}
+
+private:
+    static std::unique_ptr<KnobLookAndFeel> knobLaf;
+};
+
+class BigKnobOne : public Knob
 {
     public:
 
-        KnobOne(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize) : Knob(vts, paramId, knobSize)
+        BigKnobOne(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize) : Knob(vts, paramId, knobSize)
         {
             knobLaf->setKnobImage(BinaryData::knobOne_png, BinaryData::knobOne_pngSize, knobSize);
             setLaf(knobLaf.get());
         }
-        virtual ~KnobOne() override {};
+        virtual ~BigKnobOne() override {};
 
     private:
         static std::unique_ptr<KnobLookAndFeel> knobLaf;
@@ -56,21 +72,6 @@ class KnobTwo : public Knob
             setLaf(knobLaf.get());
         }
         virtual ~KnobTwo() override {}
-
-    private:
-        static std::unique_ptr<KnobLookAndFeel> knobLaf;
-};
-
-class KnobThree : public Knob
-{
-    public:
-
-        KnobThree(juce::AudioProcessorValueTreeState& vts, juce::String paramId, float knobSize) : Knob(vts, paramId, knobSize)
-        {
-            knobLaf->setKnobImage(BinaryData::knobOne_png, BinaryData::knobOne_pngSize, knobSize);
-            setLaf(knobLaf.get());
-        }
-        virtual ~KnobThree() override {}
 
     private:
         static std::unique_ptr<KnobLookAndFeel> knobLaf;

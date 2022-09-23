@@ -29,6 +29,6 @@ void Knob::setLaf(KnobLookAndFeel* laf) {
     slider->setLookAndFeel(laf);
 }
 
-std::unique_ptr<KnobLookAndFeel>KnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
+std::unique_ptr<KnobLookAndFeel>BigKnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
 std::unique_ptr<KnobLookAndFeel>KnobTwo::knobLaf = std::make_unique<KnobLookAndFeel>();
-std::unique_ptr<KnobLookAndFeel>KnobThree::knobLaf = std::make_unique<KnobLookAndFeel>();
+std::unique_ptr<KnobLookAndFeel>KnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();

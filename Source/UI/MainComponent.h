@@ -49,48 +49,48 @@ private:
 	// OSC PARAMS
 	// OSC ONE
 	std::unique_ptr<BlueToggle> m_oscOnePowerButton;
-	std::unique_ptr<KnobThree> m_oscOneGain;
+	std::unique_ptr<KnobOne> m_oscOneGain;
 	std::unique_ptr<KnobTwo>   m_oscOneRange;
 	std::unique_ptr<KnobTwo>   m_oscOneWaveForm;
 
 	// OSC TWO
 	std::unique_ptr<BlueToggle> m_oscTwoPowerButton;
-	std::unique_ptr<KnobThree> m_oscTwoGain;
+	std::unique_ptr<KnobOne> m_oscTwoGain;
 	std::unique_ptr<KnobTwo>   m_oscTwoRange;
 	std::unique_ptr<KnobTwo>   m_oscTwoWaveForm;
-	std::unique_ptr<KnobOne>   m_oscTwoDetune;
+	std::unique_ptr<BigKnobOne>   m_oscTwoDetune;
 
 	// OSC THREE
 	std::unique_ptr<BlueToggle> m_oscThreePowerButton;
-	std::unique_ptr<KnobThree> m_oscThreeGain;
+	std::unique_ptr<KnobOne> m_oscThreeGain;
 	std::unique_ptr<KnobTwo>   m_oscThreeRange;
 	std::unique_ptr<KnobTwo>   m_oscThreeWaveForm;
-	std::unique_ptr<KnobOne>   m_oscThreeDetune;
+	std::unique_ptr<BigKnobOne>   m_oscThreeDetune;
 
 	// FILTER
-	std::unique_ptr<KnobThree> m_filterCutoff;
-	std::unique_ptr<KnobThree> m_filterQ;
-	std::unique_ptr<KnobThree> m_filterContourAmount;
-	std::unique_ptr<KnobThree> m_filterAttack;
-	std::unique_ptr<KnobThree> m_filterDecay;
-	std::unique_ptr<KnobThree> m_filterSustain;
+	std::unique_ptr<KnobOne> m_filterCutoff;
+	std::unique_ptr<KnobOne> m_filterQ;
+	std::unique_ptr<KnobOne> m_filterContourAmount;
+	std::unique_ptr<KnobOne> m_filterAttack;
+	std::unique_ptr<KnobOne> m_filterDecay;
+	std::unique_ptr<KnobOne> m_filterSustain;
 
 	// ENVELOPE
-	std::unique_ptr<KnobThree> m_attack;
-	std::unique_ptr<KnobThree> m_decay;
-	std::unique_ptr<KnobThree> m_sustain;
+	std::unique_ptr<KnobOne> m_attack;
+	std::unique_ptr<KnobOne> m_decay;
+	std::unique_ptr<KnobOne> m_sustain;
 
 	// MIXER
-	std::unique_ptr<KnobThree> m_load;
-	std::unique_ptr<KnobThree> m_feedbackGain;
+	std::unique_ptr<KnobOne> m_load;
+	std::unique_ptr<KnobOne> m_feedbackGain;
 	std::unique_ptr<BlueToggle> m_feedbackOn;
-	std::unique_ptr<KnobThree> m_noiseGain;
+	std::unique_ptr<KnobOne> m_noiseGain;
 	std::unique_ptr<BlueToggle> m_noiseOn;
 	std::unique_ptr<BlueToggle> m_noiseType;
 
 	// NON-FAUST
-	std::unique_ptr<KnobThree> m_glide;
-	std::unique_ptr<KnobThree> master_volume;
+	std::unique_ptr<KnobOne> m_glide;
+	std::unique_ptr<KnobOne> master_volume;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
