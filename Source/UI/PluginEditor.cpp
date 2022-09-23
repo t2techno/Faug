@@ -36,7 +36,7 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     m_glContext.attachTo(*this);
 
     setResizable(true, true);
-    setResizeLimits(1280,1280/ratio,3840,3840/ratio);
+    setResizeLimits(1280,1280/ratio, juce::jmin(3840.0, height * ratio), juce::jmin(2160,height));
     getConstrainer()->setFixedAspectRatio(ratio);
     scaleConstant = (height * ratio) / width;
     currentWindow = juce::Rectangle<int>(0, 0, height * ratio, height);
@@ -70,7 +70,7 @@ void FaugAudioProcessorEditor::resized()
     scaleAmount /= scaleConstant;
 
     // Dealing with rounding error by rounding num to 1.0 when close
-    scaleAmount = (1.0 - scaleAmount) < 0.1 ? 1 : scaleAmount;
+    scaleAmount = (1.0 - scaleAmount) < 0.01 ? 1 : scaleAmount;
     juce::AffineTransform transform = juce::AffineTransform().scale(scaleAmount);
     m_main->setTransform(transform);
 
