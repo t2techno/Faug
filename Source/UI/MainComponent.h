@@ -23,11 +23,13 @@ public:
 
 	 void createOscBank();
 
-	 void createMixer(int upl_x, int upl_y, int col_w, int row_h);
+	 void createMixer();
 
 	 void createFilterBank(int upl_x, int upl_y, int col_w, int row_h);
 
 	 void createEnvelope(int upl_x, int upl_y, int col_w);
+
+	 void placeElement(juce::Component& comp, std::string label, int compWidth, int compHeight);
 private:
 	int window_width;
 	int window_height;

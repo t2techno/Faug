@@ -16,28 +16,17 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     juce::Rectangle<int> area = getBoundsInParent();
 
-    knob_size = window_height * 0.08;
-    small_knob_size = window_height * 0.07;
+    knob_size = window_height * 0.085;
+    small_knob_size = window_height * 0.075;
 
     toggle_width = small_knob_size;
     toggle_height = toggle_width * 0.538;
 
-    int controller_x = window_width * 0.048;
-    int controller_y = window_height * 0.11;
-    int controllerRow_h = window_height * 0;
     createController();
 
-    int oscBank_x = window_width * 0.18;
-    int oscBank_y = window_height * 0.117;
-    int oscBankCol_w = window_width * 0.08;
-    int oscBankRow_h = window_height * 0.1675;
     createOscBank();
 
-    int mixer_x = window_width * 0.445;
-    int mixer_y = window_width * 0.11;
-    int mixerCol_w = window_width * 0.077;
-    int mixerRow_h = window_height * 0.083;
-    createMixer(mixer_x, mixer_y, mixerCol_w, mixerRow_h);
+    createMixer();
 
     int filter_x = window_width * 0.71;
     int filter_y = window_height * 0.15;
@@ -62,85 +51,41 @@ MainComponent::~MainComponent()
 void MainComponent::createController()
 {
     m_glide = std::make_unique<KnobThree>(m_vts, juce::String(GLIDE_RATE), small_knob_size);
-    m_glide->setBounds(guiPositions.at((GLIDE_RATE))[0]*window_width, guiPositions.at((GLIDE_RATE))[1]*window_height, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_glide.get());
+    placeElement(*m_glide.get(), GLIDE_RATE, small_knob_size, small_knob_size);
 }
 
 void MainComponent::createOscBank()
 {
     // OSC ONE
-    // col 1
-    //    m_oscOneRange->setBounds(guiPositions.at((OSC1_RANGE))[0]*window_width, guiPositions.at((OSC1_RANGE))[1]*window_height, knob_size, knob_size);
     m_oscOneRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC1_RANGE), knob_size);
-    m_oscOneRange->setBounds(0.1821*window_width, 0.083*window_height, knob_size, knob_size);
-    addAndMakeVisible(m_oscOneRange.get());
+    placeElement(*m_oscOneRange.get(), OSC1_RANGE, knob_size, knob_size);
 
-    // col 3
     m_oscOneWaveForm = std::make_unique<KnobTwo>(m_vts, juce::String(OSC1_WAVE), knob_size);
-    m_oscOneWaveForm->setBounds(guiPositions.at((OSC1_WAVE))[0], guiPositions.at((OSC1_WAVE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscOneWaveForm.get());
+    placeElement(*m_oscOneWaveForm.get(), OSC1_WAVE, knob_size, knob_size);
     
     // OSC Two
-    // col 1
     m_oscTwoRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_RANGE), knob_size);
-    m_oscTwoRange->setBounds(guiPositions.at((OSC2_RANGE))[0], guiPositions.at((OSC2_RANGE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscTwoRange.get());
+    placeElement(*m_oscTwoRange.get(), OSC2_RANGE, knob_size, knob_size);
 
-    //col 2
     m_oscTwoDetune = std::make_unique<KnobOne>(m_vts, juce::String(OSC2_DETUNE), knob_size);
-    m_oscTwoDetune->setBounds(guiPositions.at((OSC2_DETUNE))[0], guiPositions.at((OSC2_DETUNE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscTwoDetune.get());
+    placeElement(*m_oscTwoDetune.get(), OSC2_DETUNE, knob_size, knob_size);
 
-    // col 3
     m_oscTwoWaveForm = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_WAVE), knob_size);
-    m_oscTwoWaveForm->setBounds(guiPositions.at((OSC2_DETUNE))[0], guiPositions.at((OSC2_DETUNE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscTwoWaveForm.get());
+    placeElement(*m_oscTwoWaveForm.get(), OSC2_WAVE, knob_size, knob_size);
 
     // OSC Three
-    // col 1
     m_oscThreeRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC3_RANGE), knob_size);
-    m_oscThreeRange->setBounds(guiPositions.at((OSC3_RANGE))[0], guiPositions.at((OSC3_RANGE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscThreeRange.get());
+    placeElement(*m_oscThreeRange.get(), OSC3_RANGE, knob_size, knob_size);
 
-    //col 2
     m_oscThreeDetune = std::make_unique<KnobOne>(m_vts, juce::String(OSC3_DETUNE), knob_size);
-    m_oscThreeDetune->setBounds(guiPositions.at((OSC3_DETUNE))[0], guiPositions.at((OSC3_DETUNE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscThreeDetune.get());
+    placeElement(*m_oscThreeDetune.get(), OSC3_DETUNE, knob_size, knob_size);
 
-    // col 3
     m_oscThreeWaveForm = std::make_unique<KnobTwo>(m_vts,  juce::String(OSC3_WAVE), knob_size);
-    m_oscThreeWaveForm->setBounds(guiPositions.at((OSC3_WAVE))[0], guiPositions.at((OSC3_WAVE))[1], knob_size, knob_size);
-    addAndMakeVisible(m_oscThreeWaveForm.get());
+    placeElement(*m_oscThreeWaveForm.get(), OSC3_WAVE, knob_size, knob_size);
 }
 
-void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
+void MainComponent::createMixer()
 {
-    int button_upl_y = upl_y + (window_height * 0.018);
-    
-    // Oscillators
-    m_oscOneGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC1_GAIN), small_knob_size);
-    m_oscOneGain->setBounds(upl_x, upl_y, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_oscOneGain.get());
-
-    m_oscOnePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC1_ON), toggle_width, toggle_height);
-    m_oscOnePowerButton->setBounds(upl_x + col_w, button_upl_y, toggle_width, toggle_height);
-    addAndMakeVisible(m_oscOnePowerButton.get());
-
-    m_oscTwoGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC2_GAIN), small_knob_size);
-    m_oscTwoGain->setBounds(upl_x, upl_y + 2 * row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_oscTwoGain.get());
-
-    m_oscTwoPowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC2_ON), toggle_width, toggle_height);
-    m_oscTwoPowerButton->setBounds(upl_x + col_w, button_upl_y + 2 * row_h, toggle_width, toggle_height);
-    addAndMakeVisible(m_oscTwoPowerButton.get());
-
-    m_oscThreeGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC3_GAIN), small_knob_size);
-    m_oscThreeGain->setBounds(upl_x, upl_y + 4 * row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_oscThreeGain.get());
-
-    m_oscThreePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC3_ON), toggle_width, toggle_height);
-    m_oscThreePowerButton->setBounds(upl_x + col_w, button_upl_y + 4 * row_h, toggle_width, toggle_height);
-    addAndMakeVisible(m_oscThreePowerButton.get());
 
 
     // Saturation/Drive
@@ -148,27 +93,44 @@ void MainComponent::createMixer(int upl_x, int upl_y, int col_w, int row_h)
     //m_load->setBounds(upl_x + 2 * col_w, upl_y - 0.75*row_h, small_knob_size, small_knob_size);
     //addAndMakeVisible(m_load.get());
 
-    m_feedbackOn = std::make_unique<BlueToggle>(m_vts, juce::String(FEEDBACK_ON), toggle_width, toggle_height);
-    m_feedbackOn->setBounds(upl_x + col_w, button_upl_y + row_h, toggle_width, toggle_height);
-    addAndMakeVisible(m_feedbackOn.get());
+    // Oscillators
+    m_oscOneGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC1_GAIN), small_knob_size);
+    placeElement(*m_oscOneGain.get(), OSC1_GAIN, small_knob_size, small_knob_size);
 
-    m_feedbackGain = std::make_unique<KnobThree>(m_vts,  juce::String(FEEDBACK_GAIN), small_knob_size);
-    m_feedbackGain->setBounds(upl_x+2*col_w, upl_y+row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_feedbackGain.get());
+    m_oscOnePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC1_ON), toggle_width, toggle_height);
+    placeElement(*m_oscOnePowerButton.get(), OSC1_ON, toggle_width, toggle_height);
+
+    m_oscTwoGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC2_GAIN), small_knob_size);
+    placeElement(*m_oscTwoGain.get(), OSC2_GAIN, small_knob_size, small_knob_size);
+
+    m_oscTwoPowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC2_ON), toggle_width, toggle_height);
+    placeElement(*m_oscTwoPowerButton.get(), OSC2_ON, toggle_width, toggle_height);
+
+    m_oscThreeGain = std::make_unique<KnobThree>(m_vts, juce::String(OSC3_GAIN), small_knob_size);
+    placeElement(*m_oscThreeGain.get(), OSC3_GAIN, small_knob_size, small_knob_size);
+
+    m_oscThreePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC3_ON), toggle_width, toggle_height);
+    placeElement(*m_oscThreePowerButton.get(), OSC3_ON, toggle_width, toggle_height);
+
+    m_feedbackGain = std::make_unique<KnobThree>(m_vts, juce::String(FEEDBACK_GAIN), small_knob_size);
+    placeElement(*m_feedbackGain.get(), FEEDBACK_GAIN, small_knob_size, small_knob_size);
+
+    m_feedbackOn = std::make_unique<BlueToggle>(m_vts, juce::String(FEEDBACK_ON), toggle_width, toggle_height);
+    placeElement(*m_feedbackOn.get(), FEEDBACK_ON, toggle_width, toggle_height);
 
     // Noise
-    m_noiseOn = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_ON), toggle_width, toggle_height);
-    m_noiseOn->setBounds(upl_x + col_w, button_upl_y + 3 * row_h, toggle_width, toggle_height);
-    addAndMakeVisible(m_noiseOn.get());
 
-    m_noiseGain = std::make_unique<KnobThree>(m_vts,  juce::String(NOISE_GAIN), small_knob_size);
-    m_noiseGain->setBounds(upl_x+2*col_w, upl_y+3*row_h, small_knob_size, small_knob_size);
-    addAndMakeVisible(m_noiseGain.get());
+    m_noiseGain = std::make_unique<KnobThree>(m_vts, juce::String(NOISE_GAIN), small_knob_size);
+    placeElement(*m_noiseGain.get(), NOISE_GAIN, small_knob_size, small_knob_size);
+
+    m_noiseOn = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_ON), toggle_width, toggle_height);
+    placeElement(*m_noiseOn.get(), NOISE_ON, toggle_width, toggle_height);
 
     //vertical
     m_noiseType = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_TYPE), toggle_width, toggle_height);
-    float noiseType_x = upl_x + 2.05 * col_w;
-    float noiseType_y = button_upl_y + 4.80 * row_h;
+
+    float noiseType_x = guiPositions.at((NOISE_TYPE))[0] * float(window_width);
+    float noiseType_y = guiPositions.at((NOISE_TYPE))[1] * float(window_height);
     m_noiseType->setTransform(juce::AffineTransform().rotated(juce::MathConstants<float>::halfPi, 
                                                             noiseType_x+(toggle_width/2), noiseType_y+(toggle_height/2)));
     m_noiseType->setBounds(noiseType_x, noiseType_y, toggle_width, toggle_height);
@@ -226,6 +188,12 @@ void MainComponent::createEnvelope(int upl_x, int upl_y, int col_w)
     m_sustain = std::make_unique<KnobThree>(m_vts,  juce::String(SUSTAIN), small_knob_size);
     m_sustain->setBounds(upl_x + 2*col_w, upl_y, small_knob_size, small_knob_size);
     addAndMakeVisible(m_sustain.get());
+}
+
+void MainComponent::placeElement(juce::Component& comp, std::string label, int compWidth, int compHeight)
+{
+    comp.setBounds(guiPositions.at((label))[0] * window_width, guiPositions.at((label))[1] * window_height, compWidth, compHeight);
+    addAndMakeVisible(comp);
 }
 
 void MainComponent::paint(juce::Graphics& g)

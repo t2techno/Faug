@@ -33,7 +33,7 @@ namespace BinaryData
     const int            knobTwo_pngSize = 146036;
 
     extern const char*   background_png;
-    const int            background_pngSize = 4290197;
+    const int            background_pngSize = 4302825;
 
     extern const char*   Faug_dsp;
     const int            Faug_dspSize = 6025;
