@@ -39,6 +39,7 @@ private:
     juce::OpenGLContext m_glContext;
     juce::Rectangle<int> originalScreen;
     juce::Rectangle<int> currentWindow;
+    float scaleConstant;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FaugAudioProcessorEditor)

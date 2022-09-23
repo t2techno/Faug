@@ -6,7 +6,7 @@
   ==============================================================================
 */
 
-#include "../ParamsList.h"
+#include "../Constants.h"
 #include "PluginEditor.h"
 #include "MainComponent.h"
 
@@ -38,8 +38,9 @@ FaugAudioProcessorEditor::FaugAudioProcessorEditor (FaugAudioProcessor& p, juce:
     setResizable(true, true);
     setResizeLimits(1280,1280/ratio,3840,3840/ratio);
     getConstrainer()->setFixedAspectRatio(ratio);
-    setSize(height*ratio, height);
+    scaleConstant = (height * ratio) / width;
     currentWindow = juce::Rectangle<int>(0, 0, height * ratio, height);
+    setSize(height * ratio, height);
 
 }
 
@@ -52,11 +53,10 @@ FaugAudioProcessorEditor::~FaugAudioProcessorEditor()
 void FaugAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colours::black);
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Faug", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void FaugAudioProcessorEditor::resized()
@@ -65,6 +65,12 @@ void FaugAudioProcessorEditor::resized()
 
     // keep my aspect ratio
     float scaleAmount = float(resizedWindow.getWidth()) / float(originalScreen.getWidth());
+
+    // Scale the scale amount by the original ratio of displayed screen to monitor size
+    scaleAmount /= scaleConstant;
+
+    // Dealing with rounding error by rounding num to 1.0 when close
+    scaleAmount = (1.0 - scaleAmount) < 0.1 ? 1 : scaleAmount;
     juce::AffineTransform transform = juce::AffineTransform().scale(scaleAmount);
     m_main->setTransform(transform);
 
