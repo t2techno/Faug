@@ -19,7 +19,9 @@ public:
 	 void resized() override; //Component
 
 	 // Create UI Sections
-	 void createOscBank(int upl_x, int upl_y, int col_w, int row_h);
+	 void createController();
+
+	 void createOscBank();
 
 	 void createMixer(int upl_x, int upl_y, int col_w, int row_h);
 
