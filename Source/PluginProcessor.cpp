@@ -8,7 +8,7 @@
 #include "./Synth/FaugAudioSource.h"
 #include "PluginProcessor.h"
 #include "./UI/PluginEditor.h"
-#include "ParamsList.h"
+#include "Constants.h"
 
 //==============================================================================
 FaugAudioProcessor::FaugAudioProcessor()

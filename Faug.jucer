@@ -12,6 +12,8 @@
         <FILE id="eWogrQ" name="brownToggle.png" compile="0" resource="1" file="imageWork/toggles/brownToggle.png"/>
         <FILE id="xAKdIn" name="orangeToggle.png" compile="0" resource="1"
               file="imageWork/toggles/orangeToggle.png"/>
+        <FILE id="vRKiwg" name="screwKnob.png" compile="0" resource="1" file="imageWork/knobs/screwKnob.png"/>
+        <FILE id="aet8Hk" name="whiteToggle.png" compile="0" resource="1" file="imageWork/toggles/whiteToggle.png"/>
       </GROUP>
       <GROUP id="{15A861F6-9811-8423-343A-4F63F8149AAF}" name="knobs">
         <FILE id="NKxNQh" name="knobOne.png" compile="0" resource="1" file="imageWork/knobs/knobOne.png"/>
@@ -45,6 +47,8 @@
         <FILE id="VZMZyU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/synth/FaustDspVoice.h"/>
       </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
+        <FILE id="SxvcZc" name="guiElementsPosition.cpp" compile="1" resource="0"
+              file="Source/UI/guiElementsPosition.cpp"/>
         <GROUP id="{78B36E4E-225D-C158-D484-E5B6F8E89E94}" name="Toggles">
           <FILE id="LutJMt" name="Toggle.cpp" compile="1" resource="0" file="Source/UI/Toggles/Toggle.cpp"/>
           <FILE id="xH4FmF" name="Toggle.h" compile="0" resource="0" file="Source/UI/Toggles/Toggle.h"/>
@@ -77,7 +81,8 @@
               file="Source/UI/PluginEditor.cpp"/>
         <FILE id="dRZ62N" name="PluginEditor.h" compile="0" resource="0" file="Source/UI/PluginEditor.h"/>
       </GROUP>
-      <FILE id="H82bMi" name="ParamsList.h" compile="0" resource="0" file="Source/ParamsList.h"/>
+      <FILE id="MFKxEs" name="Constants.cpp" compile="1" resource="0" file="Source/Constants.cpp"/>
+      <FILE id="H82bMi" name="Constants.h" compile="0" resource="0" file="Source/Constants.h"/>
       <FILE id="Skb0Ql" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="yEThbj" name="PluginProcessor.h" compile="0" resource="0"

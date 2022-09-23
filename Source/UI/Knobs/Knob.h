@@ -14,7 +14,6 @@
 #include <JuceHeader.h>
 #include "KnobLookAndFeel.h"
 #include "KnobImage.h"
-#include "../../ParamsList.h"
 
 typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 

@@ -11,7 +11,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../../ParamsList.h"
 
 class KnobImage : public juce::DrawableImage
 {
