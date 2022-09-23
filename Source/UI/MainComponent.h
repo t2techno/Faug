@@ -25,11 +25,15 @@ public:
 
 	 void createMixer();
 
-	 void createFilterBank(int upl_x, int upl_y, int col_w, int row_h);
+	 void createFilterBank();
 
-	 void createEnvelope(int upl_x, int upl_y, int col_w);
+	 void createEnvelope();
 
-	 void placeElement(juce::Component& comp, std::string label, int compWidth, int compHeight);
+	 void placeElement(juce::Component& comp, std::string label);
+
+	 // getElementDimensions. single line call, but it would be super verbose to include it everywhere
+	 int getElWidth(std::string label);
+	 int getElHeight(std::string label);
 private:
 	int window_width;
 	int window_height;

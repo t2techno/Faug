@@ -65,7 +65,7 @@ class KnobThree : public Knob
 {
     public:
 
-        KnobThree(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize) : Knob(vts, paramId, knobSize)
+        KnobThree(juce::AudioProcessorValueTreeState& vts, juce::String paramId, float knobSize) : Knob(vts, paramId, knobSize)
         {
             knobLaf->setKnobImage(BinaryData::knobOne_png, BinaryData::knobOne_pngSize, knobSize);
             setLaf(knobLaf.get());
