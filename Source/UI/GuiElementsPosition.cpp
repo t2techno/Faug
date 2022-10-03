@@ -1,10 +1,12 @@
 /*
   ==============================================================================
-	File Generated from Inkscape SVG with Python3
-	Contains the name, x/y position, and width/height for each gui element from a single layer in the source SVG
-	VAR_NAME should be defined and imported from somewhere as a string constant
 
-		Author: Tyler Tuschhoff ~ 09/2022
+	File generated with svg2gui
+	Contains the name, x/y position and width/height for each gui element from a single layer in the source SVG
+	All values are relative to total gui width/height(in range 0 <= ... <= 1)
+	VAR_NAME should be defined and imported from somewhere as a string constant. eg. #include "../Constants.h"
+	Declare guiPositions in the same file as the string constants
+
   ==============================================================================
 */
 
@@ -14,7 +16,7 @@
 
 #include "../Constants.h"
 
-//  VAR_NAME should be useable with both Faust and JUCE (keep your naming consistent)// {VAR_NAME: [x_position,y_position,width,height]}
+//  VAR_NAME should be useable everywhere (keep your naming consistent)// {VAR_NAME: [x_position, y_position, width, height]}
 const std::map<std::string, std::array<float,4>> guiPositions = {
 	{ATTACK,{0.7135146588541667,0.5133405672222222,0.040087898437500005,0.07126338888888889}},
 	{DECAY,{0.7939367421875,0.5133406135185185,0.040087898437500005,0.07126338888888889}},
