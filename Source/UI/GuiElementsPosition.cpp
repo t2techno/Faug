@@ -16,7 +16,8 @@
 
 #include "../Constants.h"
 
-//  VAR_NAME should be useable everywhere (keep your naming consistent)// {VAR_NAME: [x_position, y_position, width, height]}
+//  VAR_NAME should be useable everywhere (keep your naming consistent)
+// {VAR_NAME: [x_position, y_position, width, height]}
 const std::map<std::string, std::array<float,4>> guiPositions = {
 	{ATTACK,{0.7135146588541667,0.5133405672222222,0.040087898437500005,0.07126338888888889}},
 	{DECAY,{0.7939367421875,0.5133406135185185,0.040087898437500005,0.07126338888888889}},
