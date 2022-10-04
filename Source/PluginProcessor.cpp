@@ -145,9 +145,6 @@ void FaugAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::M
     m_audioSource->getNextAudioBlock(bufferToFill);
 
     FaugAudioProcessorEditor* editor = static_cast<FaugAudioProcessorEditor*>(getActiveEditor());
-    
-    if (editor)
-        editor->getScope()->pushBuffer(*bufferToFill.buffer);
 }
 
 //==============================================================================

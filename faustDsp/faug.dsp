@@ -14,28 +14,31 @@ with{
     prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
 
     //upglide is about half of downglide
-    glide = hslider("[03]glide[style:knob]", 0.01, 0.001, 3.0, 0.001);
-    pitchbend = hslider("[04]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
+    pitchbend = hslider("[03]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
+    glide = hslider("[04]glide[style:knob]", 0.01, 0.001, 3.0, 0.001);
     start_time = ba.latch(frequencyIn != frequencyIn', ba.time);
     dt = ba.time - start_time;
     epsilon = 0.01;
     expo(tau) = exp((0-dt)/(tau*ma.SR)), epsilon : max;
 
     blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate)+pitchbend;
+    glideOn = checkbox("[05]glideOn");
 
     // mini-moogs generally had longer glide times down vs up 
-    freq = blend(ba.if(frequencyIn > prevfreq, glide/1.8, glide), frequencyIn, prevfreq) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
+    freq = blend(ba.if(frequencyIn > prevfreq, glide/1.8, glide), 
+                       frequencyIn, 
+                       ba.if(glideOn, prevfreq, frequencyIn)) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
     
-    oscOnePower   = checkbox("[05]oscOnePower");
-    oscTwoPower   = checkbox("[06]oscTwoPower");
-    oscThreePower = checkbox("[07]oscThreePower");
+    oscOnePower   = checkbox("[06]oscOnePower");
+    oscTwoPower   = checkbox("[07]oscTwoPower");
+    oscThreePower = checkbox("[08]oscThreePower");
 
-    oscOneGain   = hslider("[08]oscOneGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
-    oscTwoGain   = hslider("[09]oscTwoGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
-    oscThreeGain = hslider("[10]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
+    oscOneGain   = hslider("[09]oscOneGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
+    oscTwoGain   = hslider("[10]oscTwoGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
+    oscThreeGain = hslider("[11]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
 
     // oscillators
     oscOne = waveOneTwo(freqOne+oscTwo*0.001, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
@@ -49,9 +52,9 @@ with{
 
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
-    waveSelectOne = hslider("[11]waveOne[style:knob]",1,0,5,1);
-    waveSelectTwo = hslider("[12]waveTwo[style:knob]",1,0,5,1);
-    waveSelectThree = hslider("[13]waveThree[style:knob]",1,0,5,1);
+    waveSelectOne = hslider("[12]waveOne[style:knob]",1,0,5,1);
+    waveSelectTwo = hslider("[13]waveTwo[style:knob]",1,0,5,1);
+    waveSelectThree = hslider("[14]waveThree[style:knob]",1,0,5,1);
     waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
@@ -61,13 +64,13 @@ with{
     driftTwo = os.osc(0.1)*0.005 + driftOne : @(ma.SR/3);
     driftThree = os.osc(0.25)*0.0025 + driftTwo: @(ma.SR/5);
 
-    rangeOne = hslider("[14]rangeOne[style:knob]",2,0,5,1);
-    rangeTwo = hslider("[15]rangeTwo[style:knob]",2,0,5,1);
-    rangeThree = hslider("[16]rangeThree[style:knob]",2,0,5,1);
+    rangeOne = hslider("[15]rangeOne[style:knob]",2,0,5,1);
+    rangeTwo = hslider("[16]rangeTwo[style:knob]",2,0,5,1);
+    rangeThree = hslider("[17]rangeThree[style:knob]",2,0,5,1);
 
-    globalDetune = hslider("[17]globalDetune[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo; 
-    detuneTwo = hslider("[18]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
-    detuneThree = hslider("[19]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
+    globalDetune = hslider("[18]globalDetune[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo; 
+    detuneTwo = hslider("[19]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
+    detuneThree = hslider("[20]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
 
     tri(f,type)    = os.lf_triangle(f), os.triangle(f) : select2(type);
     saw(f,type)    = os.lf_saw(f), os.sawtooth(f) : select2(type);
@@ -78,15 +81,14 @@ with{
 
 // Envelope
     envelope = en.adsr(attack,decay,sustain,release,gate);
-    attack = hslider("[20]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
-    decay = hslider("[21]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
-    sustain = hslider("[22]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
+    attack = hslider("[21]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
+    decay = hslider("[22]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
+    sustain = hslider("[23]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
     release = decay/2;
 
 // Filter
-
     filter = ve.moogLadder(cutoffFreq, Q);
-    cutoffFreq = (hslider("[24]cutoff[style:knob]",440,10,32000,1)/32000) <: _, (1-_)*filterEnvelope : + : si.smoo;
+    cutoffFreq = hslider("[24]cutoff[style:knob]",440,10,22000,1) : _/ma.SR <: _, (1-_)*filterEnvelope : + : si.smoo;
     Q = hslider("[25]emphasis[style:knob]",1,0.707,25,0.001) : si.smoo;
     //reverse = hslider("[0]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1) : si.smoo;
     contourAmount = hslider("[26]contourAmount[style:knob]",1,0,1,0.01) : si.smoo;

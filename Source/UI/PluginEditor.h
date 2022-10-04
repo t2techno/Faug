@@ -28,15 +28,11 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    Spectroscope* getScope();
-
 
 private:
     FaugAudioProcessor& audioProcessor;
     std::unique_ptr<MainComponent> m_main;
-    std::unique_ptr<Spectroscope> m_scope;
 
-    juce::OpenGLContext m_glContext;
     juce::Rectangle<int> originalScreen;
     juce::Rectangle<int> currentWindow;
     float scaleConstant;

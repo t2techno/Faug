@@ -195,7 +195,7 @@ void MainComponent::paint(juce::Graphics& g)
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(window_height * .28).removeFromRight(window_width * 0.98).removeFromLeft(window_width * .6);
+{    auto area = getLocalBounds().removeFromBottom(window_height * .28).removeFromRight(window_width * 0.6).removeFromLeft(window_width * 0.98);
     keyboardComponent.setBounds(area);
 }
 
