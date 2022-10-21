@@ -12,11 +12,11 @@
         <FILE id="eWogrQ" name="brownToggle.png" compile="0" resource="1" file="imageWork/toggles/brownToggle.png"/>
         <FILE id="xAKdIn" name="orangeToggle.png" compile="0" resource="1"
               file="imageWork/toggles/orangeToggle.png"/>
-        <FILE id="vRKiwg" name="screwKnob.png" compile="0" resource="1" file="imageWork/knobs/screwKnob.png"/>
         <FILE id="aet8Hk" name="whiteToggle.png" compile="0" resource="1" file="imageWork/toggles/whiteToggle.png"/>
       </GROUP>
       <GROUP id="{15A861F6-9811-8423-343A-4F63F8149AAF}" name="knobs">
         <FILE id="NKxNQh" name="knobOne.png" compile="0" resource="1" file="imageWork/knobs/knobOne.png"/>
+        <FILE id="vRKiwg" name="screwKnob.png" compile="0" resource="1" file="imageWork/knobs/screwKnob.png"/>
         <FILE id="tWMkQ8" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobs/knobTwo.png"/>
       </GROUP>
       <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>

@@ -20,14 +20,14 @@ namespace BinaryData
     extern const char*   orangeToggle_png;
     const int            orangeToggle_pngSize = 58265;
 
-    extern const char*   screwKnob_png;
-    const int            screwKnob_pngSize = 57748;
-
     extern const char*   whiteToggle_png;
     const int            whiteToggle_pngSize = 105670;
 
     extern const char*   knobOne_png;
     const int            knobOne_pngSize = 178191;
+
+    extern const char*   screwKnob_png;
+    const int            screwKnob_pngSize = 57748;
 
     extern const char*   knobTwo_png;
     const int            knobTwo_pngSize = 146036;

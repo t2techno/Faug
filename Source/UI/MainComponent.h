@@ -82,7 +82,7 @@ private:
 
 
 	// MIXER
-	//std::unique_ptr<KnobOne>    m_load;
+	std::unique_ptr<ScrewKnob>  m_load;
 
 	std::unique_ptr<BlueToggle> m_oscOnePowerButton;
 	std::unique_ptr<KnobOne>    m_oscOneGain;

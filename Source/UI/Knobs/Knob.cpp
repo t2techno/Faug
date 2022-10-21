@@ -33,3 +33,4 @@ std::unique_ptr<KnobLookAndFeel>BigKnobOne::knobLaf = std::make_unique<KnobLookA
 std::unique_ptr<KnobLookAndFeel>TinyKnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
 std::unique_ptr<KnobLookAndFeel>KnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
 std::unique_ptr<KnobLookAndFeel>KnobTwo::knobLaf = std::make_unique<KnobLookAndFeel>();
+std::unique_ptr<KnobLookAndFeel>ScrewKnob::knobLaf = std::make_unique<KnobLookAndFeel>();

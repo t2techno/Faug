@@ -93,3 +93,19 @@ class KnobTwo : public Knob
     private:
         static std::unique_ptr<KnobLookAndFeel> knobLaf;
 };
+
+
+class ScrewKnob : public Knob
+{
+public:
+
+    ScrewKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize) : Knob(vts, paramId, knobSize)
+    {
+        knobLaf->setKnobImage(BinaryData::screwKnob_png, BinaryData::screwKnob_pngSize, knobSize);
+        setLaf(knobLaf.get());
+    }
+    virtual ~ScrewKnob() override {}
+
+private:
+    static std::unique_ptr<KnobLookAndFeel> knobLaf;
+};

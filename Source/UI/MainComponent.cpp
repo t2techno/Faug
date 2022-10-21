@@ -85,12 +85,8 @@ void MainComponent::createOscBank()
 
 void MainComponent::createMixer()
 {
-
-
-    // Saturation/Drive
-    //m_load = std::make_unique<KnobThree>(m_vts, juce::String(LOAD), small_knob_size);
-    //m_load->setBounds(upl_x + 2 * col_w, upl_y - 0.75*row_h, small_knob_size, small_knob_size);
-    //addAndMakeVisible(m_load.get());
+    m_load = std::make_unique<ScrewKnob>(m_vts, juce::String(LOAD), getElWidth(LOAD));
+    placeElement(*m_load.get(), LOAD);
 
     // Oscillators
     m_oscOneGain = std::make_unique<KnobOne>(m_vts, juce::String(OSC1_GAIN), getElWidth(OSC3_WAVE));
