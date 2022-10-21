@@ -1,19 +1,20 @@
 import("stdfaust.lib");
 
-// add AlphaScale tuning mode
 // many modulations things to add yet
 // tuning variance on a per note basis
 // tuning variance on a per note press basis
 
-generateSound(fdb) = output(fdb) : filter*envelope
+display(name, mini, maxi) = _ <: attach(_,vbargraph("[9999]%name[style:numerical]",mini,maxi));
+limit_range(mini,maxi) = _, mini : max : _, maxi : min;
+gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
+
+generateSound(fdb) = output(fdb) : filter : _*envelope
 with{
 // Base playing frequency and gate
-    gain = hslider("gain",1.0,0.0,1.0,0.01);
     gate = button("[00]gate");
     frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.01);
     prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
 
-    //upglide is about half of downglide
     pitchbend = hslider("[03]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
     glide = hslider("[04]glide[style:knob]", 0.01, 0.001, 3.0, 0.001);
     start_time = ba.latch(frequencyIn != frequencyIn', ba.time);
@@ -25,9 +26,11 @@ with{
     glideOn = checkbox("[05]glideOn");
 
     // mini-moogs generally had longer glide times down vs up 
+    // upglide is about half of downglide
     freq = blend(ba.if(frequencyIn > prevfreq, glide/1.8, glide), 
                        frequencyIn, 
-                       ba.if(glideOn, prevfreq, frequencyIn)) <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
+                       ba.if(glideOn, prevfreq, frequencyIn)) 
+                       <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
     scale = 1, oscOnePower*oscOneGain*0.8 + oscTwoPower*oscTwoGain*0.8 + oscThreePower*oscThreeGain*0.8 : max;
@@ -79,37 +82,75 @@ with{
     square(f,type) = os.lf_squarewave(f), os.square(f) : select2(type);
     rectangle(f,type,n) = os.lf_pulsetrain(f,n), os.pulsetrain(f,n) : select2(type);
 
-// Envelope
+// Envelope Section
     envelope = en.adsr(attack,decay,sustain,release,gate);
     attack = hslider("[21]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
     decay = hslider("[22]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
     sustain = hslider("[23]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
     release = decay/2;
 
-// Filter
-    filter = ve.moogLadder(cutoffFreq, Q);
-    cutoffFreq = hslider("[24]cutoff[style:knob]",440,10,22000,1) : _/ma.SR <: _, (1-_)*filterEnvelope : + : si.smoo;
-    Q = hslider("[25]emphasis[style:knob]",1,0.707,25,0.001) : si.smoo;
-    //reverse = hslider("[0]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1) : si.smoo;
-    contourAmount = hslider("[26]contourAmount[style:knob]",1,0,1,0.01) : si.smoo;
 
-    filterEnvelope = en.adsr(fAttack,fDecay,fSustain,fDecay,gate)*contourAmount;
-    fAttack = hslider("[27]fAttack[style:knob]",50,1,7000,1)*0.01 : si.smoo;
-    fDecay = hslider("[28]fDecay[style:knob]",50,1,30000,1)*0.01 : si.smoo;
-    fSustain = hslider("[29]fSustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
+// Filter Section
+    // filter response is 32k, cutoff range max 20k, using for freq normalization
+    // Will probably become ma.SR/2 to allow for oversampling later 
+    filterMax = 20000.0;
+    cutoffIn = hslider("[24]cutoff[style:knob]",440,10,filterMax,0.01);
+
+// key tracking stuff
+    // Midi note 48, 130.81hz, C2 is default 1V in model D
+    // Will use as center for keyTrackingDiff
+    keyTrackCenter = 130.81;
+
+    keyTrackDiff = frequencyIn-keyTrackCenter;
+
+    //oneThird, twoThird
+    keyTrackOne = checkbox("[25]keyTrackOne")*keyTrackDiff;
+    keyTrackTwo = checkbox("[26]keyTrackTwo")*2.0*keyTrackDiff;
+    keyTrackSum = (keyTrackOne + keyTrackTwo)/3.0;
+
+// filter contour
+    reverseContour = hslider("contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
+    contourAmount = hslider("[27]contourAmount[style:knob]",0.0,0.0,1.0,0.001) : si.smoo;
+    fAttack = hslider("[28]fAttack[style:knob]",50,1,7000,1) : si.smoo;
+    fDecay = hslider("[29]fDecay[style:knob]",50,1,30000,1) : si.smoo;
+    fSustain = hslider("[30]fSustain[style:knob]",0.8,0.01,1.0,0.01) : si.smoo;
+
+    
+   // 4 octave change max
+    contourPeak = (cutoffIn*16), filterMax : min, 
+                  (cutoffIn/16) :  select2(reverseContour);
+
+    // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
+    filterUp   = _ + filterContour*(contourPeak-_)*contourAmount;
+    filterDown = _ - filterContour*(_-contourPeak)*contourAmount;
+    filterContour = en.adsr(fAttack, fDecay, fSustain, fDecay/2.0);
+
+    cutOffCombine = cutoffIn + keyTrackSum <: filterUp, filterDown: select2(reverseContour);
+
+    finalCutoff = cutOffCombine/filterMax : limit_range(0.0,1.0);
+
+    emphasis = hslider("[31]emphasis[style:knob]",1,0.707,25.1,0.001) : si.smoo;
+    finalEmphasis = ba.if(emphasis <= 25.0, 
+                          emphasis, 25+(emphasis-25)*os.osc(0.25));
+    filter = ve.moogLadder(finalCutoff, finalEmphasis);
 
 // Noise
-    noiseSelect = checkbox("[30]noiseType");
-    noiseOn = checkbox("[31]noiseOn");
-    noiseGain = hslider("[32]noiseGain[style:knob]", 0.0, 0.0, 1.0, 0.01);
+    noiseSelect = checkbox("[32]noiseType");
+    noiseOn = checkbox("[33]noiseOn");
+    noiseGain = hslider("[34]noiseGain[style:knob]", 0.0, 0.0, 1.0, 0.01);
     noise = no.noise, no.pink_noise : select2(noiseSelect)*noiseGain*noiseOn;
 
+    load = hslider("[35]load[style:knob]",1.0,1.0,3.0,0.01);
     output(fdb) = ((oscillators+noise)*load)+fdb;
-    load = hslider("[33]load[style:knob]",1.0,1.0,3.0,0.01);
 };
 
-process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive) <: _,_
+process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive : _*masterVolume*on) <: _,_
 with {
+    // Inverting on button so it defaults to on
+    powerButton = checkbox("on");
+    on = 1.0,0.0 : select2(powerButton);
+    masterVolume = hslider("masterVolume[style:knob]",1.0,0.0,1.0,0.01);
+
     fdback = hslider("feedbackGain[style:knob]",0,0,1,0.01);
     fdbackOn = checkbox("feedbackOn");
     fdBackSignal = _*fdback;
