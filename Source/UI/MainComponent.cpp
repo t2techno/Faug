@@ -24,6 +24,13 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     createEnvelope();
 
+    master_volume = std::make_unique<TinyKnobOne>(m_vts, juce::String(VOLUME), getElWidth(VOLUME));
+    placeElement(*master_volume, VOLUME);
+
+    master_on = std::make_unique<BrownToggle>(m_vts, juce::String(ON), getElWidth(ON),
+        getElHeight(ON));
+    placeElement(*master_on.get(), ON);
+    
     setSize(window_width, window_height);
 
     // wait .4 seconds, then grab keyboard focus to use as potential midi-input
@@ -35,8 +42,15 @@ MainComponent::~MainComponent()
 
 void MainComponent::createController()
 {
+    m_globalDetune = std::make_unique<KnobOne>(m_vts, juce::String(GLOBAL_DETUNE), getElWidth(GLOBAL_DETUNE));
+    placeElement(*m_globalDetune, GLOBAL_DETUNE);
+
     m_glide = std::make_unique<KnobOne>(m_vts, juce::String(GLIDE_RATE), getElWidth(GLIDE_RATE));
     placeElement(*m_glide.get(), GLIDE_RATE);
+
+    m_glideOn = std::make_unique<BrownToggle>(m_vts, juce::String(GLIDE_ON), getElWidth(GLIDE_ON),
+                                                                             getElHeight(GLIDE_ON));
+    placeElement(*m_glideOn.get(), GLIDE_ON);
 }
 
 void MainComponent::createOscBank()
@@ -130,6 +144,15 @@ void MainComponent::createMixer()
 
 void MainComponent::createFilterBank()
 {
+    // filter/controller border
+    m_keyTrackOne = std::make_unique<OrangeToggle>(m_vts, juce::String(KEY_TRK1), getElWidth(KEY_TRK1),
+        getElHeight(KEY_TRK1));
+    placeElement(*m_keyTrackOne.get(), KEY_TRK1);
+
+    m_keyTrackTwo = std::make_unique<OrangeToggle>(m_vts, juce::String(KEY_TRK2), getElWidth(KEY_TRK2),
+        getElHeight(KEY_TRK2));
+    placeElement(*m_keyTrackTwo.get(), KEY_TRK2);
+
     // Row One - Filter Frequency
     m_filterCutoff = std::make_unique<KnobOne>(m_vts,  juce::String(F_CUTOFF), getElWidth(F_CUTOFF));
     placeElement(*m_filterCutoff.get(), F_CUTOFF);
@@ -195,7 +218,8 @@ void MainComponent::paint(juce::Graphics& g)
 }
 
 void MainComponent::resized()
-{    auto area = getLocalBounds().removeFromBottom(window_height * .28).removeFromRight(window_width * 0.6).removeFromLeft(window_width * 0.98);
+{    
+    auto area = getLocalBounds().removeFromBottom(window_height * .2925).removeFromRight(window_width * 0.825).removeFromLeft(window_width * 0.8);
     keyboardComponent.setBounds(area);
 }
 

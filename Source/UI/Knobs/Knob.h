@@ -62,6 +62,23 @@ class BigKnobOne : public Knob
 
 };
 
+class TinyKnobOne : public Knob
+{
+public:
+
+    TinyKnobOne(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize) : Knob(vts, paramId, knobSize)
+    {
+        knobLaf->setKnobImage(BinaryData::knobOne_png, BinaryData::knobOne_pngSize, knobSize);
+        setLaf(knobLaf.get());
+    }
+    virtual ~TinyKnobOne() override {};
+
+private:
+    static std::unique_ptr<KnobLookAndFeel> knobLaf;
+
+
+};
+
 class KnobTwo : public Knob
 {
     public:

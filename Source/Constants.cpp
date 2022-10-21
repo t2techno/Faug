@@ -23,6 +23,7 @@ const char* const GATE = "gate";
 // CONTROLLERS
 const char* const GLOBAL_DETUNE = "globalDetune";
 const char* const GLIDE_RATE = "glide";
+
 // ToDos
 const char* const MOD_MIX = "modMix";
 const char* const OSC3_FILTEG_MOD = "osc3_filterEg_modSrc";
@@ -81,6 +82,7 @@ const char* const KEY_TRK2 = "keyTrackTwo";
 const char* const F_CUTOFF = "cutoff";
 const char* const F_Q = "emphasis";
 const char* const F_ENV_AMOUNT = "contourAmount";
+const char* const F_ENV_DIRECTION = "contourDirection";
 const char* const F_ATTACK = "fAttack";
 const char* const F_DECAY = "fDecay";
 const char* const F_SUSTAIN = "fSustain";
@@ -91,5 +93,5 @@ const char* const DECAY = "decay";
 const char* const SUSTAIN = "sustain";
 
 // Power
-const char * const VOLUME = "volume";
+const char * const VOLUME = "masterVolume";
 const char * const ON = "on";

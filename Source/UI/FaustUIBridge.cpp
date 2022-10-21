@@ -32,7 +32,7 @@ void FaustUIBridge::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAU
     juce::NormalisableRange<float> range;
     float skew;
     //time labels are skewed so low values are a larger percent of knob range
-    if (label == std::string("glide")) 
+    if (label == std::string("glide"))
     {
         skew = 0.5;
     }

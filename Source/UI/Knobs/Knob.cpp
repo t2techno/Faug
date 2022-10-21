@@ -30,5 +30,6 @@ void Knob::setLaf(KnobLookAndFeel* laf) {
 }
 
 std::unique_ptr<KnobLookAndFeel>BigKnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
-std::unique_ptr<KnobLookAndFeel>KnobTwo::knobLaf = std::make_unique<KnobLookAndFeel>();
+std::unique_ptr<KnobLookAndFeel>TinyKnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
 std::unique_ptr<KnobLookAndFeel>KnobOne::knobLaf = std::make_unique<KnobLookAndFeel>();
+std::unique_ptr<KnobLookAndFeel>KnobTwo::knobLaf = std::make_unique<KnobLookAndFeel>();
