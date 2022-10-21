@@ -33,13 +33,13 @@ namespace BinaryData
     const int            knobTwo_pngSize = 146036;
 
     extern const char*   background_png;
-    const int            background_pngSize = 4302825;
+    const int            background_pngSize = 4302498;
 
     extern const char*   Faug_dsp;
-    const int            Faug_dspSize = 6025;
+    const int            Faug_dspSize = 7781;
 
     extern const char*   FaugExp_dsp;
-    const int            FaugExp_dspSize = 26753405;
+    const int            FaugExp_dspSize = 27642025;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 11;

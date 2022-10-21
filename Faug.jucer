@@ -31,8 +31,8 @@
         <FILE id="puzHDR" name="Spectroscope.h" compile="0" resource="0" file="Source/Scope/Spectroscope.h"/>
       </GROUP>
       <GROUP id="{945315F8-3E98-51C0-3E36-09D01E7A5E4E}" name="FaustExp">
-        <FILE id="CAImOu" name="FaugExp.cpp" compile="1" resource="0" file="Source/FaustExp/FaugExp.cpp"/>
-        <FILE id="BjN0iW" name="FaugExp.dsp" compile="0" resource="1" file="Source/FaustExp/FaugExp.dsp"/>
+        <FILE id="s1xxtc" name="FaugExp.cpp" compile="1" resource="0" file="Source/FaustExp/FaugExp.cpp"/>
+        <FILE id="MuMYFm" name="FaugExp.dsp" compile="0" resource="1" file="Source/FaustExp/FaugExp.dsp"/>
         <FILE id="U418kl" name="FaustIncludes.h" compile="0" resource="0" file="Source/FaustExp/FaustIncludes.h"/>
       </GROUP>
       <GROUP id="{5A9A1819-7DD7-1F3E-3700-C43CF7595875}" name="synth">
