@@ -57,7 +57,7 @@ private:
 
 	// KEYBOARDS
 	std::unique_ptr<BrownToggle> m_glideOn;
-	//std::unique_ptr<BrownToggle> m_decayOn;
+	std::unique_ptr<BrownToggle> m_decayOn;
 	//std::unique_ptr<KnobTwo> m_lfoRate;
 	//std::unique_ptr<ModWheel> m_pitchBend;
 	//std::unique_ptr<ModWheel> m_modBend;

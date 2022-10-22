@@ -51,6 +51,10 @@ void MainComponent::createController()
     m_glideOn = std::make_unique<BrownToggle>(m_vts, juce::String(GLIDE_ON), getElWidth(GLIDE_ON),
                                                                              getElHeight(GLIDE_ON));
     placeElement(*m_glideOn.get(), GLIDE_ON);
+
+    m_decayOn = std::make_unique<BrownToggle>(m_vts, juce::String(DECAY_ON), getElWidth(DECAY_ON),
+                                                                             getElHeight(DECAY_ON));
+    placeElement(*m_decayOn.get(), DECAY_ON);
 }
 
 void MainComponent::createOscBank()
