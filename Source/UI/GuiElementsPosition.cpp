@@ -10,9 +10,9 @@
   ==============================================================================
 */
 
-#include <map>;
-#include <array>;
-#include <string>;
+#include <map>
+#include <array>
+#include <string>
 
 #include "../Constants.h"
 

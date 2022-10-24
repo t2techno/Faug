@@ -22,8 +22,19 @@
       <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
+      <GROUP id="{5F25E63C-BCCC-536F-E1FA-8CDD15CB641A}" name="Synth">
+        <FILE id="dC0MZL" name="FaugAudioSource.cpp" compile="1" resource="0"
+              file="Source/Synth/FaugAudioSource.cpp"/>
+        <FILE id="OtV4oz" name="FaugAudioSource.h" compile="0" resource="0"
+              file="Source/Synth/FaugAudioSource.h"/>
+        <FILE id="n3oGKU" name="FaustDspSound.cpp" compile="1" resource="0"
+              file="Source/Synth/FaustDspSound.cpp"/>
+        <FILE id="BeTRp4" name="FaustDspVoice.cpp" compile="1" resource="0"
+              file="Source/Synth/FaustDspVoice.cpp"/>
+        <FILE id="XdzDAU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/Synth/FaustDspVoice.h"/>
+      </GROUP>
       <GROUP id="{F27B6B61-07D6-880A-6FF7-40C557C455AA}" name="FaustDsp">
-        <FILE id="jN6Kd1" name="Faug.dsp" compile="0" resource="1" file="faustDsp/Faug.dsp"/>
+        <FILE id="YruDFt" name="Faug.dsp" compile="0" resource="1" file="FaustDsp/Faug.dsp"/>
       </GROUP>
       <GROUP id="{9084B4EB-C57E-BD40-0DA5-DE49C242B1F2}" name="Scope">
         <FILE id="qWkN7i" name="Spectroscope.cpp" compile="1" resource="0"
@@ -35,20 +46,9 @@
         <FILE id="MuMYFm" name="FaugExp.dsp" compile="0" resource="1" file="Source/FaustExp/FaugExp.dsp"/>
         <FILE id="U418kl" name="FaustIncludes.h" compile="0" resource="0" file="Source/FaustExp/FaustIncludes.h"/>
       </GROUP>
-      <GROUP id="{5A9A1819-7DD7-1F3E-3700-C43CF7595875}" name="synth">
-        <FILE id="fMHUhN" name="FaugAudioSource.cpp" compile="1" resource="0"
-              file="Source/synth/FaugAudioSource.cpp"/>
-        <FILE id="SJLObh" name="FaugAudioSource.h" compile="0" resource="0"
-              file="Source/synth/FaugAudioSource.h"/>
-        <FILE id="xEE8ae" name="FaustDspSound.cpp" compile="1" resource="0"
-              file="Source/synth/FaustDspSound.cpp"/>
-        <FILE id="x5tCPx" name="FaustDspVoice.cpp" compile="1" resource="0"
-              file="Source/synth/FaustDspVoice.cpp"/>
-        <FILE id="VZMZyU" name="FaustDspVoice.h" compile="0" resource="0" file="Source/synth/FaustDspVoice.h"/>
-      </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
-        <FILE id="SxvcZc" name="guiElementsPosition.cpp" compile="1" resource="0"
-              file="Source/UI/guiElementsPosition.cpp"/>
+        <FILE id="hjmWel" name="GuiElementsPosition.cpp" compile="1" resource="0"
+              file="Source/UI/GuiElementsPosition.cpp"/>
         <GROUP id="{78B36E4E-225D-C158-D484-E5B6F8E89E94}" name="Toggles">
           <FILE id="LutJMt" name="Toggle.cpp" compile="1" resource="0" file="Source/UI/Toggles/Toggle.cpp"/>
           <FILE id="xH4FmF" name="Toggle.h" compile="0" resource="0" file="Source/UI/Toggles/Toggle.h"/>
