@@ -1,5 +1,6 @@
 ## My ignore statements
 
+JuceLibraryCode
 Builds
 .gitignore.bak
 FaustSource
