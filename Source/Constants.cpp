@@ -95,3 +95,17 @@ const char* const SUSTAIN = "sustain";
 // Power
 const char * const VOLUME = "masterVolume";
 const char * const ON = "on";
+
+const std::map<std::string, double> skewMap = 
+{
+  {VOLUME,0.5},
+  {OSC1_GAIN,0.5},
+  {OSC2_GAIN,0.5},
+  {OSC3_GAIN,0.5},
+  {ATTACK, 0.25},
+  {DECAY, 0.25},
+  {F_ATTACK, 0.25},
+  {F_DECAY, 0.25},
+  {F_CUTOFF, 0.3},
+  {GLIDE_RATE, 0.5}
+};
