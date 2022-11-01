@@ -102,10 +102,10 @@ const std::map<std::string, double> skewMap =
   {OSC1_GAIN,0.5},
   {OSC2_GAIN,0.5},
   {OSC3_GAIN,0.5},
-  {ATTACK, 0.25},
-  {DECAY, 0.25},
-  {F_ATTACK, 0.25},
-  {F_DECAY, 0.25},
-  {F_CUTOFF, 0.3},
+  {ATTACK, 0.5},
+  {DECAY, 0.5},
+  {F_ATTACK, 0.5},
+  {F_DECAY, 0.5},
+  {F_CUTOFF, 0.5},
   {GLIDE_RATE, 0.5}
 };
