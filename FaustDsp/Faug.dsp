@@ -10,8 +10,8 @@ gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
 
 generateSound(fdb) = output(fdb) : filter : _*envelope
 with{
-// Base playing frequency and gate
     gate = button("[00]gate");
+// Base playing frequency and gate
     frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.01);
     prevfreq = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
 
@@ -43,7 +43,7 @@ with{
     oscTwoGain   = hslider("[10]oscTwoGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
     oscThreeGain = hslider("[11]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
 
-    oscModOn = checkbox("[08]oscModOn");
+    oscModOn = checkbox("[12]oscModOn");
 
     // oscillators
     oscOne = waveOneTwo(freqOne, rangeOne, waveSelectOne)*oscOneGain*oscOnePower;
@@ -55,15 +55,17 @@ with{
     oscillators = (oscOne + oscTwo + oscThree)/scale;
 
     // a little leakage from osc 2 into osc 1
-    freqOne   = freq, 2^(rangeOne-4)   : * : _, globalDetune : * : _ +(oscTwoLeakage*0.01)+(modulation*oscModOn);
-    freqTwo   = freq, 2^(rangeTwo-4)   : * : _, detuneTwo    : * : _ + driftTwo+(modulation*oscModOn);
+    freqOne   = freq, 2^(rangeOne-4)   : * : _, globalDetune : * : _ +(oscTwoLeakage*0.01) : modulateOsc;
+    freqTwo   = freq, 2^(rangeTwo-4)   : * : _, detuneTwo    : * : _ + driftTwo : modulateOsc;
     freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree  : * : _ + driftThree;
 
+
+    modulateOsc = _ <: _, _*(2^(modulation)) : select2(oscModOn);
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
-    waveSelectOne = hslider("[12]waveOne[style:knob]",1,0,5,1);
-    waveSelectTwo = hslider("[13]waveTwo[style:knob]",1,0,5,1);
-    waveSelectThree = hslider("[14]waveThree[style:knob]",1,0,5,1);
+    waveSelectOne = hslider("[13]waveOne[style:knob]",1,0,5,1);
+    waveSelectTwo = hslider("[14]waveTwo[style:knob]",1,0,5,1);
+    waveSelectThree = hslider("[15]waveThree[style:knob]",1,0,5,1);
     waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
@@ -73,13 +75,13 @@ with{
     driftTwo = os.osc(0.1)*0.005 + driftOne : @(ma.SR/3);
     driftThree = os.osc(0.25)*0.0025 + driftTwo: @(ma.SR/5);
 
-    rangeOne = hslider("[15]rangeOne[style:knob]",2,0,5,1);
-    rangeTwo = hslider("[16]rangeTwo[style:knob]",2,0,5,1);
-    rangeThree = hslider("[17]rangeThree[style:knob]",2,0,5,1);
+    rangeOne = hslider("[16]rangeOne[style:knob]",2,0,5,1);
+    rangeTwo = hslider("[17]rangeTwo[style:knob]",2,0,5,1);
+    rangeThree = hslider("[18]rangeThree[style:knob]",2,0,5,1);
 
-    globalDetune = hslider("[18]globalDetune[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo; 
-    detuneTwo = hslider("[19]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
-    detuneThree = hslider("[20]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
+    globalDetune = hslider("[19]globalDetune[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo; 
+    detuneTwo = hslider("[20]detuneTwo[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
+    detuneThree = hslider("[21]detuneThree[style:knob]", 0, -7.5, 7.5, 0.01) : ba.semi2ratio, globalDetune : + : si.smoo;
 
     tri(f,type)    = os.lf_triangle(f), os.triangle(f) : select2(type);
     saw(f,type)    = os.lf_saw(f), os.sawtooth(f) : select2(type);
@@ -89,18 +91,17 @@ with{
     rectangle(f,type,n) = os.lf_pulsetrain(f,n), os.pulsetrain(f,n) : select2(type);
 
 // Envelope Section
-    envelope = en.adsr(attack,decay,sustain,release,gate);
-    decayButton = checkbox("decayOn");
-    attack = hslider("[21]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
-    decay = hslider("[22]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
-    sustain = hslider("[23]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
-    release = 10, decay : select2(decayButton);
+    envelope = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
+    decayButton = checkbox("[22]decayOn");
+    attack = hslider("[23]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
+    decay = hslider("[24]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
+    sustain = hslider("[25]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
+    release = 10*0.001, decay : select2(decayButton);
 
 // Filter Section
-    // filter response is 32k, cutoff range max 20k, using for freq normalization
-    // Will probably become ma.SR/2 to allow for oversampling later 
-    filterMax = 20000.0;
-    cutoffIn = hslider("[24]cutoff[style:knob]",440,10,filterMax,0.01);
+    // filter response is 32k, cutoff range max ma.SR
+    filterMax = ma.SR/2;
+    cutoffIn = hslider("[26]cutoff[style:knob]",0.5,0.0,1.0,0.001);
 
 // key tracking stuff
     // Midi note 48, 130.81hz, C2 is default 1V in model D
@@ -110,69 +111,67 @@ with{
     keyTrackDiff = frequencyIn-keyTrackCenter;
 
     //oneThird, twoThird
-    keyTrackOne = checkbox("[25]keyTrackOne")*keyTrackDiff;
-    keyTrackTwo = checkbox("[26]keyTrackTwo")*2.0*keyTrackDiff;
+    keyTrackOne = checkbox("[27]keyTrackOne")*keyTrackDiff;
+    keyTrackTwo = checkbox("[28]keyTrackTwo")*2.0*keyTrackDiff;
     keyTrackSum = (keyTrackOne + keyTrackTwo)/3.0;
 
 // filter contour
-    reverseContour = hslider("contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
-    contourAmount = hslider("[27]contourAmount[style:knob]",0.0,0.0,1.0,0.001) : si.smoo;
-    fAttack = hslider("[28]fAttack[style:knob]",50,1,7000,1) : si.smoo;
-    fDecay = hslider("[29]fDecay[style:knob]",50,1,30000,1) : si.smoo;
-    fSustain = hslider("[30]fSustain[style:knob]",0.8,0.01,1.0,0.01) : si.smoo;
+    reverseContour = hslider("[29]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
+    contourAmount = hslider("[30]contourAmount[style:knob]",0.0,0.0,1.0,0.001) : si.smoo;
+    fAttack = hslider("[31]fAttack[style:knob]",50,1,7000,1) : si.smoo;
+    fDecay = hslider("[32]fDecay[style:knob]",50,1,30000,1) : si.smoo;
+    fSustain = hslider("[33]fSustain[style:knob]",0.8,0.01,1.0,0.01) : si.smoo;
     fRelease = 10, fDecay : select2(decayButton);
     
    // 4 octave change max
     contourPeak = (cutoffIn*16), filterMax : min, 
                   (cutoffIn/16) :  select2(reverseContour);
 
-    // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
     filterUp   = _ + filterContour*(contourPeak-_)*contourAmount;
     filterDown = _ - filterContour*(_-contourPeak)*contourAmount;
     filterContour = en.adsr(fAttack, fDecay, fSustain, fRelease);
 
-    cutOffCombine = cutoffIn + keyTrackSum <: filterUp, filterDown: select2(reverseContour);
+    // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
+    cutOffCombine = keyTrackSum <: filterUp, filterDown: select2(reverseContour) : 
+        _ + (cutoffIn*ma.SR) : modulateFilter : _/ma.SR : limit_range(0.0,1.0);
 
-    finalCutoff = (cutOffCombine+filterMod)/filterMax : limit_range(0.0,1.0);
+    modulateFilter = _ <: _, _*(2^(modulation)) : select2(oscModOn);
 
-    emphasis = hslider("[31]emphasis[style:knob]",1,0.707,25.1,0.001) : si.smoo;
-    finalEmphasis = ba.if(emphasis <= 25.0, 
-                          emphasis, 25+(emphasis-25)*os.osc(0.25));
-    filter = ve.moogLadder(finalCutoff, finalEmphasis);
+    emphasis = hslider("[34]emphasis[style:knob]",1,0.707,25.0,0.001) : si.smoo;
+    filter = ve.moogLadder(cutOffCombine, emphasis);
 
 // Noise
-    noiseSelect = checkbox("[32]noiseType");
-    noiseOn = checkbox("[33]noiseOn");
-    noiseGain = hslider("[34]noiseGain[style:knob]", 0.0, 0.0, 1.0, 0.01);
+    noiseSelect = checkbox("[35]noiseType");
+    noiseOn = checkbox("[36]noiseOn");
+    noiseGain = hslider("[37]noiseGain[style:knob]", 0.0, 0.0, 1.0, 0.01);
     noise = no.noise, no.pink_noise : select2(noiseSelect)*noiseGain*noiseOn;
 
 // Modulation
-    filterModOn = checkbox("[23]filterModOn");
+    filterModOn = checkbox("[38]filterModOn");
 
-    oscThree_filterEg = checkbox("[23]oscThree_filterEg");
+    oscThree_filterEg = checkbox("[39]oscThree_filterEg");
     modLeft = oscThreeMod, filterContour : select2(oscThree_filterEg);
     
-    lfoRate = hslider("[23]lfoRate[style:knob]",10.0,0.5,200.0,0.01) : si.smoo;
-    lfo = os.osc(lfoRate), os.lf_squarewave(lfoRate) : select2(checkbox("[23]lfoShape"));
+    lfoRate = hslider("[40]lfoRate[style:knob]",10.0,0.5,200.0,0.01) : si.smoo;
+    lfo = os.osc(lfoRate), os.lf_squarewave(lfoRate) : select2(checkbox("[41]lfoShape"));
 
     lowBandLimit = 20;
     bw3 = 0.7 * ma.SR/2.0 - lowBandLimit;
     redNoise = no.noise : fi.spectral_tilt(3,lowBandLimit,bw3,-0.25);
     modNoise = no.pink_noise, redNoise : select2(noiseSelect);
 
-    modRight  = modNoise, lfo : select2(checkbox("[23]noise_lfo"));
-    modMix = hslider("[23]modMix[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
-    modulation = (1-modMix)*modLeft + (modMix)*modRight;
+    modRight  = modNoise, lfo : select2(checkbox("[42]noise_lfo"));
+    modMix = hslider("[43]modMix[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
+    //modulation = (1-modMix)*modLeft + (modMix)*modRight;
+    modulation = modNoise + modLeft;
 
-    filterMod = modulation*filterModOn;
-
-    load = hslider("[35]load[style:knob]",1.0,1.0,3.0,0.01);
+    load = hslider("[44]load[style:knob]",1.0,1.0,3.0,0.01);
     output(fdb) = ((oscillators+noise)*load)+fdb;
 };
 
-process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive : _*masterVolume*on) <: _,_
+process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive : _*on*masterVolume) <: _,_
 with {
-    // Inverting on button so it defaults to on
+    // Inverting power button so it defaults to on
     powerButton = checkbox("on");
     on = 1.0,0.0 : select2(powerButton);
     masterVolume = hslider("masterVolume[style:knob]",1.0,0.0,1.0,0.01);

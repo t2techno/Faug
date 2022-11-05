@@ -88,3 +88,5 @@ extern const char * const VOLUME;
 extern const char * const ON;
 
 extern const std::map<std::string, std::array<float, 4>> guiPositions;
+
+extern const std::map<std::string, double> skewMap;
