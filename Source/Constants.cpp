@@ -106,6 +106,6 @@ const std::map<std::string, double> skewMap =
   {DECAY, 0.5},
   {F_ATTACK, 0.5},
   {F_DECAY, 0.5},
-  {F_CUTOFF, 0.5},
+  {F_CUTOFF, 0.75},
   {GLIDE_RATE, 0.5}
 };

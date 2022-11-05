@@ -10,7 +10,6 @@ gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
 
 generateSound(fdb) = output(fdb) : filter : _*envelope
 with{
-    
     gate = button("[00]gate");
 // Base playing frequency and gate
     frequencyIn = nentry("[01]freq[unit:Hz]", 440, 20, 20000, 0.01);
@@ -56,10 +55,12 @@ with{
     oscillators = (oscOne + oscTwo + oscThree)/scale;
 
     // a little leakage from osc 2 into osc 1
-    freqOne   = freq, 2^(rangeOne-4)   : * : _, globalDetune : * : _ +(oscTwoLeakage*0.01);//+(modulation*oscModOn);
-    freqTwo   = freq, 2^(rangeTwo-4)   : * : _, detuneTwo    : * : _ + driftTwo;//+(modulation*oscModOn);
+    freqOne   = freq, 2^(rangeOne-4)   : * : _, globalDetune : * : _ +(oscTwoLeakage*0.01) : modulateOsc;
+    freqTwo   = freq, 2^(rangeTwo-4)   : * : _, detuneTwo    : * : _ + driftTwo : modulateOsc;
     freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree  : * : _ + driftThree;
 
+
+    modulateOsc = _ <: _, _*(2^(modulation)) : select2(oscModOn);
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
     waveSelectOne = hslider("[13]waveOne[style:knob]",1,0,5,1);
@@ -95,11 +96,10 @@ with{
     attack = hslider("[23]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
     decay = hslider("[24]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
     sustain = hslider("[25]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
-    release = 0.01, decay : select2(decayButton);
+    release = 10*0.001, decay : select2(decayButton);
 
 // Filter Section
-    // filter response is 32k, cutoff range max 20k, using for freq normalization
-    // Will probably become ma.SR/2 to allow for oversampling later 
+    // filter response is 32k, cutoff range max ma.SR
     filterMax = ma.SR/2;
     cutoffIn = hslider("[26]cutoff[style:knob]",0.5,0.0,1.0,0.001);
 
@@ -133,7 +133,9 @@ with{
 
     // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
     cutOffCombine = keyTrackSum <: filterUp, filterDown: select2(reverseContour) : 
-        _/ma.SR + cutoffIn : limit_range(0.0,1.0);
+        _ + (cutoffIn*ma.SR) : modulateFilter : _/ma.SR : limit_range(0.0,1.0);
+
+    modulateFilter = _ <: _, _*(2^(modulation)) : select2(oscModOn);
 
     emphasis = hslider("[34]emphasis[style:knob]",1,0.707,25.0,0.001) : si.smoo;
     filter = ve.moogLadder(cutOffCombine, emphasis);
@@ -160,9 +162,8 @@ with{
 
     modRight  = modNoise, lfo : select2(checkbox("[42]noise_lfo"));
     modMix = hslider("[43]modMix[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
-    modulation = (1-modMix)*modLeft + (modMix)*modRight;
-
-    filterMod = modulation*filterModOn;
+    //modulation = (1-modMix)*modLeft + (modMix)*modRight;
+    modulation = modNoise + modLeft;
 
     load = hslider("[44]load[style:knob]",1.0,1.0,3.0,0.01);
     output(fdb) = ((oscillators+noise)*load)+fdb;
