@@ -5,6 +5,7 @@ Builds
 .gitignore.bak
 FaustSource
 imageWork/inProgress
+.vscode
 
 ## Generated ignore statements from github's visual studio template
 
