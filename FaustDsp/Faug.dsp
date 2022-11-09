@@ -135,7 +135,7 @@ with{
     cutOffCombine = keyTrackSum <: filterUp, filterDown: select2(reverseContour) : 
         _ + (cutoffIn*ma.SR) : modulateFilter : _/ma.SR : limit_range(0.0,1.0);
 
-    modulateFilter = _ <: _, _*(2^(modulation)) : select2(oscModOn);
+    modulateFilter = _ <: _, _*(2^(modulation)) : select2(filterModOn);
 
     emphasis = hslider("[34]emphasis[style:knob]",1,0.707,25.0,0.001) : si.smoo;
     filter = ve.moogLadder(cutOffCombine, emphasis);
@@ -163,13 +163,13 @@ with{
     modRight  = modNoise, lfo : select2(checkbox("[42]noise_lfo"));
     modMix = hslider("[43]modMix[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
     //modulation = (1-modMix)*modLeft + (modMix)*modRight;
-    modulation = modNoise + modLeft;
+    modulation = modNoise;
 
     load = hslider("[44]load[style:knob]",1.0,1.0,3.0,0.01);
     output(fdb) = ((oscillators+noise)*load)+fdb;
 };
 
-process = hgroup("faug", (generateSound ~ fdBackSignal*fdbackOn) : drive : _*on*masterVolume) <: _,_
+process = hgroup("faug", (generateSound ~ fdBackSignal) : aa.Ratanh : _*on*masterVolume) <: _,_
 with {
     // Inverting power button so it defaults to on
     powerButton = checkbox("on");
@@ -178,10 +178,10 @@ with {
 
     fdback = hslider("feedbackGain[style:knob]",0,0,1,0.01);
     fdbackOn = checkbox("feedbackOn");
-    fdBackSignal = _*fdback;
+    fdBackSignal = (_+fdback)*fdbackOn;
     drive = _ <: drySig, wetSig : +;
-    drySig = _, (1-fdback)*_ : select2(fdbackOn) : aa.tanh1;
-    wetSig = fdback*fdbackOn*_ : histeresis : aa.tanh1;
+    drySig = _, (1-fdback)*_ : select2(fdbackOn);
+    wetSig = fdback*_;
 
     histeresis = firpart : + ~ backPart;
     firpart(x) = 0.1*x' + 0.5*x''';
