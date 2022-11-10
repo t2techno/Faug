@@ -56,24 +56,24 @@ with{
     oscillators = (oscOne + oscTwo + oscThree)/scale;
 
     // a little leakage from osc 2 into osc 1
-    freqOne   = freq, 2^(rangeOne-4)   : * : _, globalDetune : * : modulateOsc;
-    freqTwo   = freq, 2^(rangeTwo-4)   : * : _, detuneTwo    : * : modulateOsc;
-    freqThree = freq, 2^(rangeThree-4) : * : _, detuneThree  : *;
+    freqOne   = freq, 2^(rangeOne-4)   : * : _*globalDetune : _*driftOne : modulateOsc;
+    freqTwo   = freq, 2^(rangeTwo-4)   : * : _*detuneTwo    : _*driftTwo : modulateOsc;
+    freqThree = freq, 2^(rangeThree-4) : * : _*detuneThree  : _*driftThree;
 
     modulateOsc = _ <: _, _*(2^(modulation)) : select2(oscModOn);
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
     //                            3rd option in wave three is a reverse saw
-    waveSelectOne = hslider("[13]waveOne[style:knob]",1,0,5,1);
-    waveSelectTwo = hslider("[14]waveTwo[style:knob]",1,0,5,1);
+    waveSelectOne   = hslider("[13]waveOne[style:knob]"  ,1,0,5,1);
+    waveSelectTwo   = hslider("[14]waveTwo[style:knob]"  ,1,0,5,1);
     waveSelectThree = hslider("[15]waveThree[style:knob]",1,0,5,1);
     waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
     waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
 
-    driftOne   = os.osc(0.05)*0.01 : @(ma.SR/2);
-    driftTwo   = driftOne''';
-    driftThree = driftTwo''';
+    driftOne   = os.osc(0.05)*0.01 : 2^_ : @(ma.SR/100);
+    driftTwo   = driftOne@(100);
+    driftThree = driftTwo@(100);
 
     rangeOne   = hslider("[16]rangeOne[style:knob]",2,0,5,1);
     rangeTwo   = hslider("[17]rangeTwo[style:knob]",2,0,5,1);
@@ -93,12 +93,12 @@ with{
 
 
 // Envelope Section
-    envelope = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
+    envelope    = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
     decayButton = checkbox("[22]decayOn");
-    attack = hslider("[23]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
-    decay = hslider("[24]decay[style:knob]",50,1,24000,1)*0.001 : si.smoo;
-    sustain = hslider("[25]sustain[style:knob]",0.8,0.01,1,0.01) : si.smoo;
-    release = 10*0.001, decay : select2(decayButton);
+    attack      = hslider("[23]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
+    decay       = hslider("[24]decay[style:knob]",50,1,24000,1)*0.001  : si.smoo;
+    sustain     = hslider("[25]sustain[style:knob]",0.8,0.01,1,0.01)   : si.smoo;
+    release     = 10*0.001, decay : select2(decayButton);
 
 // Filter Section
     // filter response is 32k, cutoff range max ma.SR
