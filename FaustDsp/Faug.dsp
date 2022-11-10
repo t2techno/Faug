@@ -1,18 +1,16 @@
 import("stdfaust.lib");
 
-// many modulations things to add yet
-// tuning variance on a per note basis
-// tuning variance on a per note press basis
-
 display(name, mini, maxi) = _ <: attach(_,vbargraph("[9999]%name[style:numerical]",mini,maxi));
 limit_range(mini,maxi) = _, mini : max : _, maxi : min;
 gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
+
+// todo variable keytracking per oscillator
 
 generateSound(fdb) = output(fdb) : filter : _*envelope
 with{
     gate = button("[00]gate");
 
-    frequencyIn = nentry("[01]freq[unit:Hz]",     440, 20, 20000, 0.01);
+    frequencyIn = nentry("[01]freq[unit:Hz]",     440, 20, 20000, 0.01)*pitchbend;
     prevfreq    = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
 
     pitchbend  = hslider("[03]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
@@ -22,7 +20,7 @@ with{
     epsilon    = 0.01;
     expo(tau)  = exp((0-dt)/(tau*ma.SR)), epsilon : max;
 
-    blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate)+pitchbend;
+    blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate);
     glideOn = checkbox("[05]glideOn");
 
     // mini-moogs generally had longer glide times down vs up 
@@ -55,10 +53,13 @@ with{
 
     oscillators = (oscOne + oscTwo + oscThree)/scale;
 
-    // a little leakage from osc 2 into osc 1
-    freqOne   = freq, 2^(rangeOne-4)   : * : _*globalDetune : _*driftOne : modulateOsc;
-    freqTwo   = freq, 2^(rangeTwo-4)   : * : _*detuneTwo    : _*driftTwo : modulateOsc;
-    freqThree = freq, 2^(rangeThree-4) : * : _*detuneThree  : _*driftThree;
+    freqOne   = freq, 2^(rangeOne-4)   : * : _*globalDetune*driftOne : modulateOsc;
+    freqTwo   = freq, 2^(rangeTwo-4)   : * : _*detuneTwo   *driftTwo : modulateOsc;
+
+    oscThreeKeyTrack    = checkbox("[13]oscThreeKeyTrack");
+    oscThreeManualFreq  = hslider("[14]oscThreeIsoFreq",200,440,20,0.01) : si.smoo;
+    freqThreePre = freq, oscThreeDeTrack : select2(oscThreeKeyTrack); 
+    freqThree    = freqThreePre : _, 2^(rangeThree-4)   : * : _*detuneThree *driftThree;
 
     modulateOsc = _ <: _, _*(2^(modulation)) : select2(oscModOn);
     // Oscillator wave selectors. 3rd option in waves one and two is a triangle saw
@@ -163,7 +164,8 @@ with{
 
     modRight  = modNoise, lfo : select2(checkbox("[42]noise_lfo"));
     modMix = hslider("[43]modMix[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
-    modulation = (1-modMix)*modLeft + (modMix)*modRight;
+    modAmount = hslider("[43]modAmount[style:knob]",0.0,0.0,1.0,0.01) : si.smoo;
+    modulation = (1-modMix)*modLeft + (modMix)*modRight : _*modAmount;
 
     load = hslider("[44]load[style:knob]",1.0,1.0,3.0,0.01);
     output(fdb) = ((oscillators+noise)*load)+fdb;
