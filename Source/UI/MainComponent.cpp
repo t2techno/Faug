@@ -55,6 +55,17 @@ void MainComponent::createController()
     m_decayOn = std::make_unique<BrownToggle>(m_vts, juce::String(DECAY_ON), getElWidth(DECAY_ON),
                                                                              getElHeight(DECAY_ON));
     placeElement(*m_decayOn.get(), DECAY_ON);
+
+    m_modMix = std::make_unique<KnobOne>(m_vts, juce::String(MOD_MIX), getElWidth(MOD_MIX));
+    placeElement(*m_modMix.get(), MOD_MIX);
+
+    m_osc3_filterEG_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(OSC3_FILTEG_MOD), getElWidth(OSC3_FILTEG_MOD),
+                                                                             getElHeight(OSC3_FILTEG_MOD));
+    placeElement(*m_osc3_filterEG_modSrc.get(), OSC3_FILTEG_MOD);
+
+    m_noise_lfo_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(NOISE_LFO_MOD), getElWidth(NOISE_LFO_MOD),
+                                                                             getElHeight(NOISE_LFO_MOD));
+    placeElement(*m_noise_lfo_modSrc.get(), NOISE_LFO_MOD);
 }
 
 void MainComponent::createOscBank()

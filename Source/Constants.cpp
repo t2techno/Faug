@@ -35,7 +35,7 @@ const char* const LFO_RATE = "lfoRate";
 const char* const GLIDE_ON = "glideOn";
 const char* const DECAY_ON = "decayOn";
 const char* const PITCH_BEND = "pitchBend";
-const char* const MOD_BEND = "modBend";
+const char* const MOD_AMOUNT = "modAmount";
 
 // In-Between
 const char* const OSC_MOD_ON = "oscModOn";

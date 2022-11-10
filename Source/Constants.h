@@ -27,7 +27,7 @@ extern const char * const DECAY_ON;
 //Todo
 //move wheel shadow from guiElement to background
 extern const char * const PITCH_BEND;
-extern const char * const MOD_BEND;
+extern const char * const MOD_AMOUNT;
 
 // In-Between
 extern const char * const OSC_MOD_ON;

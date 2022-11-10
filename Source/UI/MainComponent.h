@@ -50,17 +50,17 @@ private:
 	// CONTROLLERS
 	std::unique_ptr<KnobOne> m_globalDetune;
 	std::unique_ptr<KnobOne> m_glide;
-	//std::unique_ptr<KnobTwo> m_modMix;
-	//std::unique_ptr<BrownToggle> m_osc3_filterEG_modSrc;
-	//std::unique_ptr<BrownToggle> m_noise_lfo_modSrc;
+	std::unique_ptr<KnobOne> m_modMix;
+	std::unique_ptr<BrownToggle> m_osc3_filterEG_modSrc;
+	std::unique_ptr<BrownToggle> m_noise_lfo_modSrc;
 
 
 	// KEYBOARDS
 	std::unique_ptr<BrownToggle> m_glideOn;
 	std::unique_ptr<BrownToggle> m_decayOn;
-	//std::unique_ptr<KnobTwo> m_lfoRate;
+	std::unique_ptr<KnobOne> m_lfoRate;
 	//std::unique_ptr<ModWheel> m_pitchBend;
-	//std::unique_ptr<ModWheel> m_modBend;
+	//std::unique_ptr<ModWheel> m_modAmount;
 
 
 	// In-Between CONTROLLER/OSCILLATOR
