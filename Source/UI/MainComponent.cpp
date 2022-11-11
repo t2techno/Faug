@@ -48,6 +48,10 @@ void MainComponent::createController()
     m_glide = std::make_unique<KnobOne>(m_vts, juce::String(GLIDE_RATE), getElWidth(GLIDE_RATE));
     placeElement(*m_glide.get(), GLIDE_RATE);
 
+    m_oscModOn = std::make_unique<BigOrangeToggle>(m_vts, juce::String(OSC_MOD_ON), getElWidth(OSC_MOD_ON),
+                                                                             getElHeight(OSC_MOD_ON));
+    placeElement(*m_oscModOn.get(), OSC_MOD_ON);
+
     m_glideOn = std::make_unique<BrownToggle>(m_vts, juce::String(GLIDE_ON), getElWidth(GLIDE_ON),
                                                                              getElHeight(GLIDE_ON));
     placeElement(*m_glideOn.get(), GLIDE_ON);
@@ -96,6 +100,10 @@ void MainComponent::createOscBank()
 
     m_oscThreeWaveForm = std::make_unique<KnobTwo>(m_vts,  juce::String(OSC3_WAVE), getElWidth(OSC3_WAVE));
     placeElement(*m_oscThreeWaveForm.get(), OSC3_WAVE);
+
+    m_osc3Ctrl = std::make_unique<BigOrangeToggle>(m_vts, juce::String(OSC3_CTRL), getElWidth(OSC3_CTRL),
+        getElHeight(OSC3_CTRL));
+    placeElement(*m_osc3Ctrl.get(), OSC3_CTRL);
 }
 
 void MainComponent::createMixer()
@@ -156,6 +164,10 @@ void MainComponent::createMixer()
 void MainComponent::createFilterBank()
 {
     // filter/controller border
+    m_filterModOn = std::make_unique<OrangeToggle>(m_vts, juce::String(F_MOD_ON), getElWidth(F_MOD_ON),
+        getElHeight(F_MOD_ON));
+    placeElement(*m_filterModOn.get(), F_MOD_ON);
+
     m_keyTrackOne = std::make_unique<OrangeToggle>(m_vts, juce::String(KEY_TRK1), getElWidth(KEY_TRK1),
         getElHeight(KEY_TRK1));
     placeElement(*m_keyTrackOne.get(), KEY_TRK1);
@@ -173,7 +185,6 @@ void MainComponent::createFilterBank()
 
     m_filterContourAmount = std::make_unique<KnobOne>(m_vts,  juce::String(F_ENV_AMOUNT), getElWidth(F_ENV_AMOUNT));
     placeElement(*m_filterContourAmount.get(), F_ENV_AMOUNT);
-
 
     // Row Two - Filter Envelope
     m_filterAttack = std::make_unique<KnobOne>(m_vts,  juce::String(F_ATTACK), getElWidth(F_ATTACK));

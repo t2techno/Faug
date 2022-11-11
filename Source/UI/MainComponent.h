@@ -64,7 +64,7 @@ private:
 
 
 	// In-Between CONTROLLER/OSCILLATOR
-	//std::unique_ptr<OrangeToggle> m_oscModOn;
+	std::unique_ptr<BigOrangeToggle> m_oscModOn;
 
 
 	// OSCILLATOR BANK
@@ -75,10 +75,10 @@ private:
 	std::unique_ptr<KnobTwo>     m_oscTwoWaveForm;
 	std::unique_ptr<BigKnobOne>  m_oscTwoDetune;
 
-	std::unique_ptr<KnobTwo>     m_oscThreeRange;
-	std::unique_ptr<KnobTwo>     m_oscThreeWaveForm;
-	std::unique_ptr<BigKnobOne>  m_oscThreeDetune;
-	//std::unique_ptr<OrangeToggle>m_osc3Ctrl;
+	std::unique_ptr<KnobTwo>        m_oscThreeRange;
+	std::unique_ptr<KnobTwo>        m_oscThreeWaveForm;
+	std::unique_ptr<BigKnobOne>     m_oscThreeDetune;
+	std::unique_ptr<BigOrangeToggle>m_osc3Ctrl;
 
 
 	// MIXER
@@ -103,7 +103,7 @@ private:
 	// In-Between
 	std::unique_ptr<OrangeToggle> m_keyTrackOne;
 	std::unique_ptr<OrangeToggle> m_keyTrackTwo;
-	//std::unique_ptr<OrangeToggle> m_filterModOne;
+	std::unique_ptr<OrangeToggle> m_filterModOn;
 
 	// FILTER
 	std::unique_ptr<KnobOne> m_filterCutoff;

@@ -32,6 +32,20 @@ private:
     std::unique_ptr<ButtonAttachment>   attach;
 };
 
+class BigOrangeToggle : public Toggle
+{
+    public:
+        BigOrangeToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight) : Toggle(vts, paramId, toggleWidth, toggleHeight)
+        {
+            toggleLaf->setToggleImage(BinaryData::orangeToggle_png, BinaryData::orangeToggle_pngSize, toggleWidth, toggleHeight);
+            setLaf(toggleLaf.get());
+        }
+        virtual ~BigOrangeToggle() override {};
+
+    private:
+        static std::unique_ptr<ToggleLookAndFeel> toggleLaf;
+};
+
 
 class OrangeToggle : public Toggle
 {
