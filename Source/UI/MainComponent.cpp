@@ -213,7 +213,7 @@ void MainComponent::placeElement(juce::Component& comp, std::string label)
 {
     comp.setBounds(guiPositions.at(label)[0] * window_width,
         guiPositions.at(label)[1] * window_height,
-        getElWidth(label), getElHeight (label));
+        getElWidth(label), getElHeight(label));
     addAndMakeVisible(comp);
 }
 

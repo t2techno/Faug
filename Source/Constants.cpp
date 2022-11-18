@@ -26,8 +26,8 @@ const char* const GLIDE_RATE = "glide";
 
 // ToDos
 const char* const MOD_MIX = "modMix";
-const char* const OSC3_FILTEG_MOD = "osc3_filterEg_modSrc";
-const char* const NOISE_LFO_MOD = "noise_lfo_modSrc";
+const char* const OSC3_FILTEG_MOD = "oscThree_filterEg";
+const char* const NOISE_LFO_MOD = "noise_lfo";
 
 //KEYBOARD
 //Todo
@@ -52,7 +52,7 @@ const char* const OSC3_RANGE = "rangeThree";
 const char* const OSC3_DETUNE = "detuneThree";
 const char* const OSC3_WAVE = "waveThree";
 //ToDo
-const char* const OSC3_CTRL = "osc3Ctrl";
+const char* const OSC3_CTRL = "oscThreeKeyTrack";
 
 //Mixer
 const char* const LOAD = "load";

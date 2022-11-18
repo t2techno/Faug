@@ -18,6 +18,7 @@
         <FILE id="NKxNQh" name="knobOne.png" compile="0" resource="1" file="imageWork/knobs/knobOne.png"/>
         <FILE id="tWMkQ8" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobs/knobTwo.png"/>
         <FILE id="Fph0lz" name="screwKnob.png" compile="0" resource="1" file="imageWork/knobs/screwKnob.png"/>
+        <FILE id="ZS4uoy" name="wheel.png" compile="0" resource="1" file="imageWork/knobs/wheel.png"/>
       </GROUP>
       <FILE id="YsvKdd" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
     </GROUP>
