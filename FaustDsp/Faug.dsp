@@ -17,7 +17,7 @@ with{
     frequencyIn = nentry("[01]freq[unit:Hz]",     440, 20, 20000, 0.01);
     prevfreq    = nentry("[02]prevFreq[unit:Hz]", 440, 20, 20000, 0.01);
 
-    pitchbend  = hslider("[03]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio : si.smoo;
+    pitchbend  = hslider("[03]pitchBend[style:knob]", 0, -2.5, 2.5, 0.01) : ba.semi2ratio;
     glide      = hslider("[04]glide[style:knob]", 0.01, 0.001, 3.0, 0.001);
     start_time = ba.latch(frequencyIn != frequencyIn', ba.time);
     dt         = ba.time - start_time;
@@ -35,7 +35,7 @@ with{
                        <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
-    scale = 1, oscOnePower*oscOneGain*0.4 + 
+    scale = 1.0, oscOnePower*oscOneGain*0.4 + 
                oscTwoPower*oscTwoGain*0.4 + 
                oscThreePower*oscThreeGain*0.4 : max;
 
@@ -43,9 +43,9 @@ with{
     oscTwoPower   = checkbox("[07]oscTwoPower");
     oscThreePower = checkbox("[08]oscThreePower");
 
-    oscOneGain   = hslider("[09]oscOneGain[style:knob]",  1.0,0.0,1.0,0.01) : si.smoo;
-    oscTwoGain   = hslider("[10]oscTwoGain[style:knob]",  1.0,0.0,1.0,0.01) : si.smoo;
-    oscThreeGain = hslider("[11]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01) : si.smoo;
+    oscOneGain   = hslider("[09]oscOneGain[style:knob]",  1.0,0.0,1.0,0.01);
+    oscTwoGain   = hslider("[10]oscTwoGain[style:knob]",  1.0,0.0,1.0,0.01);
+    oscThreeGain = hslider("[11]oscThreeGain[style:knob]",1.0,0.0,1.0,0.01);
 
     oscModOn = checkbox("[12]oscModOn");
 
@@ -101,9 +101,9 @@ with{
 // Envelope Section
     envelope    = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
     decayButton = checkbox("[23]decayOn");
-    attack      = hslider("[24]attack[style:knob]",50,1,10000,1)*0.001 : si.smoo;
-    decay       = hslider("[25]decay[style:knob]",50,1,24000,1)*0.001  : si.smoo;
-    sustain     = hslider("[26]sustain[style:knob]",0.8,0.01,1,0.01)   : si.smoo;
+    attack      = hslider("[24]attack[style:knob]",50,1,10000,1)*0.001;
+    decay       = hslider("[25]decay[style:knob]",50,1,24000,1)*0.001;
+    sustain     = hslider("[26]sustain[style:knob]",0.8,0.01,1,0.01);
     release     = 10*0.001, decay : select2(decayButton);
 
 // Filter Section
@@ -121,10 +121,10 @@ with{
 
 // filter contour
     reverseContour = hslider("[30]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
-    contourAmount = hslider("[31]contourAmount[style:knob]",0.0,0.0,1.0,0.001) : si.smoo;
-    fAttack = hslider("[32]fAttack[style:knob]",50,1,7000,1) : si.smoo;
-    fDecay = hslider("[33]fDecay[style:knob]",50,1,30000,1) : si.smoo;
-    fSustain = hslider("[34]fSustain[style:knob]",0.8,0.01,1.0,0.01) : si.smoo;
+    contourAmount = hslider("[31]contourAmount[style:knob]",0.0,0.0,1.0,0.001);
+    fAttack = hslider("[32]fAttack[style:knob]",50,1,7000,1);
+    fDecay = hslider("[33]fDecay[style:knob]",50,1,30000,1);
+    fSustain = hslider("[34]fSustain[style:knob]",0.8,0.01,1.0,0.01);
     fRelease = 10, fDecay : select2(decayButton);
     
    // 4 octave change max
@@ -133,7 +133,7 @@ with{
 
     filterUp   = _ + filterContour*(contourPeak-_)*contourAmount;
     filterDown = _ - filterContour*(_-contourPeak)*contourAmount;
-    filterContour = en.adsr(fAttack, fDecay, fSustain, fRelease);
+    filterContour = en.adsr(fAttack, fDecay, fSustain, fRelease) <: _, si.smoo : select2(decayButton);
 
     // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
     cutOffCombine = keyTrackSum <: filterUp, filterDown: select2(reverseContour) : 
@@ -142,7 +142,7 @@ with{
     filterModOn = checkbox("[35]filterModOn");
     modulate(on) = _ <: _, _*(2^(modulation)) : select2(on);
 
-    emphasis = hslider("[36]emphasis[style:knob]",1,0.707,25.0,0.001) : si.smoo;
+    emphasis = hslider("[36]emphasis[style:knob]",1,0.707,25.0,0.001);
     filter = ve.moogLadder(cutOffCombine, emphasis);
 
 // Noise
@@ -154,7 +154,7 @@ with{
 // Modulation
     modLeft = oscThreeSignal, filterContour : select2(checkbox("[40]oscThree_filterEg"));
     
-    lfoRate = hslider("[41]lfoRate[style:knob]",10.0,0.5,200.0,0.01) : si.smoo;
+    lfoRate = hslider("[41]lfoRate[style:knob]",10.0,0.5,200.0,0.01) ;
     lfo = os.osc(lfoRate), os.lf_squarewave(lfoRate) : select2(checkbox("[42]lfoShape"));
 
     lowBandLimit = 20;
