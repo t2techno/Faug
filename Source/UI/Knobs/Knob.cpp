@@ -9,6 +9,7 @@
 */
 
 #include "Knob.h"
+#include "../Wheel/ModWheel.h"
 
 Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int knobSize)
 {

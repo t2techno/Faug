@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-#include "Wheel.h"
+#include "ModWheel.h"
 
-Wheel::Wheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int wheelWidth, int wheelHeight)
+ModWheel::ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int wheelWidth, int wheelHeight)
 {
     slider = std::make_unique<juce::Slider>();
     addAndMakeVisible(slider.get());
@@ -20,13 +20,13 @@ Wheel::Wheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int 
     attach.reset(new SliderAttachment(vts, juce::String(paramId), *slider.get()));
 }
 
-Wheel::~Wheel()
+ModWheel::~ModWheel()
 {
     slider->setLookAndFeel(nullptr);
 }
 
-void Wheel::setLaf(WheelLookAndFeel* laf) {
+void ModWheel::setLaf(ModWheelLookAndFeel* laf) {
     slider->setLookAndFeel(laf);
 }
 
-std::unique_ptr<WheelLookAndFeel>Wheel::wheelLaf = std::make_unique<WheelLookAndFeel>();
+std::unique_ptr<ModWheelLookAndFeel>ModWheel::wheelLaf = std::make_unique<ModWheelLookAndFeel>();

@@ -60,6 +60,14 @@ void MainComponent::createController()
                                                                              getElHeight(DECAY_ON));
     placeElement(*m_decayOn.get(), DECAY_ON);
 
+    m_modAmount = std::make_unique<ModWheel>(m_vts, juce::String(MOD_AMOUNT), getElWidth(MOD_AMOUNT),
+        getElHeight(MOD_AMOUNT));
+    placeElement(*m_modAmount.get(), MOD_AMOUNT);
+
+    m_pitchBend = std::make_unique<ModWheel>(m_vts, juce::String(PITCH_BEND), getElWidth(PITCH_BEND),
+        getElHeight(MOD_AMOUNT));
+    placeElement(*m_pitchBend.get(), PITCH_BEND);
+
     m_modMix = std::make_unique<KnobOne>(m_vts, juce::String(MOD_MIX), getElWidth(MOD_MIX));
     placeElement(*m_modMix.get(), MOD_MIX);
 

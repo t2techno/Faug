@@ -11,19 +11,19 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "WheelLookAndFeel.h"
+#include "ModWheelLookAndFeel.h"
 
 typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
-class Wheel : public juce::Component
+class ModWheel : public juce::Component
 {
 public:
-    Wheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, const int wheelWidth, const int wheelHeight);
-    virtual ~Wheel() override;
-    void setLaf(WheelLookAndFeel* laf);
+    ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, const int wheelWidth, const int wheelHeight);
+    virtual ~ModWheel() override;
+    void setLaf(ModWheelLookAndFeel* laf);
 
 private:
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
-    static std::unique_ptr<WheelLookAndFeel> wheelLaf;
+    static std::unique_ptr<ModWheelLookAndFeel> wheelLaf;
 };

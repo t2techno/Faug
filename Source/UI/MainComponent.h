@@ -5,6 +5,7 @@
 #include <JuceHeader.h>
 #include "./Knobs/Knob.h"
 #include "./Toggles/Toggle.h"
+#include "./Wheel/ModWheel.h"
 
 class MainComponent : public juce::Component,
 							 juce::Timer
@@ -61,8 +62,8 @@ private:
 	std::unique_ptr<BrownToggle> m_glideOn;
 	std::unique_ptr<BrownToggle> m_decayOn;
 	std::unique_ptr<TinyKnobOne> m_lfoRate;
-	//std::unique_ptr<ModWheel> m_pitchBend;
-	//std::unique_ptr<ModWheel> m_modAmount;
+	std::unique_ptr<ModWheel> m_pitchBend;
+	std::unique_ptr<ModWheel> m_modAmount;
 
 
 	// In-Between CONTROLLER/OSCILLATOR
