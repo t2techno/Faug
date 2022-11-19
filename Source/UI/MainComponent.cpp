@@ -29,7 +29,7 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     master_on = std::make_unique<BrownToggle>(m_vts, juce::String(ON), getElWidth(ON),
         getElHeight(ON));
-    placeElement(*master_on.get(), ON);
+    placeVerticalButton(*master_on.get(), ON);
     
     setSize(window_width, window_height);
 
@@ -103,7 +103,7 @@ void MainComponent::createOscBank()
 
     m_osc3Ctrl = std::make_unique<BigOrangeToggle>(m_vts, juce::String(OSC3_CTRL), getElWidth(OSC3_CTRL),
         getElHeight(OSC3_CTRL));
-    placeElement(*m_osc3Ctrl.get(), OSC3_CTRL);
+    placeVerticalButton(*m_osc3Ctrl.get(), OSC3_CTRL);
 }
 
 void MainComponent::createMixer()
@@ -148,17 +148,9 @@ void MainComponent::createMixer()
                                                                             getElHeight(NOISE_ON));
     placeElement(*m_noiseOn.get(), NOISE_ON);
 
-    //vertical
     m_noiseType = std::make_unique<BlueToggle>(m_vts, juce::String(NOISE_TYPE), getElWidth(NOISE_TYPE),
                                                                                 getElHeight(NOISE_TYPE));
-    float noiseType_x      = guiPositions.at((NOISE_TYPE))[0] * float(window_width);
-    float noiseType_y      = guiPositions.at((NOISE_TYPE))[1] * float(window_height);
-    float noiseType_width  = guiPositions.at((NOISE_TYPE))[2] * float(window_width);
-    float noiseType_height = guiPositions.at((NOISE_TYPE))[3] * float(window_height);
-    m_noiseType->setTransform(juce::AffineTransform().rotated(juce::MathConstants<float>::halfPi, 
-                                                            noiseType_x+(noiseType_width/2), noiseType_y+(noiseType_height/2)));
-    m_noiseType->setBounds(noiseType_x, noiseType_y, noiseType_width, noiseType_height);
-    addAndMakeVisible(m_noiseType.get());
+    placeVerticalButton(*m_noiseType.get(), NOISE_TYPE);
 }
 
 void MainComponent::createFilterBank()
@@ -214,6 +206,18 @@ void MainComponent::placeElement(juce::Component& comp, std::string label)
     comp.setBounds(guiPositions.at(label)[0] * window_width,
         guiPositions.at(label)[1] * window_height,
         getElWidth(label), getElHeight(label));
+    addAndMakeVisible(comp);
+}
+
+void MainComponent::placeVerticalButton(juce::Component& comp, std::string label)
+{
+    float x = guiPositions.at((label))[0] * float(window_width);
+    float y = guiPositions.at((label))[1] * float(window_height);
+    float width = guiPositions.at((label))[2] * float(window_width);
+    float height = guiPositions.at((label))[3] * float(window_height);
+    comp.setTransform(juce::AffineTransform().rotated(juce::MathConstants<float>::halfPi,
+        x + (width / 2), y + (height / 2)));
+    comp.setBounds(x, y, width, height);
     addAndMakeVisible(comp);
 }
 
