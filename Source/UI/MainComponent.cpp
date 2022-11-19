@@ -64,12 +64,15 @@ void MainComponent::createController()
     placeElement(*m_modMix.get(), MOD_MIX);
 
     m_osc3_filterEG_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(OSC3_FILTEG_MOD), getElWidth(OSC3_FILTEG_MOD),
-                                                                             getElHeight(OSC3_FILTEG_MOD));
+        getElHeight(OSC3_FILTEG_MOD));
     placeElement(*m_osc3_filterEG_modSrc.get(), OSC3_FILTEG_MOD);
 
     m_noise_lfo_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(NOISE_LFO_MOD), getElWidth(NOISE_LFO_MOD),
-                                                                             getElHeight(NOISE_LFO_MOD));
+        getElHeight(NOISE_LFO_MOD));
     placeElement(*m_noise_lfo_modSrc.get(), NOISE_LFO_MOD);
+
+    m_lfoRate = std::make_unique<TinyKnobOne>(m_vts, juce::String(LFO_RATE), getElWidth(LFO_RATE));
+    placeElement(*m_lfoRate.get(), LFO_RATE);
 }
 
 void MainComponent::createOscBank()
