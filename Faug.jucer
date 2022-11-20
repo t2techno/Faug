@@ -48,13 +48,13 @@
       </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">
         <GROUP id="{FD5AB648-6586-CAEF-7E03-A5E15438B1C4}" name="Wheel">
-          <FILE id="fHocAt" name="Wheel.cpp" compile="1" resource="0" file="Source/UI/Wheel/Wheel.cpp"/>
-          <FILE id="MHVyNy" name="Wheel.h" compile="0" resource="0" file="Source/UI/Wheel/Wheel.h"/>
-          <FILE id="CtY2bN" name="WheelImage.h" compile="0" resource="0" file="Source/UI/Wheel/WheelImage.h"/>
-          <FILE id="oCrWpV" name="WheelLookAndFeel.cpp" compile="1" resource="0"
-                file="Source/UI/Wheel/WheelLookAndFeel.cpp"/>
-          <FILE id="BalUYR" name="WheelLookAndFeel.h" compile="0" resource="0"
-                file="Source/UI/Wheel/WheelLookAndFeel.h"/>
+          <FILE id="klGsfs" name="ModWheel.cpp" compile="1" resource="0" file="Source/UI/Wheel/ModWheel.cpp"/>
+          <FILE id="QM3Cp3" name="ModWheel.h" compile="0" resource="0" file="Source/UI/Wheel/ModWheel.h"/>
+          <FILE id="h5i75j" name="ModWheelImage.h" compile="0" resource="0" file="Source/UI/Wheel/ModWheelImage.h"/>
+          <FILE id="SJ5iEO" name="ModWheelLookAndFeel.cpp" compile="1" resource="0"
+                file="Source/UI/Wheel/ModWheelLookAndFeel.cpp"/>
+          <FILE id="DlDzC9" name="ModWheelLookAndFeel.h" compile="0" resource="0"
+                file="Source/UI/Wheel/ModWheelLookAndFeel.h"/>
         </GROUP>
         <FILE id="hjmWel" name="GuiElementsPosition.cpp" compile="1" resource="0"
               file="Source/UI/GuiElementsPosition.cpp"/>
