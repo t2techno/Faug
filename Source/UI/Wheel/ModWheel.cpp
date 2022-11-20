@@ -18,6 +18,9 @@ ModWheel::ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId
     slider->setSliderStyle(juce::Slider::LinearVertical);
     slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
     attach.reset(new SliderAttachment(vts, juce::String(paramId), *slider.get()));
+
+    modWheelLaf->setWheelImage(BinaryData::wheel_png, BinaryData::wheel_pngSize, wheelWidth, wheelHeight);
+    setLaf(modWheelLaf.get());
 }
 
 ModWheel::~ModWheel()
@@ -29,4 +32,4 @@ void ModWheel::setLaf(ModWheelLookAndFeel* laf) {
     slider->setLookAndFeel(laf);
 }
 
-std::unique_ptr<ModWheelLookAndFeel>ModWheel::wheelLaf = std::make_unique<ModWheelLookAndFeel>();
+std::unique_ptr<ModWheelLookAndFeel>ModWheel::modWheelLaf = std::make_unique<ModWheelLookAndFeel>();

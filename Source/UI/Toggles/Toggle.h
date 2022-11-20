@@ -88,3 +88,17 @@ public:
 private:
     static std::unique_ptr<ToggleLookAndFeel> toggleLaf;
 };
+
+class WhiteToggle : public Toggle
+{
+public:
+    WhiteToggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight) : Toggle(vts, paramId, toggleWidth, toggleHeight)
+    {
+        toggleLaf->setToggleImage(BinaryData::whiteToggle_png, BinaryData::whiteToggle_pngSize, toggleWidth, toggleHeight);
+        setLaf(toggleLaf.get());
+    }
+    virtual ~WhiteToggle() override {};
+
+private:
+    static std::unique_ptr<ToggleLookAndFeel> toggleLaf;
+};

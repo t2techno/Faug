@@ -11,8 +11,8 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     background = juce::Drawable::createFromImageData(BinaryData::background_png, BinaryData::background_pngSize);
 
     setOpaque(true);
-    addAndMakeVisible(keyboardComponent);
-    keyboardComponent.setKeyWidth(40);
+
+    createKeyboard();
 
     createController();
 
@@ -40,6 +40,31 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 MainComponent::~MainComponent()
 {}
 
+void MainComponent::createKeyboard() 
+{
+    addAndMakeVisible(keyboardComponent);
+    keyboardComponent.setKeyWidth(40);
+
+    m_glideOn = std::make_unique<WhiteToggle>(m_vts, juce::String(GLIDE_ON), getElWidth(GLIDE_ON),
+        getElHeight(GLIDE_ON));
+    placeElement(*m_glideOn.get(), GLIDE_ON);
+
+    m_decayOn = std::make_unique<WhiteToggle>(m_vts, juce::String(DECAY_ON), getElWidth(DECAY_ON),
+        getElHeight(DECAY_ON));
+    placeElement(*m_decayOn.get(), DECAY_ON);
+
+    m_modAmount = std::make_unique<ModWheel>(m_vts, juce::String(MOD_AMOUNT), getElWidth(MOD_AMOUNT),
+        getElHeight(MOD_AMOUNT));
+    placeElement(*m_modAmount.get(), MOD_AMOUNT);
+
+    m_pitchBend = std::make_unique<ModWheel>(m_vts, juce::String(PITCH_BEND), getElWidth(PITCH_BEND),
+        getElHeight(MOD_AMOUNT));
+    placeElement(*m_pitchBend.get(), PITCH_BEND);
+
+    m_lfoRate = std::make_unique<TinyKnobOne>(m_vts, juce::String(LFO_RATE), getElWidth(LFO_RATE));
+    placeElement(*m_lfoRate.get(), LFO_RATE);
+}
+
 void MainComponent::createController()
 {
     m_globalDetune = std::make_unique<KnobOne>(m_vts, juce::String(GLOBAL_DETUNE), getElWidth(GLOBAL_DETUNE));
@@ -52,22 +77,6 @@ void MainComponent::createController()
                                                                              getElHeight(OSC_MOD_ON));
     placeElement(*m_oscModOn.get(), OSC_MOD_ON);
 
-    m_glideOn = std::make_unique<BrownToggle>(m_vts, juce::String(GLIDE_ON), getElWidth(GLIDE_ON),
-                                                                             getElHeight(GLIDE_ON));
-    placeElement(*m_glideOn.get(), GLIDE_ON);
-
-    m_decayOn = std::make_unique<BrownToggle>(m_vts, juce::String(DECAY_ON), getElWidth(DECAY_ON),
-                                                                             getElHeight(DECAY_ON));
-    placeElement(*m_decayOn.get(), DECAY_ON);
-
-    m_modAmount = std::make_unique<ModWheel>(m_vts, juce::String(MOD_AMOUNT), getElWidth(MOD_AMOUNT),
-        getElHeight(MOD_AMOUNT));
-    placeElement(*m_modAmount.get(), MOD_AMOUNT);
-
-    m_pitchBend = std::make_unique<ModWheel>(m_vts, juce::String(PITCH_BEND), getElWidth(PITCH_BEND),
-        getElHeight(MOD_AMOUNT));
-    placeElement(*m_pitchBend.get(), PITCH_BEND);
-
     m_modMix = std::make_unique<KnobOne>(m_vts, juce::String(MOD_MIX), getElWidth(MOD_MIX));
     placeElement(*m_modMix.get(), MOD_MIX);
 
@@ -78,9 +87,6 @@ void MainComponent::createController()
     m_noise_lfo_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(NOISE_LFO_MOD), getElWidth(NOISE_LFO_MOD),
         getElHeight(NOISE_LFO_MOD));
     placeElement(*m_noise_lfo_modSrc.get(), NOISE_LFO_MOD);
-
-    m_lfoRate = std::make_unique<TinyKnobOne>(m_vts, juce::String(LFO_RATE), getElWidth(LFO_RATE));
-    placeElement(*m_lfoRate.get(), LFO_RATE);
 }
 
 void MainComponent::createOscBank()

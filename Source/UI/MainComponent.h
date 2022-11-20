@@ -20,6 +20,8 @@ public:
 	 void resized() override; //Component
 
 	 // Create UI Sections
+	 void createKeyboard();
+
 	 void createController();
 
 	 void createOscBank();
@@ -59,8 +61,8 @@ private:
 
 
 	// KEYBOARDS
-	std::unique_ptr<BrownToggle> m_glideOn;
-	std::unique_ptr<BrownToggle> m_decayOn;
+	std::unique_ptr<WhiteToggle> m_glideOn;
+	std::unique_ptr<WhiteToggle> m_decayOn;
 	std::unique_ptr<TinyKnobOne> m_lfoRate;
 	std::unique_ptr<ModWheel> m_pitchBend;
 	std::unique_ptr<ModWheel> m_modAmount;

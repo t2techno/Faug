@@ -33,3 +33,4 @@ std::unique_ptr<ToggleLookAndFeel> BigOrangeToggle::toggleLaf = std::make_unique
 std::unique_ptr<ToggleLookAndFeel> OrangeToggle::toggleLaf    = std::make_unique<ToggleLookAndFeel>();
 std::unique_ptr<ToggleLookAndFeel> BlueToggle::toggleLaf      = std::make_unique<ToggleLookAndFeel>();
 std::unique_ptr<ToggleLookAndFeel> BrownToggle::toggleLaf     = std::make_unique<ToggleLookAndFeel>();
+std::unique_ptr<ToggleLookAndFeel> WhiteToggle::toggleLaf     = std::make_unique<ToggleLookAndFeel>();

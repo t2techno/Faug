@@ -25,5 +25,5 @@ public:
 private:
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
-    static std::unique_ptr<ModWheelLookAndFeel> wheelLaf;
+    static std::unique_ptr<ModWheelLookAndFeel> modWheelLaf;
 };

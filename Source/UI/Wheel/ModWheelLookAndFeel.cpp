@@ -58,7 +58,7 @@ void ModWheelLookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int 
     const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider)
 {
     const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
-    g.drawImageAt(wheelImage->getImage(), 0, 0, false);
+    g.drawImageTransformed(wheelImage->getImage(), transform.translation(0, sliderPos));
 
     // Draw the readout
     // Change this to hint box?    
