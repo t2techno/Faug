@@ -114,6 +114,41 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
     </ul></li>
   </ul></li>
 </ul>
+
+<h2>Filter Section:</h2>
+<h3>Faust Libraries vaeffects Emulation of traditional moog 4th order ladder filter</h3>
+<ul>
+  <li>Filter Modulation button: Turns on modulation of filter cutoff by modulation sources</li>
+  <li>Keyboard Control:<ul>
+    <li>Keyboard Control 1: Turns on 1/3 of key tracking for filter cutoff</li>
+    <li>Keyboard Control 2: Turns on 2/3 of key tracking for filter cutoff</li>
+    <li>Turning on both gives full keyboard tracking eg. Filter cutoff will move 1:1 with change in played pitch</li>  
+  </ul></li>
+  <li>Cutoff Frequency Knob: Determines base cutoff of filter: range [10Hz,20kHz]</li>
+  <li>Emphasis Knob: Controls the amount of filter signal fed back into filter, resulting in a resonance peak at cutoff<ul>
+    <li>Self-Oscillation occurs at max value</li>
+    <li>ToDo: Add scaling to reduce emphasis as cutoff freq goes down so bass notes still have bass frequencies</li>
+  </ul></li>
+  <li>Contour Amount Knob: Adjusts the amount that the Filter's envelope generator impacts the filter cutoff<ul>
+    <li>Max Range of 4 octaves</li>
+    <li>ToDo: Add filter direction toggle</li>
+  </ul></li>
+  <li>Attack Time Knob: The amount of time it takes for the filter cutoff to go from the base frequency to max or min cutoff frequency.<ul>
+    <li>Value Range: [50ms, 10s]</li>
+    <li>Peak change amount is determined by Contour Amount knob.</li>
+  </ul></li>
+  <li>Sustain Level Knob: The percent of difference between filter cutoff and contour peak for the filter cutoff to stay at after Attack and decay phases<ul>
+    <li>Value Range: [0%, 100%]</li>
+    <li>0%: After the Attack phase, the filter cutoff will decay to the base cutoff frequency set by the knob</li>
+    <li>50%: If contour is set to max(4 octaves), the filter cutoff will decay to 2 octaves above base cutoff frequency determined by knob</li>
+    <li>100%: After the Attack phase, the filter cutoff will not decay at all</li>
+  </ul></li>
+  <li>Decay Time Knob: The amount of time it takes for the filter cutoff to go from the max or min cutoff frequency to Sustain level<ul>
+    <li>Value Range: [50ms, 24s]</li>
+    <li>Begins immediately after Attack phase ends</li>
+  </ul></li>
+  <li>ToDo: Add different cutoff slopes/filter implementations</li>
+</ul>
 <h3>Other ToDos:</h3>
 <ul>
   <li>Filter Direction button</li>
