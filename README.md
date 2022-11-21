@@ -1,20 +1,20 @@
 # Faug
 A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust = Faug
 
-![Alt text](./imageWork/backgroundExample.png?raw=true "Full Faug")
+![Alt text](./imageWork/backgroundExample.png?raw=true "Faug UI")
 
 <h2>Controllers Section:</h2>
 <ul>
-  <li>Tune:  Global detune ranging from [-2.5, 2.5] semi-tones</li>
-  <li>Glide: Glide rate/portamento, max time ~6sec</li>
-  <li>Modulation Mix: Knob to mix between modulation sources determined by buttons below</li>
-  <li>Osc-3/Filter Eg:Button to determine mod source added by left side of the Modulation Mix knob
+  <li>Tune Knob:  Global detune ranging from [-2.5, 2.5] semi-tones</li>
+  <li>Glide Knob : Glide rate/portamento, max time ~6sec</li>
+  <li>Modulation Mix Knob: Mixes between modulation sources determined by buttons below</li>
+  <li>Osc-3/Filter Eg Button: Determines mod source added by left side of the Modulation Mix knob
     <ul>
         <li>Osc-3: Osc three signal is modulation source</li>
         <li>Filter EG: Filter Envelope Generator is modulation source</li>
     </ul>
   </li>
-  <li>Noise/LFO:Button to determine mod source added by Right side of the Modulation Mix knob
+  <li>Noise/LFO Button: Determines mod source added by Right side of the Modulation Mix knob
     <ul>
         <li>Noise: Noise is modulation source
           <ul>
@@ -42,15 +42,15 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
   </li>
   <li>Mod Wheel: Modulation Amount to modulation targets
     <ul>
-      <li>ToDo: Wheel image/slider integration not working yet.=</li>
+      <li>ToDo: Wheel image/slider integration not working yet.</li>
     </ul>
   </li>
-  <li>Glide button: 
+  <li>Glide Button: 
     <ul>
       <li>Activates glide/portamento when notes are played with no seperation</li>
     </ul>
   </li>
-  <li>Decay button: 
+  <li>Decay Button: 
     <ul>
       <li>Applies an Envelope's decay setting to it's release stage</li>
       <li>Release is ~10ms when turned off</li>
@@ -60,12 +60,12 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 
 <h2>Oscillator Bank:</h2>
 <ul>
-  <li>Oscillator Modulation: Turns on modulation source routing to Oscillators 1 and 2
-    <ul><li>Oscillator 3 doesn't get modulated b/c it is a modulation source</li></ul>
-  </li>
-  <li>Osc-3 Control button: Connects Oscillator 3's frequency to the keyboard input
-  <ul><li>Uses Keyboard center of C3 - Midi Note 48 - 130.81Hz as input frequency when Oscillator 3 disengaged from keyboard</li></ul>
-  </li>
+  <li>Oscillator Modulation Button: Turns on modulation source routing to Oscillators 1 and 2<ul>
+    <li>Oscillator 3 doesn't get modulated b/c it is a modulation source</li>
+  </ul></li>
+  <li>Osc-3 Control Button: Connects Oscillator 3's frequency to the keyboard input<ul>
+    <li>Uses Keyboard center of C3 - Midi Note 48 - 130.81Hz as input frequency when Oscillator 3 disengaged from keyboard</li>
+  </ul></li>
   <li>Range Column:<ul>
     <li>Octave for pitch of respective oscillator</li>
     <li>Units are feet - tradition from organ pipes</li>
@@ -78,16 +78,42 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
     <li>Oscillator 1 doesn't get detuned as it serves as a reference for the other two</li>
   </ul></li>
   <li>Waveform column:<ul>
-    <li>Triangle: Triangle wave</li>
-    <ul><li>Triangle+Saw: Oscillators 1 & 2: A triangle and saw wave added together</li>
-    <li>Reverse Saw: Oscillator 3: A saw wave that ramps down instead of ramping up</li></ul>
+    <li>Triangle: Triangle wave</li><ul>
+      <li>Triangle+Saw: Oscillators 1 & 2: A triangle and saw wave added together</li>
+      <li>Reverse Saw: Oscillator 3: A saw wave that ramps down instead of ramping up</li>
+    </ul>
     <li>Saw: Save Wave, ramps up</li>
     <li>Square: Square Wave</li>
     <li>Rectangle: Rectangle Wave-Pulse train with 0.7 duty cycle </li>
     <li>Narrow Rectangle: Rectangle Wave-Pulse train with 0.85 duty cycle </li>
   </ul></li>
 </ul>
-To Be Continue...
+
+<h2>Mixer Section:</h2>
+<ul>
+  <li>Left Column of knobs: Volume knobs for their respective oscillators<ul>
+    <li>Volume Knob for Oscillator 3 has no impact on it's contribution to modulation signal</li>
+  </ul></li>
+  <li>Center Column of buttons: On/Off buttons for their respective noise sources contribution to the sound signal path<ul>
+    <li>On/Off buttons for Oscillator 3 and Noise have no impact on they're contributions to the modulation signal</li>
+  </ul></li>
+  <li>Right Column: <ul>
+    <li>Load Screw/knob: Increases the output of Oscillators and Noise(not feedback) before being fed into the filter<ul>
+      <li>ToDo: Include a warm little light that increases in brightness with load</li>
+      <li>ToDo: Improve/build upon scaling/saturation algorithms</li>
+    </ul></li>
+    <li>Feedback Amount: Amount of the signal's output that gets fed back to the input<ul>
+      <li>ToDo: Improve and build upon feedback saturation/processing</li>
+    </ul></li>
+    <li>Noise Volume: Volume knob for noise signal's contribution to sound signal<ul>
+      <li>Has no impact on noise's contribution to modulation signal</li>
+    </ul></li>
+    <li>Noise-Type Button: Determines noise type for sound and modulation signals<ul>
+      <li>White Noise for sound signal is Pink Noise for modulation Signal</li>
+      <li>Pink Noise for sound signal is Red Noise for modulation Signal</li>
+    </ul></li>
+  </ul></li>
+</ul>
 <h3>Other ToDos:</h3>
 <ul>
   <li>Filter Direction button</li>
