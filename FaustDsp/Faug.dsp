@@ -27,11 +27,7 @@ with{
     blend(rate, f, pf) = f*(1 - expo(rate)) + pf*expo(rate);
     glideOn = checkbox("[05]glideOn");
 
-    // mini-moogs generally had longer glide times down vs up 
-    // upglide is about half of downglide
-    freq = blend(ba.if(frequencyIn > prevfreq, glide/1.8, glide), 
-                       frequencyIn, 
-                       ba.if(glideOn, prevfreq, frequencyIn)) 
+    freq = blend(glide, frequencyIn, ba.if(glideOn, prevfreq, frequencyIn)) 
                        <: attach(_,vbargraph("finalFreq[style:numerical]",0,20000));
 
 // Oscillators
@@ -71,9 +67,9 @@ with{
     waveSelectOne   = hslider("[14]waveOne[style:knob]"  ,1,0,5,1);
     waveSelectTwo   = hslider("[15]waveTwo[style:knob]"  ,1,0,5,1);
     waveSelectThree = hslider("[16]waveThree[style:knob]",1,0,5,1);
-    waveOneTwo(f,r,ws) = tri(f,r), saw(f,r), triSaw(f,r), square(f,r),
+    waveOneTwo(f,r,ws) = tri(f,r), triSaw(f,r), saw(f,r), square(f,r),
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
-    waveThree(f,r,ws) = tri(f,r), saw(f,r), revSaw(f,r), square(f,r), 
+    waveThree(f,r,ws) = tri(f,r), revSaw(f,r), saw(f,r), square(f,r), 
         rectangle(f,r,0.70), rectangle(f,r,0.85) : ba.selectn(6,ws);
 
     driftOne   = os.osc(0.05)*0.01 : 2^_ : @(ma.SR/100);
