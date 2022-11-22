@@ -8,6 +8,8 @@ gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
 // Will use as center for keyTrackingDiff
 keyboardCenter = 130.81;
 
+nyquist = ma.SR/2;
+
 // todo variable keytracking per oscillator
 
 generateSound(fdb) = output(fdb) : filter : _*envelope
@@ -97,15 +99,16 @@ with{
 // Envelope Section
     envelope    = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
     decayButton = checkbox("[23]decayOn");
-    attack      = hslider("[24]attack[style:knob]",50,1,10000,1)*0.001;
-    decay       = hslider("[25]decay[style:knob]",50,1,24000,1)*0.001;
+    attack      = hslider("[24]attack[style:knob]",1,1,10000,1)*0.001;
+    decay       = hslider("[25]decay[style:knob]",4,1,24000,1)*0.001;
     sustain     = hslider("[26]sustain[style:knob]",0.8,0.01,1,0.01);
     release     = 10*0.001, decay : select2(decayButton);
 
 // Filter Section
-    // filter response is 32k, cutoff range max ma.SR
-    filterMax = ma.SR/2;
-    cutoffIn = hslider("[27]cutoff[style:knob]",0.5,0.0,1.0,0.001);
+    // filter response is 32k, cutoff max is 20k
+    filterMax = 20000.0/nyquist;
+    filterMin = 10.0/nyquist
+    cutoffIn = hslider("[27]cutoff[style:knob]",0.5,filterMin,filterMax,0.001);
 
 // key tracking stuff
     keyTrackDiff = frequencyIn-keyboardCenter;
@@ -118,8 +121,8 @@ with{
 // filter contour
     reverseContour = hslider("[30]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
     contourAmount = hslider("[31]contourAmount[style:knob]",0.0,0.0,1.0,0.001);
-    fAttack = hslider("[32]fAttack[style:knob]",50,1,7000,1);
-    fDecay = hslider("[33]fDecay[style:knob]",50,1,30000,1);
+    fAttack = hslider("[32]fAttack[style:knob]",1,1,7000,1);
+    fDecay = hslider("[33]fDecay[style:knob]",4,1,30000,1);
     fSustain = hslider("[34]fSustain[style:knob]",0.8,0.01,1.0,0.01);
     fRelease = 10, fDecay : select2(decayButton);
     
@@ -151,7 +154,7 @@ with{
     modLeft = oscThreeSignal, filterContour : select2(checkbox("[40]oscThree_filterEg"));
     
     lfoRate = hslider("[41]lfoRate[style:knob]",10.0,0.5,200.0,0.01) ;
-    lfo = os.osc(lfoRate), os.lf_squarewave(lfoRate) : select2(checkbox("[42]lfoShape"));
+    lfo = os.lf_triangle(lfoRate), os.lf_squarewave(lfoRate) : select2(checkbox("[42]lfoShape"));
 
     lowBandLimit = 20;
     bw3 = 0.7 * ma.SR/2.0 - lowBandLimit;
