@@ -106,8 +106,10 @@ with{
 
 // Filter Section
     // filter response is 32k, cutoff max is 20k
-    filterMax = 20000.0/nyquist;
-    filterMin = 10.0/nyquist
+    // Have to have constant value know at compile time.
+    // Maybe have multiple hardcoded values for different sample rates
+    filterMax = 20000.0/22050.0;
+    filterMin = 10.0/22050.0;
     cutoffIn = hslider("[27]cutoff[style:knob]",0.5,filterMin,filterMax,0.001);
 
 // key tracking stuff

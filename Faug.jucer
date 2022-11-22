@@ -43,7 +43,7 @@
         <FILE id="puzHDR" name="Spectroscope.h" compile="0" resource="0" file="Source/Scope/Spectroscope.h"/>
       </GROUP>
       <GROUP id="{945315F8-3E98-51C0-3E36-09D01E7A5E4E}" name="FaustExp">
-        <FILE id="k8tYZ0" name="FaugExp.cpp" compile="1" resource="0" file="Source/FaustExp/FaugExp.cpp"/>
+        <FILE id="Bujuoe" name="FaugExp.cpp" compile="1" resource="0" file="Source/FaustExp/FaugExp.cpp"/>
         <FILE id="U418kl" name="FaustIncludes.h" compile="0" resource="0" file="Source/FaustExp/FaustIncludes.h"/>
       </GROUP>
       <GROUP id="{CB4BB736-C4C8-4FC7-5CA5-AA87012A2100}" name="UI">

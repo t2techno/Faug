@@ -11,7 +11,7 @@ Compilation options: -lang cpp -es 1 -mcd 16 -single -ftz 0 -vec -lv 1 -vs 8 -g
 #define FAUSTFLOAT float
 #endif 
 
-#include "FaustIncludes.h"
+#include "./FaustIncludes.h"
 
 /* link with : "" */
 #include <algorithm>
@@ -114,10 +114,10 @@ class mydsp : public dsp {
 	int iConst4;
 	int iConst5;
 	FAUSTFLOAT fCheckbox3;
-	FAUSTFLOAT fEntry1;
 	FAUSTFLOAT fHslider3;
 	float fConst6;
 	FAUSTFLOAT fCheckbox4;
+	FAUSTFLOAT fEntry1;
 	FAUSTFLOAT fVbargraph0;
 	FAUSTFLOAT fHslider4;
 	FAUSTFLOAT fHslider5;
@@ -363,13 +363,13 @@ class mydsp : public dsp {
 		fCheckbox1 = FAUSTFLOAT(0.0f);
 		fEntry0 = FAUSTFLOAT(4.4e+02f);
 		fCheckbox2 = FAUSTFLOAT(0.0f);
-		fHslider0 = FAUSTFLOAT(5e+01f);
-		fHslider1 = FAUSTFLOAT(5e+01f);
+		fHslider0 = FAUSTFLOAT(4.0f);
+		fHslider1 = FAUSTFLOAT(1.0f);
 		fHslider2 = FAUSTFLOAT(0.8f);
 		fCheckbox3 = FAUSTFLOAT(0.0f);
-		fEntry1 = FAUSTFLOAT(4.4e+02f);
 		fHslider3 = FAUSTFLOAT(0.01f);
 		fCheckbox4 = FAUSTFLOAT(0.0f);
+		fEntry1 = FAUSTFLOAT(4.4e+02f);
 		fHslider4 = FAUSTFLOAT(0.0f);
 		fHslider5 = FAUSTFLOAT(0.0f);
 		fHslider6 = FAUSTFLOAT(0.0f);
@@ -405,8 +405,8 @@ class mydsp : public dsp {
 		fHslider25 = FAUSTFLOAT(1.0f);
 		fHslider26 = FAUSTFLOAT(1.0f);
 		fButton0 = FAUSTFLOAT(0.0f);
-		fHslider27 = FAUSTFLOAT(5e+01f);
-		fHslider28 = FAUSTFLOAT(5e+01f);
+		fHslider27 = FAUSTFLOAT(4.0f);
+		fHslider28 = FAUSTFLOAT(1.0f);
 		fHslider29 = FAUSTFLOAT(0.8f);
 		fCheckbox16 = FAUSTFLOAT(0.0f);
 		fHslider30 = FAUSTFLOAT(1.0f);
@@ -686,16 +686,16 @@ class mydsp : public dsp {
 		ui_interface->addCheckButton("decayOn", &fCheckbox2);
 		ui_interface->declare(&fHslider28, "24", "");
 		ui_interface->declare(&fHslider28, "style", "knob");
-		ui_interface->addHorizontalSlider("attack", &fHslider28, FAUSTFLOAT(5e+01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1e+04f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("attack", &fHslider28, FAUSTFLOAT(1.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(1e+04f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider27, "25", "");
 		ui_interface->declare(&fHslider27, "style", "knob");
-		ui_interface->addHorizontalSlider("decay", &fHslider27, FAUSTFLOAT(5e+01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(2.4e+04f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("decay", &fHslider27, FAUSTFLOAT(4.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(2.4e+04f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider29, "26", "");
 		ui_interface->declare(&fHslider29, "style", "knob");
 		ui_interface->addHorizontalSlider("sustain", &fHslider29, FAUSTFLOAT(0.8f), FAUSTFLOAT(0.01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
 		ui_interface->declare(&fHslider9, "27", "");
 		ui_interface->declare(&fHslider9, "style", "knob");
-		ui_interface->addHorizontalSlider("cutoff", &fHslider9, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
+		ui_interface->addHorizontalSlider("cutoff", &fHslider9, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.00045351475f), FAUSTFLOAT(0.90702945f), FAUSTFLOAT(0.001f));
 		ui_interface->declare(&fCheckbox1, "28", "");
 		ui_interface->addCheckButton("keyTrackOne", &fCheckbox1);
 		ui_interface->declare(&fCheckbox0, "29", "");
@@ -708,10 +708,10 @@ class mydsp : public dsp {
 		ui_interface->addHorizontalSlider("contourAmount", &fHslider10, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
 		ui_interface->declare(&fHslider1, "32", "");
 		ui_interface->declare(&fHslider1, "style", "knob");
-		ui_interface->addHorizontalSlider("fAttack", &fHslider1, FAUSTFLOAT(5e+01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(7e+03f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("fAttack", &fHslider1, FAUSTFLOAT(1.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(7e+03f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider0, "33", "");
 		ui_interface->declare(&fHslider0, "style", "knob");
-		ui_interface->addHorizontalSlider("fDecay", &fHslider0, FAUSTFLOAT(5e+01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(3e+04f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("fDecay", &fHslider0, FAUSTFLOAT(4.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(3e+04f), FAUSTFLOAT(1.0f));
 		ui_interface->declare(&fHslider2, "34", "");
 		ui_interface->declare(&fHslider2, "style", "knob");
 		ui_interface->addHorizontalSlider("fSustain", &fHslider2, FAUSTFLOAT(0.8f), FAUSTFLOAT(0.01f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
@@ -794,20 +794,18 @@ class mydsp : public dsp {
 		float* fRec13 = &fRec13_tmp[4];
 		float fZec2[8];
 		int iSlow11 = int(float(fCheckbox3));
-		float fSlow12 = float(fEntry1);
-		float fSlow13 = float(fHslider3);
-		float fSlow14 = ((fSlow0 > fSlow12) ? 0.5555556f * fSlow13 : fSlow13);
+		float fSlow12 = fConst6 / float(fHslider3);
 		float fZec3[8];
-		float fSlow15 = ((int(float(fCheckbox4))) ? fSlow12 : fSlow0);
+		float fSlow13 = ((int(float(fCheckbox4))) ? float(fEntry1) : fSlow0);
 		float fZec4[8];
 		float fZec5[8];
 		float fZec6[8];
 		float fZec7[8];
-		float fSlow16 = std::pow(2.0f, 0.083333336f * float(fHslider4));
-		float fSlow17 = float(fHslider6);
-		float fSlow18 = float(fHslider7);
-		float fSlow19 = std::pow(2.0f, fSlow18 + -4.0f) * std::pow(2.0f, 0.083333336f * (fSlow17 + float(fHslider5))) * fSlow16;
-		float fSlow20 = fConst6 * fSlow19;
+		float fSlow14 = std::pow(2.0f, 0.083333336f * float(fHslider4));
+		float fSlow15 = float(fHslider6);
+		float fSlow16 = float(fHslider7);
+		float fSlow17 = std::pow(2.0f, fSlow16 + -4.0f) * std::pow(2.0f, 0.083333336f * (fSlow15 + float(fHslider5))) * fSlow14;
+		float fSlow18 = fConst6 * fSlow17;
 		float fZec8[8];
 		float fRec10_tmp[12];
 		float* fRec10 = &fRec10_tmp[4];
@@ -833,15 +831,15 @@ class mydsp : public dsp {
 		float fRec17_tmp[12];
 		float* fRec17 = &fRec17_tmp[4];
 		float fRec18[8];
-		int iSlow21 = int(float(fHslider8));
-		float fSlow22 = float(fHslider9);
-		float fSlow23 = ((iSlow21) ? 0.0625f * fSlow22 : std::min<float>(16.0f * fSlow22, fConst7));
-		float fSlow24 = fSlow23 - fSlow2;
+		int iSlow19 = int(float(fHslider8));
+		float fSlow20 = float(fHslider9);
+		float fSlow21 = ((iSlow19) ? 0.0625f * fSlow20 : std::min<float>(16.0f * fSlow20, 0.90702945f));
+		float fSlow22 = fSlow21 - fSlow2;
 		float fZec22[8];
-		float fSlow25 = float(fHslider10);
-		float fSlow26 = fSlow2 - fSlow23;
+		float fSlow23 = float(fHslider10);
+		float fSlow24 = fSlow2 - fSlow21;
 		float fZec23[8];
-		float fSlow27 = fConst0 * fSlow22;
+		float fSlow25 = fConst0 * fSlow20;
 		float fYec4_tmp[12];
 		float* fYec4 = &fYec4_tmp[4];
 		float fRec19_tmp[12];
@@ -864,12 +862,12 @@ class mydsp : public dsp {
 		float* fRec25 = &fRec25_tmp[4];
 		float fRec24_tmp[12];
 		float* fRec24 = &fRec24_tmp[4];
-		float fSlow28 = fConst6 * float(fHslider11);
+		float fSlow26 = fConst6 * float(fHslider11);
 		float fRec27_tmp[12];
 		float* fRec27 = &fRec27_tmp[4];
 		float fZec26[8];
-		float fSlow29 = float(fHslider12);
-		float fSlow30 = fSlow16 * std::pow(2.0f, fSlow29 + -4.0f) * std::pow(2.0f, 0.083333336f * fSlow17);
+		float fSlow27 = float(fHslider12);
+		float fSlow28 = fSlow14 * std::pow(2.0f, fSlow27 + -4.0f) * std::pow(2.0f, 0.083333336f * fSlow15);
 		float fYec6_tmp[12];
 		float* fYec6 = &fYec6_tmp[4];
 		float fRec29_tmp[12];
@@ -879,18 +877,18 @@ class mydsp : public dsp {
 		float fZec27[8];
 		float fRec31_tmp[12];
 		float* fRec31 = &fRec31_tmp[4];
-		int iSlow31 = int(float(fCheckbox5));
-		int iSlow32 = int(float(fCheckbox6));
-		float fSlow33 = float(fHslider13);
-		int iSlow34 = fSlow33 >= 3.0f;
-		int iSlow35 = fSlow33 >= 2.0f;
-		int iSlow36 = fSlow33 >= 1.0f;
-		int iSlow37 = int(fSlow18);
+		int iSlow29 = int(float(fCheckbox5));
+		int iSlow30 = int(float(fCheckbox6));
+		float fSlow31 = float(fHslider13);
+		int iSlow32 = fSlow31 >= 3.0f;
+		int iSlow33 = fSlow31 >= 2.0f;
+		int iSlow34 = fSlow31 >= 1.0f;
+		int iSlow35 = int(fSlow16);
 		float fZec28[8];
-		float fSlow38 = fConst36 * fSlow19;
+		float fSlow36 = fConst36 * fSlow17;
 		float fZec29[8];
-		int iSlow39 = fSlow33 >= 5.0f;
-		int iSlow40 = fSlow33 >= 4.0f;
+		int iSlow37 = fSlow31 >= 5.0f;
+		int iSlow38 = fSlow31 >= 4.0f;
 		float fZec30[8];
 		int iZec31[8];
 		float fZec32[8];
@@ -898,14 +896,14 @@ class mydsp : public dsp {
 		int iZec34[8];
 		float fZec35[8];
 		float fZec36[8];
-		float fSlow41 = float(fHslider14);
-		float fSlow42 = 1.0f - fSlow41;
-		int iSlow43 = int(float(fCheckbox7));
-		int iSlow44 = int(float(fCheckbox8));
+		float fSlow39 = float(fHslider14);
+		float fSlow40 = 1.0f - fSlow39;
+		int iSlow41 = int(float(fCheckbox7));
+		int iSlow42 = int(float(fCheckbox8));
 		float fZec37[8];
-		int iSlow45 = int(float(fCheckbox9));
+		int iSlow43 = int(float(fCheckbox9));
 		float fZec38[8];
-		float fSlow46 = float(fHslider15);
+		float fSlow44 = float(fHslider15);
 		float fZec39[8];
 		float fZec40[8];
 		float fRec28_tmp[12];
@@ -931,8 +929,8 @@ class mydsp : public dsp {
 		float* fRec34 = &fRec34_tmp[4];
 		float fRec35[8];
 		float fZec52[8];
-		float fSlow47 = float(fHslider17);
-		float fSlow48 = fSlow16 * std::pow(2.0f, fSlow47 + -4.0f) * std::pow(2.0f, 0.083333336f * (fSlow17 + float(fHslider16)));
+		float fSlow45 = float(fHslider17);
+		float fSlow46 = fSlow14 * std::pow(2.0f, fSlow45 + -4.0f) * std::pow(2.0f, 0.083333336f * (fSlow15 + float(fHslider16)));
 		float fYec9_tmp[12];
 		float* fYec9 = &fYec9_tmp[4];
 		float fRec37_tmp[12];
@@ -966,51 +964,51 @@ class mydsp : public dsp {
 		float fRec42_tmp[12];
 		float* fRec42 = &fRec42_tmp[4];
 		float fRec43[8];
-		int iSlow49 = int(float(fCheckbox10));
+		int iSlow47 = int(float(fCheckbox10));
 		float fZec67[8];
 		float fZec68[8];
-		float fSlow50 = 0.16465649f * (float(fHslider18) + -0.707f);
-		float fSlow51 = float(fHslider19);
-		float fSlow52 = float(fCheckbox11);
-		float fSlow53 = fSlow52 * fSlow51;
-		float fSlow54 = float(fCheckbox12) * float(fHslider20);
-		float fSlow55 = float(fHslider21) * float(fCheckbox13);
-		float fSlow56 = float(fHslider22);
-		int iSlow57 = fSlow56 >= 3.0f;
-		int iSlow58 = fSlow56 >= 2.0f;
-		int iSlow59 = fSlow56 >= 1.0f;
-		int iSlow60 = int(fSlow47);
+		float fSlow48 = 0.16465649f * (float(fHslider18) + -0.707f);
+		float fSlow49 = float(fHslider19);
+		float fSlow50 = float(fCheckbox11);
+		float fSlow51 = fSlow50 * fSlow49;
+		float fSlow52 = float(fCheckbox12) * float(fHslider20);
+		float fSlow53 = float(fHslider21) * float(fCheckbox13);
+		float fSlow54 = float(fHslider22);
+		int iSlow55 = fSlow54 >= 3.0f;
+		int iSlow56 = fSlow54 >= 2.0f;
+		int iSlow57 = fSlow54 >= 1.0f;
+		int iSlow58 = int(fSlow45);
 		float fZec69[8];
 		float fZec70[8];
 		float fZec71[8];
-		int iSlow61 = fSlow56 >= 5.0f;
-		int iSlow62 = fSlow56 >= 4.0f;
+		int iSlow59 = fSlow54 >= 5.0f;
+		int iSlow60 = fSlow54 >= 4.0f;
 		float fZec72[8];
 		int iZec73[8];
 		float fZec74[8];
 		float fZec75[8];
 		int iZec76[8];
 		float fZec77[8];
-		float fSlow63 = float(fHslider23) * float(fCheckbox14);
-		float fSlow64 = float(fHslider24);
-		int iSlow65 = fSlow64 >= 3.0f;
-		int iSlow66 = fSlow64 >= 2.0f;
-		int iSlow67 = fSlow64 >= 1.0f;
-		int iSlow68 = int(fSlow29);
+		float fSlow61 = float(fHslider23) * float(fCheckbox14);
+		float fSlow62 = float(fHslider24);
+		int iSlow63 = fSlow62 >= 3.0f;
+		int iSlow64 = fSlow62 >= 2.0f;
+		int iSlow65 = fSlow62 >= 1.0f;
+		int iSlow66 = int(fSlow27);
 		float fZec78[8];
 		float fZec79[8];
 		float fZec80[8];
-		int iSlow69 = fSlow64 >= 5.0f;
-		int iSlow70 = fSlow64 >= 4.0f;
+		int iSlow67 = fSlow62 >= 5.0f;
+		int iSlow68 = fSlow62 >= 4.0f;
 		float fZec81[8];
 		int iZec82[8];
 		float fZec83[8];
 		float fZec84[8];
 		int iZec85[8];
 		float fZec86[8];
-		float fSlow71 = float(fHslider25) * float(fCheckbox15);
-		float fSlow72 = 1.0f / std::max<float>(1.0f, 0.4f * (fSlow55 + fSlow71 + fSlow63));
-		float fSlow73 = float(fHslider26);
+		float fSlow69 = float(fHslider25) * float(fCheckbox15);
+		float fSlow70 = 1.0f / std::max<float>(1.0f, 0.4f * (fSlow53 + fSlow69 + fSlow61));
+		float fSlow71 = float(fHslider26);
 		float fZec87[8];
 		float fRec2_tmp[12];
 		float* fRec2 = &fRec2_tmp[4];
@@ -1024,20 +1022,20 @@ class mydsp : public dsp {
 		float fRec5_tmp[12];
 		float* fRec5 = &fRec5_tmp[4];
 		float fRec6[8];
-		float fSlow74 = float(fButton0);
+		float fSlow72 = float(fButton0);
 		float fVec4_tmp[12];
 		float* fVec4 = &fVec4_tmp[4];
 		float fRec44_tmp[12];
 		float* fRec44 = &fRec44_tmp[4];
-		int iSlow75 = fSlow74 == 0.0f;
+		int iSlow73 = fSlow72 == 0.0f;
 		int iRec45_tmp[12];
 		int* iRec45 = &iRec45_tmp[4];
-		float fSlow76 = float(fHslider27);
-		float fSlow77 = std::max<float>(1.0f, fConst0 * ((iSlow4) ? 0.001f * fSlow76 : 0.01f));
-		float fSlow78 = std::max<float>(1.0f, fConst41 * float(fHslider28));
-		float fSlow79 = 1.0f / fSlow78;
-		float fSlow80 = float(fHslider29);
-		float fSlow81 = (1.0f - fSlow80) / std::max<float>(1.0f, fConst41 * fSlow76);
+		float fSlow74 = float(fHslider27);
+		float fSlow75 = std::max<float>(1.0f, fConst0 * ((iSlow4) ? 0.001f * fSlow74 : 0.01f));
+		float fSlow76 = std::max<float>(1.0f, fConst41 * float(fHslider28));
+		float fSlow77 = 1.0f / fSlow76;
+		float fSlow78 = float(fHslider29);
+		float fSlow79 = (1.0f - fSlow78) / std::max<float>(1.0f, fConst41 * fSlow74);
 		float fZec91[8];
 		float fRec46_tmp[12];
 		float* fRec46 = &fRec46_tmp[4];
@@ -1047,10 +1045,10 @@ class mydsp : public dsp {
 		float* fYec12 = &fYec12_tmp[4];
 		float fRec0_tmp[16];
 		float* fRec0 = &fRec0_tmp[8];
-		int iSlow82 = int(fSlow52);
-		float fSlow83 = 1.0f - fSlow51;
-		float fSlow84 = ((int(float(fCheckbox16))) ? 0.0f : 1.0f);
-		float fSlow85 = float(fHslider30);
+		int iSlow80 = int(fSlow50);
+		float fSlow81 = 1.0f - fSlow49;
+		float fSlow82 = ((int(float(fCheckbox16))) ? 0.0f : 1.0f);
+		float fSlow83 = float(fHslider30);
 		float fZec92[8];
 		for (int vindex = 0; vindex < count; vindex = vindex + 8) {
 			FAUSTFLOAT* output0 = &output0_ptr[vindex];
@@ -1129,7 +1127,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 6 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec3[i] = std::max<float>(std::exp(fConst6 * (float(-1 * (iRec11[i] + (-1 - iRec12[i]))) / fSlow14)), 0.01f);
+				fZec3[i] = std::max<float>(std::exp(fSlow12 * float(-1 * (iRec11[i] + (-1 - iRec12[i])))), 0.01f);
 			}
 			/* Recursive loop 7 */
 			/* Pre code */
@@ -1147,7 +1145,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 8 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec4[i] = fSlow0 * (1.0f - fZec3[i]) + fSlow15 * fZec3[i];
+				fZec4[i] = fSlow0 * (1.0f - fZec3[i]) + fSlow13 * fZec3[i];
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
@@ -1177,7 +1175,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 12 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec9[i] = fSlow19 * fZec7[i];
+				fZec9[i] = fSlow17 * fZec7[i];
 			}
 			/* Vectorizable loop 13 */
 			/* Compute code */
@@ -1269,7 +1267,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec8[i] = fRec10[i - 1] + fSlow20 * fZec7[i];
+				fZec8[i] = fRec10[i - 1] + fSlow18 * fZec7[i];
 				fRec10[i] = fZec8[i] - std::floor(fZec8[i]);
 			}
 			/* Post code */
@@ -1325,7 +1323,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fYec6[i] = fSlow30 * fZec26[i];
+				fYec6[i] = fSlow28 * fZec26[i];
 			}
 			/* Post code */
 			for (int j53 = 0; j53 < 4; j53 = j53 + 1) {
@@ -1338,7 +1336,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fYec9[i] = fSlow48 * fZec52[i];
+				fYec9[i] = fSlow46 * fZec52[i];
 			}
 			/* Post code */
 			for (int j71 = 0; j71 < 4; j71 = j71 + 1) {
@@ -1531,7 +1529,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fRec27[i] = fSlow28 + (fRec27[i - 1] - std::floor(fSlow28 + fRec27[i - 1]));
+				fRec27[i] = fSlow26 + (fRec27[i - 1] - std::floor(fSlow26 + fRec27[i - 1]));
 			}
 			/* Post code */
 			for (int j51 = 0; j51 < 4; j51 = j51 + 1) {
@@ -1545,7 +1543,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 50 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec29[i] = ((iSlow37) ? 2.0f * fRec18[i] + -1.0f : fZec28[i]);
+				fZec29[i] = ((iSlow35) ? 2.0f * fRec18[i] + -1.0f : fZec28[i]);
 			}
 			/* Vectorizable loop 51 */
 			/* Compute code */
@@ -1598,12 +1596,12 @@ class mydsp : public dsp {
 			/* Vectorizable loop 59 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec36[i] = ((iSlow34) ? ((iSlow39) ? ((iSlow37) ? fConst8 * (fYec3[(i + fYec3_idx) & 4095] - fYec3[(i + fYec3_idx - iZec34[i]) & 4095] * (fZec35[i] + (1.0f - fZec33[i])) - (fZec33[i] - fZec35[i]) * fYec3[(i + fYec3_idx - (iZec34[i] + 1)) & 4095]) : 2.0f * float(fRec10[i] <= 0.85f) + -1.0f) : ((iSlow40) ? ((iSlow37) ? fConst8 * (fYec3[(i + fYec3_idx) & 4095] - fYec3[(i + fYec3_idx - iZec31[i]) & 4095] * (fZec32[i] + (1.0f - fZec30[i])) - (fZec30[i] - fZec32[i]) * fYec3[(i + fYec3_idx - (iZec31[i] + 1)) & 4095]) : 2.0f * float(fRec10[i] <= 0.7f) + -1.0f) : ((iSlow37) ? fZec17[i] : 2.0f * float(fRec10[i] <= 0.5f) + -1.0f))) : ((iSlow35) ? 0.0f - fZec29[i] : ((iSlow36) ? fZec29[i] : ((iSlow37) ? fSlow38 * fRec15[i] * fZec6[i] * fZec2[i] : 2.0f * (1.0f - std::fabs(fZec28[i])) + -1.0f))));
+				fZec36[i] = ((iSlow32) ? ((iSlow37) ? ((iSlow35) ? fConst8 * (fYec3[(i + fYec3_idx) & 4095] - fYec3[(i + fYec3_idx - iZec34[i]) & 4095] * (fZec35[i] + (1.0f - fZec33[i])) - (fZec33[i] - fZec35[i]) * fYec3[(i + fYec3_idx - (iZec34[i] + 1)) & 4095]) : 2.0f * float(fRec10[i] <= 0.85f) + -1.0f) : ((iSlow38) ? ((iSlow35) ? fConst8 * (fYec3[(i + fYec3_idx) & 4095] - fYec3[(i + fYec3_idx - iZec31[i]) & 4095] * (fZec32[i] + (1.0f - fZec30[i])) - (fZec30[i] - fZec32[i]) * fYec3[(i + fYec3_idx - (iZec31[i] + 1)) & 4095]) : 2.0f * float(fRec10[i] <= 0.7f) + -1.0f) : ((iSlow35) ? fZec17[i] : 2.0f * float(fRec10[i] <= 0.5f) + -1.0f))) : ((iSlow33) ? fZec29[i] : ((iSlow34) ? 0.0f - fZec29[i] : ((iSlow35) ? fSlow36 * fRec15[i] * fZec6[i] * fZec2[i] : 2.0f * (1.0f - std::fabs(fZec28[i])) + -1.0f))));
 			}
 			/* Vectorizable loop 60 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec38[i] = fSlow41 * ((iSlow43) ? ((iSlow45) ? 2.0f * float(fRec27[i] <= 0.5f) + -1.0f : ftbl0mydspSIG0[int(65536.0f * fRec27[i])]) : ((iSlow44) ? fConst39 * fRec24[i] : fZec37[i]));
+				fZec38[i] = fSlow39 * ((iSlow41) ? ((iSlow43) ? 2.0f * float(fRec27[i] <= 0.5f) + -1.0f : 2.0f * (1.0f - std::fabs(2.0f * fRec27[i] + -1.0f)) + -1.0f) : ((iSlow42) ? fConst39 * fRec24[i] : fZec37[i]));
 			}
 			/* Recursive loop 61 */
 			/* Pre code */
@@ -1634,12 +1632,12 @@ class mydsp : public dsp {
 			/* Vectorizable loop 63 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec39[i] = ((iSlow31) ? fSlow30 * fZec26[i] * std::pow(2.0f, fSlow46 * (fZec38[i] + fSlow42 * ((iSlow32) ? ((iSlow4) ? fRec31[i] : fZec27[i]) : fZec36[i]))) : fYec6[i]);
+				fZec39[i] = ((iSlow29) ? fSlow28 * fZec26[i] * std::pow(2.0f, fSlow44 * (fZec38[i] + fSlow40 * ((iSlow30) ? ((iSlow4) ? fRec31[i] : fZec27[i]) : fZec36[i]))) : fYec6[i]);
 			}
 			/* Vectorizable loop 64 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec54[i] = ((iSlow31) ? fSlow48 * fZec52[i] * std::pow(2.0f, fSlow46 * (fZec38[i] + fSlow42 * ((iSlow32) ? ((iSlow4) ? fRec39[i] : fZec53[i]) : fZec36[i]))) : fYec9[i]);
+				fZec54[i] = ((iSlow29) ? fSlow46 * fZec52[i] * std::pow(2.0f, fSlow44 * (fZec38[i] + fSlow40 * ((iSlow30) ? ((iSlow4) ? fRec39[i] : fZec53[i]) : fZec36[i]))) : fYec9[i]);
 			}
 			/* Vectorizable loop 65 */
 			/* Compute code */
@@ -1659,7 +1657,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 68 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec23[i] = ((iSlow21) ? fSlow2 - fSlow25 * fZec22[i] * fSlow26 : fSlow2 + fSlow25 * fZec22[i] * fSlow24);
+				fZec23[i] = ((iSlow19) ? fSlow2 - fSlow23 * fZec22[i] * fSlow24 : fSlow2 + fSlow23 * fZec22[i] * fSlow22);
 			}
 			/* Vectorizable loop 69 */
 			/* Compute code */
@@ -1678,7 +1676,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fYec4[i] = fSlow27 + fZec23[i];
+				fYec4[i] = fSlow25 + fZec23[i];
 			}
 			/* Post code */
 			for (int j31 = 0; j31 < 4; j31 = j31 + 1) {
@@ -1719,7 +1717,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fRec19[i] = fSlow27 + fZec23[i] + fRec19[i - 1] * float(fYec4[i - 1] >= fYec4[i]);
+				fRec19[i] = fSlow25 + fZec23[i] + fRec19[i - 1] * float(fYec4[i - 1] >= fYec4[i]);
 			}
 			/* Post code */
 			for (int j33 = 0; j33 < 4; j33 = j33 + 1) {
@@ -1824,7 +1822,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fVec4[i] = fSlow74;
+				fVec4[i] = fSlow72;
 			}
 			/* Post code */
 			for (int j97 = 0; j97 < 4; j97 = j97 + 1) {
@@ -1898,7 +1896,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fRec44[i] = fSlow74 + fRec44[i - 1] * float(fVec4[i - 1] >= fSlow74);
+				fRec44[i] = fSlow72 + fRec44[i - 1] * float(fVec4[i - 1] >= fSlow72);
 			}
 			/* Post code */
 			for (int j99 = 0; j99 < 4; j99 = j99 + 1) {
@@ -1911,7 +1909,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				iRec45[i] = iSlow75 * (iRec45[i - 1] + 1);
+				iRec45[i] = iSlow73 * (iRec45[i - 1] + 1);
 			}
 			/* Post code */
 			for (int j101 = 0; j101 < 4; j101 = j101 + 1) {
@@ -1980,7 +1978,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 101 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec67[i] = std::tan(1.5707964f * std::min<float>(std::max<float>(fConst6 * ((iSlow49) ? fYec4[i] * std::pow(2.0f, fSlow46 * (fSlow42 * ((iSlow32) ? ((iSlow4) ? fRec21[i] : fZec24[i]) : fZec36[i]) + fZec38[i])) : fYec4[i]), 0.0f), 1.0f));
+				fZec67[i] = std::tan(1.5707964f * std::min<float>(std::max<float>(fConst6 * ((iSlow47) ? fYec4[i] * std::pow(2.0f, fSlow44 * (fSlow40 * ((iSlow30) ? ((iSlow4) ? fRec21[i] : fZec24[i]) : fZec36[i]) + fZec38[i])) : fYec4[i]), 0.0f), 1.0f));
 			}
 			/* Vectorizable loop 102 */
 			/* Compute code */
@@ -2015,7 +2013,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 108 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec91[i] = std::max<float>(0.0f, std::min<float>(fSlow79 * fRec44[i], std::max<float>(fSlow81 * (fSlow78 - fRec44[i]) + 1.0f, fSlow80)) * (1.0f - float(iRec45[i]) / fSlow77));
+				fZec91[i] = std::max<float>(0.0f, std::min<float>(fSlow77 * fRec44[i], std::max<float>(fSlow79 * (fSlow76 - fRec44[i]) + 1.0f, fSlow78)) * (1.0f - float(iRec45[i]) / fSlow75));
 			}
 			/* Vectorizable loop 109 */
 			/* Compute code */
@@ -2025,12 +2023,12 @@ class mydsp : public dsp {
 			/* Vectorizable loop 110 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec70[i] = ((iSlow60) ? fConst36 * fRec40[i] * fZec54[i] : 2.0f * (1.0f - std::fabs(fZec69[i])) + -1.0f);
+				fZec70[i] = ((iSlow58) ? fConst36 * fRec40[i] * fZec54[i] : 2.0f * (1.0f - std::fabs(fZec69[i])) + -1.0f);
 			}
 			/* Vectorizable loop 111 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec71[i] = ((iSlow60) ? 2.0f * fRec43[i] + -1.0f : fZec69[i]);
+				fZec71[i] = ((iSlow58) ? 2.0f * fRec43[i] + -1.0f : fZec69[i]);
 			}
 			/* Vectorizable loop 112 */
 			/* Compute code */
@@ -2055,12 +2053,12 @@ class mydsp : public dsp {
 			/* Vectorizable loop 116 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec79[i] = ((iSlow68) ? fConst36 * fRec32[i] * fZec39[i] : 2.0f * (1.0f - std::fabs(fZec78[i])) + -1.0f);
+				fZec79[i] = ((iSlow66) ? fConst36 * fRec32[i] * fZec39[i] : 2.0f * (1.0f - std::fabs(fZec78[i])) + -1.0f);
 			}
 			/* Vectorizable loop 117 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec80[i] = ((iSlow68) ? 2.0f * fRec35[i] + -1.0f : fZec78[i]);
+				fZec80[i] = ((iSlow66) ? 2.0f * fRec35[i] + -1.0f : fZec78[i]);
 			}
 			/* Vectorizable loop 118 */
 			/* Compute code */
@@ -2114,7 +2112,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec87[i] = fZec67[i] * ((fSlow73 * (fSlow72 * (fSlow71 * ((iSlow65) ? ((iSlow69) ? ((iSlow68) ? fConst8 * (fYec8[(i + fYec8_idx) & 4095] - fYec8[(i + fYec8_idx - iZec85[i]) & 4095] * (fZec86[i] + (1.0f - fZec84[i])) - (fZec84[i] - fZec86[i]) * fYec8[(i + fYec8_idx - (iZec85[i] + 1)) & 4095]) : 2.0f * float(fRec28[i] <= 0.85f) + -1.0f) : ((iSlow70) ? ((iSlow68) ? fConst8 * (fYec8[(i + fYec8_idx) & 4095] - fYec8[(i + fYec8_idx - iZec82[i]) & 4095] * (fZec83[i] + (1.0f - fZec81[i])) - (fZec81[i] - fZec83[i]) * fYec8[(i + fYec8_idx - (iZec82[i] + 1)) & 4095]) : 2.0f * float(fRec28[i] <= 0.7f) + -1.0f) : ((iSlow68) ? fZec47[i] : 2.0f * float(fRec28[i] <= 0.5f) + -1.0f))) : ((iSlow66) ? 0.5f * (fZec79[i] + fZec80[i]) : ((iSlow67) ? fZec80[i] : fZec79[i]))) + fSlow63 * ((iSlow57) ? ((iSlow61) ? ((iSlow60) ? fConst8 * (fYec11[(i + fYec11_idx) & 4095] - fYec11[(i + fYec11_idx - iZec76[i]) & 4095] * (fZec77[i] + (1.0f - fZec75[i])) - (fZec75[i] - fZec77[i]) * fYec11[(i + fYec11_idx - (iZec76[i] + 1)) & 4095]) : 2.0f * float(fRec36[i] <= 0.85f) + -1.0f) : ((iSlow62) ? ((iSlow60) ? fConst8 * (fYec11[(i + fYec11_idx) & 4095] - fYec11[(i + fYec11_idx - iZec73[i]) & 4095] * (fZec74[i] + (1.0f - fZec72[i])) - (fZec72[i] - fZec74[i]) * fYec11[(i + fYec11_idx - (iZec73[i] + 1)) & 4095]) : 2.0f * float(fRec36[i] <= 0.7f) + -1.0f) : ((iSlow60) ? fZec62[i] : 2.0f * float(fRec36[i] <= 0.5f) + -1.0f))) : ((iSlow58) ? 0.5f * (fZec70[i] + fZec71[i]) : ((iSlow59) ? fZec71[i] : fZec70[i]))) + fSlow55 * fZec36[i]) + fSlow54 * ((iSlow44) ? fZec37[i] : fZec25[i])) + fSlow53 * fRec1[i - 1] - fSlow50 * (1.0f - fZec67[i] / fZec68[i]) * (fRec5[i - 1] + fZec67[i] * (fRec4[i - 1] + fZec67[i] * (fRec3[i - 1] + fZec67[i] * fRec2[i - 1] / fZec68[i]) / fZec68[i]) / fZec68[i])) / (fSlow50 * (mydsp_faustpower4_f(fZec67[i]) / mydsp_faustpower4_f(fZec68[i])) + 1.0f) - fRec2[i - 1]) / fZec68[i];
+				fZec87[i] = fZec67[i] * ((fSlow71 * (fSlow70 * (fSlow69 * ((iSlow63) ? ((iSlow67) ? ((iSlow66) ? fConst8 * (fYec8[(i + fYec8_idx) & 4095] - fYec8[(i + fYec8_idx - iZec85[i]) & 4095] * (fZec86[i] + (1.0f - fZec84[i])) - (fZec84[i] - fZec86[i]) * fYec8[(i + fYec8_idx - (iZec85[i] + 1)) & 4095]) : 2.0f * float(fRec28[i] <= 0.85f) + -1.0f) : ((iSlow68) ? ((iSlow66) ? fConst8 * (fYec8[(i + fYec8_idx) & 4095] - fYec8[(i + fYec8_idx - iZec82[i]) & 4095] * (fZec83[i] + (1.0f - fZec81[i])) - (fZec81[i] - fZec83[i]) * fYec8[(i + fYec8_idx - (iZec82[i] + 1)) & 4095]) : 2.0f * float(fRec28[i] <= 0.7f) + -1.0f) : ((iSlow66) ? fZec47[i] : 2.0f * float(fRec28[i] <= 0.5f) + -1.0f))) : ((iSlow64) ? fZec80[i] : ((iSlow65) ? 0.5f * (fZec79[i] + fZec80[i]) : fZec79[i]))) + fSlow61 * ((iSlow55) ? ((iSlow59) ? ((iSlow58) ? fConst8 * (fYec11[(i + fYec11_idx) & 4095] - fYec11[(i + fYec11_idx - iZec76[i]) & 4095] * (fZec77[i] + (1.0f - fZec75[i])) - (fZec75[i] - fZec77[i]) * fYec11[(i + fYec11_idx - (iZec76[i] + 1)) & 4095]) : 2.0f * float(fRec36[i] <= 0.85f) + -1.0f) : ((iSlow60) ? ((iSlow58) ? fConst8 * (fYec11[(i + fYec11_idx) & 4095] - fYec11[(i + fYec11_idx - iZec73[i]) & 4095] * (fZec74[i] + (1.0f - fZec72[i])) - (fZec72[i] - fZec74[i]) * fYec11[(i + fYec11_idx - (iZec73[i] + 1)) & 4095]) : 2.0f * float(fRec36[i] <= 0.7f) + -1.0f) : ((iSlow58) ? fZec62[i] : 2.0f * float(fRec36[i] <= 0.5f) + -1.0f))) : ((iSlow56) ? fZec71[i] : ((iSlow57) ? 0.5f * (fZec70[i] + fZec71[i]) : fZec70[i]))) + fSlow53 * fZec36[i]) + fSlow52 * ((iSlow42) ? fZec37[i] : fZec25[i])) + fSlow51 * fRec1[i - 1] - fSlow48 * (1.0f - fZec67[i] / fZec68[i]) * (fRec5[i - 1] + fZec67[i] * (fRec4[i - 1] + fZec67[i] * (fRec3[i - 1] + fZec67[i] * fRec2[i - 1] / fZec68[i]) / fZec68[i]) / fZec68[i])) / (fSlow48 * (mydsp_faustpower4_f(fZec67[i]) / mydsp_faustpower4_f(fZec68[i])) + 1.0f) - fRec2[i - 1]) / fZec68[i];
 				fRec2[i] = fRec2[i - 1] + 2.0f * fZec87[i];
 				fZec88[i] = fZec67[i] * (fRec2[i - 1] + fZec87[i] - fRec3[i - 1]) / fZec68[i];
 				fRec3[i] = fRec3[i - 1] + 2.0f * fZec88[i];
@@ -2148,7 +2146,7 @@ class mydsp : public dsp {
 			}
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fYec12[i] = fSlow51 * fRec1[i];
+				fYec12[i] = fSlow49 * fRec1[i];
 			}
 			/* Post code */
 			for (int j107 = 0; j107 < 4; j107 = j107 + 1) {
@@ -2170,7 +2168,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 126 */
 			/* Compute code */
 			for (int i = 0; i < vsize; i = i + 1) {
-				fZec92[i] = fSlow85 * fSlow84 * atanhf(std::max<float>(-0.9999999f, std::min<float>(0.9999999f, fRec0[i] + ((iSlow82) ? fSlow83 * fRec1[i] : fRec1[i]))));
+				fZec92[i] = fSlow83 * fSlow82 * atanhf(std::max<float>(-0.9999999f, std::min<float>(0.9999999f, fRec0[i] + ((iSlow80) ? fSlow81 * fRec1[i] : fRec1[i]))));
 			}
 			/* Vectorizable loop 127 */
 			/* Compute code */
