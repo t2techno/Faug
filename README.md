@@ -116,9 +116,9 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 </ul>
 
 <h2>Filter Section:</h2>
-<h3>Faust Libraries vaeffects Emulation of traditional moog 4th order ladder filter</h3>
+<h3>Faust Libraries-vaeffects emulation of traditional moog 4th order ladder filter</h3>
 <ul>
-  <li>Filter Modulation button: Turns on modulation of filter cutoff by modulation sources</li>
+  <li>Filter Modulation Button: Turns on modulation of filter cutoff by modulation sources</li>
   <li>Keyboard Control:<ul>
     <li>Keyboard Control 1: Turns on 1/3 of key tracking for filter cutoff</li>
     <li>Keyboard Control 2: Turns on 2/3 of key tracking for filter cutoff</li>
@@ -134,25 +134,52 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
     <li>ToDo: Add filter direction toggle</li>
   </ul></li>
   <li>Attack Time Knob: The amount of time it takes for the filter cutoff to go from the base frequency to max or min cutoff frequency.<ul>
-    <li>Value Range: [50ms, 10s]</li>
+    <li>Value Range: [1ms, 7s]</li>
     <li>Peak change amount is determined by Contour Amount knob.</li>
   </ul></li>
-  <li>Sustain Level Knob: The percent of difference between filter cutoff and contour peak for the filter cutoff to stay at after Attack and decay phases<ul>
+  <li>Sustain Level Knob: The percent of difference between filter cutoff and contour peak for the cutoff frequency to stay at after Decay Phase<ul>
     <li>Value Range: [0%, 100%]</li>
     <li>0%: After the Attack phase, the filter cutoff will decay to the base cutoff frequency set by the knob</li>
     <li>50%: If contour is set to max(4 octaves), the filter cutoff will decay to 2 octaves above base cutoff frequency determined by knob</li>
-    <li>100%: After the Attack phase, the filter cutoff will not decay at all</li>
+    <li>100%: After the Attack phase, the filter cutoff will not decay at all and will sustain at peak value until note is released</li>
   </ul></li>
   <li>Decay Time Knob: The amount of time it takes for the filter cutoff to go from the max or min cutoff frequency to Sustain level<ul>
-    <li>Value Range: [50ms, 24s]</li>
+    <li>Value Range: [4ms, 30s]</li>
     <li>Begins immediately after Attack phase ends</li>
   </ul></li>
+  <li>Release for filter envelope is either 10ms, or Decay Time value if Decay Button in keyboard section is on</li>
   <li>ToDo: Add different cutoff slopes/filter implementations</li>
+</ul>
+
+<h2>Loudness Contour:</h2>
+<ul>
+  <li>Attack Time Knob: The amount of time it takes for the volume to reach it's peak.<ul>
+    <li>Value Range: [1ms, 10s]</li>
+    <li>Peak determined by the Volume Knob in Power Section.</li>
+  </ul></li>
+  <li>Sustain Level Knob: Volume level held after decay<ul>
+    <li>Value Range: [0%, 100%]</li>
+    <li>0%: Volume will decay to nothing</li>
+    <li>100%: No volume decay after attack until note released</li>
+  </ul></li>
+  <li>Decay Time Knob: The amount of time it takes for the filter cutoff to go from the max or min cutoff frequency to Sustain level<ul>
+    <li>Value Range: [4ms, 24s]</li>
+    <li>Begins immediately after Attack phase ends</li>
+  </ul></li>
+  <li>Release for envelope is either 10ms, or Decay Time value if Decay Button in keyboard section is on</li>
+</ul>
+
+<h2>Power Section:</h2>
+<ul>
+  <li>Volume Knob: Scales overall output</li>
+  <li>Power Button: Turns output on/off <ul>
+    <li>ToDo: Add a warm up process</li>
+  </ul></li>
 </ul>
 <h3>Other ToDos:</h3>
 <ul>
   <li>Filter Direction button</li>
   <li>Oversampling</li>
   <li>Alternate UI view when no keyboard is needed</li>
-  <li>Envelope generator builds on itself when decay button is on</li>
+  <li>Contour generator builds on itself when decay button is on</li>
 </ul>
