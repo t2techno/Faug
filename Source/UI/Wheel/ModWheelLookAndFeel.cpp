@@ -76,3 +76,15 @@ void ModWheelLookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int 
     // Draw the track
     g.setColour(slider.findColour(juce::Slider::rotarySliderOutlineColourId));
 }
+
+void ModWheelLookAndFeel::drawLinearSliderBackground(juce::Graphics& g, int x, int y, int width, int height,
+    float sliderPos, float minSliderPos, float maxSliderPos,
+    const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) {
+    /**/
+}
+
+void ModWheelLookAndFeel::drawLinearSliderThumb(juce::Graphics& g, int x, int y, int width, int height,
+    float sliderPos, float minSliderPos, float maxSliderPos,
+    const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) {
+    /**/
+}

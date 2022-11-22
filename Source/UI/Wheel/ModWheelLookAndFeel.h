@@ -34,6 +34,17 @@ public:
         float sliderPos, float minSliderPos, float maxSliderPos,
         const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
 
+    void drawLinearSliderBackground(juce::Graphics& g,
+        int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+        const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
+
+    void drawLinearSliderThumb(juce::Graphics& g,
+        int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+        const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
+
+
 private:
     std::unique_ptr<ModWheelImage> wheelImage;
     juce::AffineTransform transform = juce::AffineTransform();

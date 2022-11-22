@@ -19,7 +19,8 @@ public:
     {
         wheelImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(wheelData, wheelDataSize));
         setSize(wheelWidth, wheelHeight);
-        setImage(wheelImage->rescaled(wheelWidth, wheelHeight));
+        float wheelScale = float(wheelWidth)/float(wheelImage->getWidth());
+        setImage(wheelImage->rescaled(wheelWidth, wheelImage->getHeight()*wheelScale));
     }
 
     virtual ~ModWheelImage() override
