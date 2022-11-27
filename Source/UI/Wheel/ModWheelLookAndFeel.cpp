@@ -19,8 +19,13 @@ ModWheelLookAndFeel::ModWheelLookAndFeel()
 ModWheelLookAndFeel::~ModWheelLookAndFeel()
 {}
 
-void ModWheelLookAndFeel::setWheelImage(const char* wheelData, const int wheelDataSize, const int wheelWidth, const int wheelHeight){
-    wheelImage = std::make_unique<ModWheelImage>(wheelData, wheelDataSize, wheelWidth, wheelHeight);
+void ModWheelLookAndFeel::setWheelImages(const char* wheelData, const int wheelDataSize, 
+                                         const char* wheelShadingData, const int wheelShadingDataSize,
+                                         const int wheelWidth, const int wheelHeight){
+    wheelImage   = std::make_unique<ModWheelImage>(wheelData, wheelDataSize, wheelWidth, wheelHeight);
+
+    juce::Image tempImage = juce::ImageFileFormat::loadFrom(wheelShadingData, wheelShadingDataSize);
+    wheelShading = std::make_unique<juce::Image>(tempImage.rescaled(wheelWidth, wheelHeight));
 }
 
 juce::Font ModWheelLookAndFeel::getBaseFont()
@@ -58,7 +63,10 @@ void ModWheelLookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int 
     const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider)
 {
     const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
-    g.drawImageTransformed(wheelImage->getImage(), transform.translation(0, sliderPos));
+    //wheelImage->setTransform(transform.translation(0, sliderPos - maxSliderPos));
+    g.drawImageAt(wheelImage->getImage(), 0, sliderPos-wheelImage.get()->pivotPoint, false);
+    g.drawImageAt(*wheelShading.get(), 0, 0, false);
+
 
     // Draw the readout
     // Change this to hint box?    
@@ -75,16 +83,4 @@ void ModWheelLookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int 
 
     // Draw the track
     g.setColour(slider.findColour(juce::Slider::rotarySliderOutlineColourId));
-}
-
-void ModWheelLookAndFeel::drawLinearSliderBackground(juce::Graphics& g, int x, int y, int width, int height,
-    float sliderPos, float minSliderPos, float maxSliderPos,
-    const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) {
-    /**/
-}
-
-void ModWheelLookAndFeel::drawLinearSliderThumb(juce::Graphics& g, int x, int y, int width, int height,
-    float sliderPos, float minSliderPos, float maxSliderPos,
-    const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) {
-    /**/
 }

@@ -23,7 +23,9 @@ public:
     ModWheelLookAndFeel();
     virtual ~ModWheelLookAndFeel() override;
 
-    void setWheelImage(const char* wheelData, const int wheelDataSize, const int wheelWidth, const int wheelHeight);
+    void setWheelImages(const char* wheelData, const int wheelDataSize, 
+                        const char* wheelShadingData, const int wheelShadingDataSize,
+                        const int wheelWidth, const int wheelHeight);
 
     juce::Font getBaseFont();
     juce::Font getLabelFont(juce::Label&) override;
@@ -34,18 +36,8 @@ public:
         float sliderPos, float minSliderPos, float maxSliderPos,
         const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
 
-    void drawLinearSliderBackground(juce::Graphics& g,
-        int x, int y, int width, int height,
-        float sliderPos, float minSliderPos, float maxSliderPos,
-        const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
-
-    void drawLinearSliderThumb(juce::Graphics& g,
-        int x, int y, int width, int height,
-        float sliderPos, float minSliderPos, float maxSliderPos,
-        const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
-
-
 private:
     std::unique_ptr<ModWheelImage> wheelImage;
+    std::unique_ptr<juce::Image> wheelShading;
     juce::AffineTransform transform = juce::AffineTransform();
 };

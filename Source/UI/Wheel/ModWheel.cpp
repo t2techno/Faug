@@ -19,7 +19,9 @@ ModWheel::ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId
     slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
     attach.reset(new SliderAttachment(vts, juce::String(paramId), *slider.get()));
 
-    modWheelLaf->setWheelImage(BinaryData::wheel_png, BinaryData::wheel_pngSize, wheelWidth, wheelHeight);
+    modWheelLaf->setWheelImages(BinaryData::wheel_png, BinaryData::wheel_pngSize, 
+                                BinaryData::wheelShading_png, BinaryData::wheelShading_pngSize,
+                                wheelWidth, wheelHeight);
     setLaf(modWheelLaf.get());
 }
 

@@ -17,10 +17,15 @@ class ModWheelImage : public juce::DrawableImage
 public:
     ModWheelImage(const char* wheelData, const int wheelDataSize, const int wheelWidth, const int wheelHeight)
     {
-        wheelImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(wheelData, wheelDataSize));
+        juce::Image tempImage = juce::ImageFileFormat::loadFrom(wheelData, wheelDataSize);
+        float wheelScale = float(wheelWidth) / float(tempImage.getWidth());
+
+        wheelImage = std::make_unique<juce::Image>(tempImage.rescaled(wheelWidth, tempImage.getHeight() * wheelScale));
+
         setSize(wheelWidth, wheelHeight);
-        float wheelScale = float(wheelWidth)/float(wheelImage->getWidth());
-        setImage(wheelImage->rescaled(wheelWidth, wheelImage->getHeight()*wheelScale));
+        setImage(*wheelImage.get());
+
+        pivotPoint = float(wheelImage->getHeight())/2.0;
     }
 
     virtual ~ModWheelImage() override

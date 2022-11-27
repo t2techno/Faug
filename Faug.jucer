@@ -19,7 +19,9 @@
         <FILE id="NKxNQh" name="knobOne.png" compile="0" resource="1" file="imageWork/knobs/knobOne.png"/>
         <FILE id="tWMkQ8" name="knobTwo.png" compile="0" resource="1" file="imageWork/knobs/knobTwo.png"/>
         <FILE id="Fph0lz" name="screwKnob.png" compile="0" resource="1" file="imageWork/knobs/screwKnob.png"/>
-        <FILE id="ZS4uoy" name="wheel.png" compile="0" resource="1" file="imageWork/knobs/wheel.png"/>
+        <FILE id="y684yH" name="wheel.png" compile="0" resource="1" file="imageWork/knobs/wheel.png"/>
+        <FILE id="vg78Rx" name="wheelShading.png" compile="0" resource="1"
+              file="imageWork/knobs/wheelShading.png"/>
       </GROUP>
     </GROUP>
     <GROUP id="{91DF2DAD-6B37-F429-7638-ACB6FB3BD448}" name="Source">
