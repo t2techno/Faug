@@ -39,11 +39,7 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
       <li>ToDo: Setting to send wheel automatically back to center when released</li>
     </ul>
   </li>
-  <li>Mod Wheel: Modulation Amount to modulation targets
-    <ul>
-      <li>ToDo: Wheel image/slider integration not working yet.</li>
-    </ul>
-  </li>
+  <li>Mod Wheel: Modulation Amount to modulation targets</li>
   <li>Glide Button: 
     <ul>
       <li>Activates glide/portamento when notes are played with no seperation</li>
@@ -177,10 +173,9 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 </ul>
 <h3>Other ToDos:</h3>
 <ul>
-  <li></li>
   <li>Filter Direction button</li>
   <li>Oversampling</li>
   <li>Alternate UI view when no keyboard is needed</li>
   <li>Contour generator builds on itself when decay button is on</li>
-  <li>Replace various implementations with exponential versions</li>
+  <li>Replace various curves and contours with exponential implementations</li>
 </ul>
