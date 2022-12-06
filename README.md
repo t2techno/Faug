@@ -77,7 +77,7 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
       <li>Triangle+Saw: Oscillators 1 & 2: A triangle and saw wave added together</li>
       <li>Reverse Saw: Oscillator 3: A saw wave that ramps down instead of ramping up</li>
     </ul>
-    <li>Saw: Save Wave, ramps up</li>
+    <li>Saw: Saw Wave, ramps up</li>
     <li>Square: Square Wave</li>
     <li>Rectangle: Rectangle Wave-Pulse train with 0.7 duty cycle </li>
     <li>Narrow Rectangle: Rectangle Wave-Pulse train with 0.85 duty cycle </li>
