@@ -173,9 +173,18 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 </ul>
 <h3>Other ToDos:</h3>
 <ul>
-  <li>Filter Direction button</li>
+  <li>Variable key tracking for notes</li>
+  <li>Variable detune/drift</li>
+  <li>Settings page to allow for these and other adjustments</li>
   <li>Oversampling</li>
-  <li>Alternate UI view when no keyboard is needed</li>
+  <li>Alternate UI view when no onscreen keyboard is needed <ul>
+    <li>Different layout, more of a rack/vertical style?</li>
+    <li>Add Loudness Meter</li>
+    <li>Add Spectrum graph</li>
+    <li>Add Waveform graph</li>
+    <li>Add to settings page to toggle them on/off</li>
+  </ul></li>
+  <li>UI/visual cues to inform user which buttons are flipped on</li>
   <li>Contour generator builds on itself when decay button is on</li>
   <li>Replace various curves and contours with exponential implementations</li>
 </ul>
