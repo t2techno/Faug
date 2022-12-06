@@ -1,7 +1,7 @@
 # Faug
 A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust = Faug
 
-![Alt text](./imageWork/backgroundExample.png?raw=true "Faug UI")
+![Alt text](./imageWork/faugScreenshot.png?raw=true "Faug UI")
 
 <h2>Controllers Section:</h2>
 <ul>
@@ -173,6 +173,7 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 </ul>
 <h3>Other ToDos:</h3>
 <ul>
+  <li>UI Labels/knob ticks need some fine-tuning to line up</li>
   <li>Variable key tracking for notes</li>
   <li>Variable detune/drift</li>
   <li>Settings page to allow for these and other adjustments</li>
