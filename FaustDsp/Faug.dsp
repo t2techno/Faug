@@ -1,6 +1,6 @@
 import("stdfaust.lib");
 
-display(name, mini, maxi) = _ <: attach(_,vbargraph("[9999]%name[style:numerical]",mini,maxi));
+display(name, mini, maxi) = _ <: attach(_,vbargraph("[00]%name[style:numerical]",mini,maxi));
 limit_range(mini,maxi) = _, mini : max : _, maxi : min;
 gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
 
@@ -8,7 +8,9 @@ gain = hslider("gain[style:knob]",1.0,0.0,1.0,0.01);
 // Will use as center for keyTrackingDiff
 keyboardCenter = 130.81;
 
-nyquist = ma.SR/2;
+// currently I only have 44.1khz
+// the things relying on this require it to be known at compile time anyway
+nyquist = 22050.0;//ma.SR/2;
 
 // todo variable keytracking per oscillator
 
@@ -97,7 +99,7 @@ with{
 
 
 // Envelope Section
-    envelope    = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
+    envelope    = en.adsre(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
     decayButton = checkbox("[23]decayOn");
     attack      = hslider("[24]attack[style:knob]",1,1,10000,1)*0.001;
     decay       = hslider("[25]decay[style:knob]",4,1,24000,1)*0.001;
@@ -108,37 +110,39 @@ with{
     // filter response is 32k, cutoff max is 20k
     // Have to have constant value know at compile time.
     // Maybe have multiple hardcoded values for different sample rates
-    filterMax = 20000.0/22050.0;
-    filterMin = 10.0/22050.0;
+
+    filterMax = 20000.0/nyquist;
+    filterMin = 10.0/nyquist;
     cutoffIn = hslider("[27]cutoff[style:knob]",0.5,filterMin,filterMax,0.001);
+    cutoffFreq = cutoffIn*nyquist;
 
 // key tracking stuff
+    // offset of played frequency from keyboard center
     keyTrackDiff = frequencyIn-keyboardCenter;
 
     //oneThird, twoThird
     keyTrackOne = checkbox("[28]keyTrackOne")*keyTrackDiff;
     keyTrackTwo = checkbox("[29]keyTrackTwo")*2.0*keyTrackDiff;
     keyTrackSum = (keyTrackOne + keyTrackTwo)/3.0;
+    cutoff_KeyTrack = cutoffFreq + keyTrackSum;
 
 // filter contour
     reverseContour = hslider("[30]contour_direction[style:radio{'+':0;'-':1}]",0,0,1,1);
     contourAmount = hslider("[31]contourAmount[style:knob]",0.0,0.0,1.0,0.001);
-    fAttack = hslider("[32]fAttack[style:knob]",1,1,7000,1);
-    fDecay = hslider("[33]fDecay[style:knob]",4,1,30000,1);
+    fAttack = hslider("[32]fAttack[style:knob]",1,1,7000,1)*0.001;
+    fDecay = hslider("[33]fDecay[style:knob]",4,1,30000,1)*0.001;
     fSustain = hslider("[34]fSustain[style:knob]",0.8,0.01,1.0,0.01);
-    fRelease = 10, fDecay : select2(decayButton);
-    
-   // 4 octave change max
-    contourPeak = (cutoffIn*16), filterMax : min, 
-                  (cutoffIn/16) :  select2(reverseContour);
+    fRelease = 10*0.001, fDecay : select2(decayButton);
 
-    filterUp   = _ + filterContour*(contourPeak-_)*contourAmount;
-    filterDown = _ - filterContour*(_-contourPeak)*contourAmount;
-    filterContour = en.adsr(fAttack, fDecay, fSustain, fRelease) <: _, si.smoo : select2(decayButton);
+    // either up 4 octaves, or down 4 octaves
+    contourPeak = 16.0, (1/16) : select2(reverseContour) : _*cutoff_KeyTrack;
+
+    filterUp   = cutoff_KeyTrack <: _ + contourAmount*filterContour*(contourPeak-_);
+    filterDown = cutoff_KeyTrack <: _ - contourAmount*filterContour*(_-contourPeak); 
+    filterContour = en.adsre(fAttack, fDecay, fSustain, fRelease, gate) <: _, si.smoo : select2(decayButton);
 
     // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
-    cutOffCombine = keyTrackSum <: filterUp, filterDown: select2(reverseContour) : 
-        _ + (cutoffIn*ma.SR) : modulate(filterModOn) : _/ma.SR : limit_range(0.0,1.0);
+    cutOffCombine = filterUp, filterDown : select2(reverseContour) : modulate(filterModOn) : _/nyquist : limit_range(filterMin,filterMax);
 
     filterModOn = checkbox("[35]filterModOn");
     modulate(on) = _ <: _, _*(2^(modulation)) : select2(on);
@@ -163,7 +167,7 @@ with{
     redNoise = no.noise : fi.spectral_tilt(3,lowBandLimit,bw3,-0.25);
     modNoise = no.pink_noise, redNoise : select2(noiseSelect);
 
-    modRight  = modNoise, lfo : select2(checkbox("[43]noise_lfo"));
+    modRight  = modNoise, lfo : select2(checkbox("[43]noise_lfo")) ;
     modMix = hslider("[44]modMix[style:knob]",0.0,0.0,1.0,0.01);
     modAmount = hslider("[45]modAmount[style:knob]",0.0,0.0,1.0,0.01);
     modulation = (1-modMix)*modLeft + (modMix)*modRight : _*modAmount;
