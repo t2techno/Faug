@@ -1,7 +1,7 @@
 # Faug
 A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust = Faug
 
-![Alt text](./imageWork/backgroundExample.png?raw=true "Faug UI")
+![Alt text](./imageWork/faugScreenshot.png?raw=true "Faug UI")
 
 <h2>Controllers Section:</h2>
 <ul>
@@ -77,7 +77,7 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
       <li>Triangle+Saw: Oscillators 1 & 2: A triangle and saw wave added together</li>
       <li>Reverse Saw: Oscillator 3: A saw wave that ramps down instead of ramping up</li>
     </ul>
-    <li>Saw: Save Wave, ramps up</li>
+    <li>Saw: Saw Wave, ramps up</li>
     <li>Square: Square Wave</li>
     <li>Rectangle: Rectangle Wave-Pulse train with 0.7 duty cycle </li>
     <li>Narrow Rectangle: Rectangle Wave-Pulse train with 0.85 duty cycle </li>
@@ -173,9 +173,19 @@ A Minimoog Model D emulation with the DSP portion written in Faust. Moog + Faust
 </ul>
 <h3>Other ToDos:</h3>
 <ul>
-  <li>Filter Direction button</li>
+  <li>UI Labels/knob ticks need some fine-tuning to line up</li>
+  <li>Variable key tracking for notes</li>
+  <li>Variable detune/drift</li>
+  <li>Settings page to allow for these and other adjustments</li>
   <li>Oversampling</li>
-  <li>Alternate UI view when no keyboard is needed</li>
+  <li>Alternate UI view when no onscreen keyboard is needed <ul>
+    <li>Different layout, more of a rack/vertical style?</li>
+    <li>Add Loudness Meter</li>
+    <li>Add Spectrum graph</li>
+    <li>Add Waveform graph</li>
+    <li>Add to settings page to toggle them on/off</li>
+  </ul></li>
+  <li>UI/visual cues to inform user which buttons are flipped on</li>
   <li>Contour generator builds on itself when decay button is on</li>
   <li>Replace various curves and contours with exponential implementations</li>
 </ul>
