@@ -1,5 +1,3 @@
-#pragma once
-
 #include <JuceHeader.h>
 
 struct FaustDspSound : public juce::SynthesiserSound
