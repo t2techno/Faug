@@ -99,7 +99,7 @@ with{
 
 
 // Envelope Section
-    envelope    = en.adsre(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
+    envelope    = en.adsr(attack,decay,sustain,release,gate) <: _, si.smoo : select2(decayButton);
     decayButton = checkbox("[23]decayOn");
     attack      = hslider("[24]attack[style:knob]",1,1,10000,1)*0.001;
     decay       = hslider("[25]decay[style:knob]",4,1,24000,1)*0.001;
@@ -139,7 +139,7 @@ with{
 
     filterUp   = cutoff_KeyTrack <: _ + contourAmount*filterContour*(contourPeak-_);
     filterDown = cutoff_KeyTrack <: _ - contourAmount*filterContour*(_-contourPeak); 
-    filterContour = en.adsre(fAttack, fDecay, fSustain, fRelease, gate) <: _, si.smoo : select2(decayButton);
+    filterContour = en.adsr(fAttack, fDecay, fSustain, fRelease, gate) <: _, si.smoo : select2(decayButton);
 
     // set signal up/down a percentage of 4 octaves from the set cutoff-frequency(plus keyTrack)
     cutOffCombine = filterUp, filterDown : select2(reverseContour) : modulate(filterModOn) : _/nyquist : limit_range(filterMin,filterMax);
@@ -188,9 +188,5 @@ with {
     fdBackSignal = _*fdback*fdbackOn;
     drive = _ <: drySig, wetSig : + : aa.Ratanh;
     drySig = _, (1-fdback)*_ : select2(fdbackOn);
-    wetSig = fdback*_ : histeresis;
-
-    histeresis = firpart : + ~ backPart;
-    firpart(x) = 0.1*x' + 0.5*x''';
-    backPart(v) = 0  - 0.1*v''' - .5*v'''';
+    wetSig = 0.0, _*(2^fdback) : select2(fdbackOn);
 };
