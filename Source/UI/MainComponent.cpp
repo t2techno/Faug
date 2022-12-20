@@ -38,7 +38,9 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 }
 
 MainComponent::~MainComponent()
-{}
+{
+    
+}
 
 void MainComponent::createKeyboard() 
 {
@@ -268,6 +270,8 @@ void MainComponent::resized()
 
 void MainComponent::timerCallback()
 {
-    keyboardComponent.grabKeyboardFocus();
+    if (this->isShowing()) {
+        keyboardComponent.grabKeyboardFocus();
+    }
     stopTimer();
 }

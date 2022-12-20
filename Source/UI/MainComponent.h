@@ -36,9 +36,10 @@ public:
 
 	 void placeVerticalButton(juce::Component& comp, std::string label);
 
-	 // getElementDimensions. single line call, but it would be super verbose to include it everywhere
+	 // getElementDimensions. single line call, but it would be annoyingly verbose to include it everywhere
 	 int getElWidth(std::string label);
 	 int getElHeight(std::string label);
+
 private:
 	int window_width;
 	int window_height;
