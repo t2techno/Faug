@@ -13,11 +13,7 @@ FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioP
 {
     // This is a mono-synth, only one voice needed
     mFaust = std::make_unique<mydsp>();
-    mVoice = std::make_unique<FaustDspVoice>(mVts, *mFaust.get());
-
-    synth.addVoice(mVoice.get());
-    synth.addSound(new FaustDspSound());
-    synth.setNoteStealingEnabled(true);
+ 
     keyboardState.addListener(this);
 }
 
@@ -33,7 +29,14 @@ void FaugAudioSource::setUsingSynthSound()
 void FaugAudioSource::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
     mBridge = std::make_unique<FaustUIBridge>(mVts);
-    mVoice->prepareToPlay(sampleRate, samplesPerBlockExpected);
+
+    FaustDspVoice* synthVoice = new FaustDspVoice(mVts, *mFaust.get());
+    synthVoice->prepareToPlay(sampleRate, samplesPerBlockExpected);
+
+    synth.addVoice(synthVoice);
+    synth.addSound(new FaustDspSound());
+    synth.setNoteStealingEnabled(true);
+
     mFaust->init(sampleRate);
     mFaust->buildUserInterface(mBridge.get());
     synth.setCurrentPlaybackSampleRate(sampleRate);
@@ -42,7 +45,6 @@ void FaugAudioSource::prepareToPlay(int samplesPerBlockExpected, double sampleRa
 
 void FaugAudioSource::releaseResources() {
     mFaust.reset();
-    mVoice.reset();
     mBridge.reset();
 }
 
@@ -77,7 +79,7 @@ void FaugAudioSource::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, in
     //If the voice is active, it's currently playing currentNote. Move it to prev_freq for glide
         //If the voice isn't active, set prev_freq to new note so there is no glide
 
-    mVts.getParameterAsValue(PREV_FREQ).setValue(mVoice->isVoiceActive() ? mBridge->getCurrentFreq() :
+    mVts.getParameterAsValue(PREV_FREQ).setValue(synth.getVoice(0)->isVoiceActive() ? mBridge->getCurrentFreq() :
                                                                            juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
     currentNote = midiNoteNumber;
     heldNotes[numHeldNotes++] = midiNoteNumber;
@@ -103,7 +105,7 @@ void FaugAudioSource::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, i
         }
     }
     numHeldNotes--;
-    bool triggerNewNote = (mVoice->getCurrentlyPlayingNote() == midiNoteNumber && numHeldNotes > 0);
+    bool triggerNewNote = (synth.getVoice(0)->getCurrentlyPlayingNote() == midiNoteNumber && numHeldNotes > 0);
     if (triggerNewNote)
     {
         mVts.getParameterAsValue(PREV_FREQ).setValue(mBridge->getCurrentFreq());

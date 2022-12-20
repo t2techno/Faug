@@ -33,7 +33,6 @@ class FaugAudioSource : public juce::AudioSource,
 		juce::Synthesiser synth;
 		juce::MidiKeyboardState& keyboardState;
 		std::unique_ptr<mydsp> mFaust;
-		std::unique_ptr<FaustDspVoice> mVoice;
 		std::unique_ptr<FaustUIBridge> mBridge;
 		juce::AudioProcessorValueTreeState& mVts;
 

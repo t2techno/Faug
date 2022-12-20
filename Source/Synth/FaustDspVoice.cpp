@@ -9,7 +9,11 @@ FaustDspVoice::FaustDspVoice(juce::AudioProcessorValueTreeState& valueTreeState,
 {
 
 }
-FaustDspVoice::~FaustDspVoice(){}
+FaustDspVoice::~FaustDspVoice() {
+	for (int channel = 0; channel < 2; ++channel) {
+		delete outputs[channel];
+	}
+}
 
 void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock) 
 {
@@ -20,7 +24,6 @@ void FaustDspVoice::prepareToPlay(int sampleRate, int samplesPerBlock)
 
 void FaustDspVoice::releaseResources()
 {
-	
 }
 
 bool FaustDspVoice::canPlaySound(juce::SynthesiserSound* sound)
