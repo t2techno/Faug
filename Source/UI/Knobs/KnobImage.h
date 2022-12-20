@@ -20,16 +20,16 @@ public:
         knobImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(knobData, knobDataSize));
         setSize(knobSize, knobSize);
         setImage(knobImage->rescaled(knobSize, knobSize));
-        pivotPoint = knobSize / 2.0;
+        pivotPoint = std::make_unique<float>(knobSize / 2.0);
     }
 
     virtual ~KnobImage() override
     {
     }
 
-    float pivotPoint;
+    std::unique_ptr<float> pivotPoint;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobImage)
+    JUCE_HEAVYWEIGHT_LEAK_DETECTOR(KnobImage)
     std::unique_ptr<juce::Image> knobImage;
 };

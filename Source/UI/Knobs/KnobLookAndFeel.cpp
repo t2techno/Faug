@@ -67,7 +67,7 @@ void KnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int widt
 
     // Draw the readout
     // Change this to hint box?    
-    g.drawImageTransformed(knobImage->getImage(), transform.rotation(angle, knobImage->pivotPoint, knobImage->pivotPoint));
+    g.drawImageTransformed(knobImage->getImage(), transform.rotation(angle, *knobImage->pivotPoint.get(), *knobImage->pivotPoint.get()));
     
     
    /* 

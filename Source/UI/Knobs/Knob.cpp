@@ -22,7 +22,6 @@ Knob::Knob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int kn
 
 Knob::~Knob()
 {
-    slider->setLookAndFeel(nullptr);
 }
 
 void Knob::setLaf(KnobLookAndFeel* laf) {
