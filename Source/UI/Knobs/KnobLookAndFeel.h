@@ -17,13 +17,12 @@ class KnobImage;
 //==============================================================================
 /*
 */
-class KnobLookAndFeel  : public juce::LookAndFeel_V4
+class KnobLookAndFeel : public juce::LookAndFeel_V4
 {
     public:
         KnobLookAndFeel();
+        KnobLookAndFeel(juce::Image& knobImageIn, const int knobSize);
         virtual ~KnobLookAndFeel() override;
-
-        void setKnobImage(const char* knobData, const int knobDataSize, const int knobSize);
 
         juce::Font getBaseFont();
         juce::Font getLabelFont(juce::Label&) override;
@@ -34,7 +33,10 @@ class KnobLookAndFeel  : public juce::LookAndFeel_V4
             float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle,
             juce::Slider&) override;
 
+        int knobSize;
+
     private:
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobLookAndFeel)
         std::unique_ptr<KnobImage> knobImage;
         juce::AffineTransform transform = juce::AffineTransform();
 };

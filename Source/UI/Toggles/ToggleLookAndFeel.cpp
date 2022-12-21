@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "ToggleLookAndFeel.h"
-#include "ToggleImage.h"
+#include "ToggleImage.cpp"
 
 //==============================================================================
 

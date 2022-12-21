@@ -16,12 +16,13 @@ KnobLookAndFeel::KnobLookAndFeel()
 {
 }
 
+KnobLookAndFeel::KnobLookAndFeel(juce::Image& knobImageIn, const int knobSizeIn) :
+    knobImage(std::make_unique<KnobImage>(knobImageIn, knobSizeIn)), knobSize(knobSizeIn)
+{
+}
+
 KnobLookAndFeel::~KnobLookAndFeel()
 {}
-
-void KnobLookAndFeel::setKnobImage(const char* knobData, const int knobDataSize, const int knobSize) {
-    knobImage = std::make_unique<KnobImage>(knobData, knobDataSize, knobSize);
-}
 
 juce::Font KnobLookAndFeel::getBaseFont()
 {
