@@ -19,6 +19,9 @@ public:
 	 void paint(juce::Graphics& g) override; //Component
 	 void resized() override; //Component
 
+	 // Load Images
+	 void initializeAssets();
+
 	 // Create UI Sections
 	 void createKeyboard();
 
@@ -52,19 +55,41 @@ private:
     juce::AudioProcessorValueTreeState& m_vts;
 	std::unique_ptr<juce::Drawable> background;
 
+	// 3 Image assets
+	std::unique_ptr<juce::Image> knobOneImage;
+	std::unique_ptr<juce::Image> knobTwoImage;
+	std::unique_ptr<juce::Image> screwKnobImage;
+
+	// referenced among 5 LookAndFeels of varying size
+	std::unique_ptr<KnobLookAndFeel>BigKnobOneLaf;
+	std::unique_ptr<KnobLookAndFeel>TinyKnobOneLaf;
+	std::unique_ptr<KnobLookAndFeel>KnobOneLaf;
+	std::unique_ptr<KnobLookAndFeel>KnobTwoLaf;
+	std::unique_ptr<KnobLookAndFeel>ScrewKnobLaf;
+
 
 	// CONTROLLERS
-	std::unique_ptr<KnobOne> m_globalDetune;
-	std::unique_ptr<KnobOne> m_glide;
-	std::unique_ptr<KnobOne> m_modMix;
+	// 
+	// KnobOne
+	std::unique_ptr<Knob> m_globalDetune;
+	std::unique_ptr<Knob> m_glide;
+	std::unique_ptr<Knob> m_modMix;
+
+	// Brown Toggles
 	std::unique_ptr<BrownToggle> m_osc3_filterEG_modSrc;
 	std::unique_ptr<BrownToggle> m_noise_lfo_modSrc;
 
 
-	// KEYBOARDS
+	// KEYBOARD
+	//
+	// TinyKnobOne
+	std::unique_ptr<Knob> m_lfoRate;
+
+	// White Toggle
 	std::unique_ptr<WhiteToggle> m_glideOn;
 	std::unique_ptr<WhiteToggle> m_decayOn;
-	std::unique_ptr<TinyKnobOne> m_lfoRate;
+
+	// Mod Wheels
 	std::unique_ptr<ModWheel> m_pitchBend;
 	std::unique_ptr<ModWheel> m_modAmount;
 
@@ -74,36 +99,35 @@ private:
 
 
 	// OSCILLATOR BANK
-	std::unique_ptr<KnobTwo>     m_oscOneRange;
-	std::unique_ptr<KnobTwo>     m_oscOneWaveForm;
+	std::unique_ptr<Knob>  m_oscOneRange;
+	std::unique_ptr<Knob>  m_oscOneWaveForm;
 	
-	std::unique_ptr<KnobTwo>     m_oscTwoRange;
-	std::unique_ptr<KnobTwo>     m_oscTwoWaveForm;
-	std::unique_ptr<BigKnobOne>  m_oscTwoDetune;
+	std::unique_ptr<Knob>  m_oscTwoRange;
+	std::unique_ptr<Knob>  m_oscTwoWaveForm;
+	std::unique_ptr<Knob>  m_oscTwoDetune;
 
-	std::unique_ptr<KnobTwo>        m_oscThreeRange;
-	std::unique_ptr<KnobTwo>        m_oscThreeWaveForm;
-	std::unique_ptr<BigKnobOne>     m_oscThreeDetune;
+	std::unique_ptr<Knob> m_oscThreeRange;
+	std::unique_ptr<Knob> m_oscThreeWaveForm;
+	std::unique_ptr<Knob> m_oscThreeDetune;
 	std::unique_ptr<BigOrangeToggle>m_osc3Ctrl;
 
-
 	// MIXER
-	std::unique_ptr<ScrewKnob>  m_load;
+	std::unique_ptr<Knob>  m_load;
 
 	std::unique_ptr<BlueToggle> m_oscOnePowerButton;
-	std::unique_ptr<KnobOne>    m_oscOneGain;
+	std::unique_ptr<Knob>    m_oscOneGain;
 
 	std::unique_ptr<BlueToggle> m_oscTwoPowerButton;
-	std::unique_ptr<KnobOne>    m_oscTwoGain;
+	std::unique_ptr<Knob>    m_oscTwoGain;
 
 	std::unique_ptr<BlueToggle> m_oscThreePowerButton;
-	std::unique_ptr<KnobOne>    m_oscThreeGain;
+	std::unique_ptr<Knob>    m_oscThreeGain;
 
 	std::unique_ptr<BlueToggle> m_feedbackOn;
-	std::unique_ptr<KnobOne>    m_feedbackGain;
+	std::unique_ptr<Knob>    m_feedbackGain;
 
 	std::unique_ptr<BlueToggle> m_noiseOn;
-	std::unique_ptr<KnobOne>    m_noiseGain;
+	std::unique_ptr<Knob>    m_noiseGain;
 	std::unique_ptr<BlueToggle> m_noiseType;
 
 	// In-Between

@@ -8,7 +8,7 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
     : m_vts(vts), keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard), window_width(window_width), window_height(window_height)
 
 {
-    background = juce::Drawable::createFromImageData(BinaryData::background_png, BinaryData::background_pngSize);
+    initializeAssets();
 
     setOpaque(true);
 
@@ -24,7 +24,7 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 
     createEnvelope();
 
-    master_volume = std::make_unique<TinyKnobOne>(m_vts, juce::String(VOLUME), getElWidth(VOLUME));
+    master_volume = std::make_unique<Knob>(m_vts, juce::String(VOLUME), getElWidth(VOLUME), );
     placeElement(*master_volume, VOLUME);
 
     master_on = std::make_unique<BrownToggle>(m_vts, juce::String(ON), getElWidth(ON),
@@ -40,6 +40,21 @@ MainComponent::MainComponent(juce::MidiKeyboardState& keyboardState, juce::Audio
 MainComponent::~MainComponent()
 {
     
+}
+
+void MainComponent::initializeAssets()
+{
+    // load images
+    background     = juce::Drawable::createFromImageData(BinaryData::background_png, BinaryData::background_pngSize);
+    knobOneImage   = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::knobOne_png,   BinaryData::knobOne_pngSize));
+    knobTwoImage   = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::knobTwo_png,   BinaryData::knobTwo_pngSize));
+    screwKnobImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::screwKnob_png, BinaryData::screwKnob_pngSize));
+
+    KnobOneLaf     = std::make_unique<KnobLookAndFeel>(*knobOneImage.get(),   10);
+    BigKnobOneLaf  = std::make_unique<KnobLookAndFeel>(*knobOneImage.get(),   20);
+    TinyKnobOneLaf = std::make_unique<KnobLookAndFeel>(*knobOneImage.get(),   5);
+    KnobTwoLaf     = std::make_unique<KnobLookAndFeel>(*knobTwoImage.get(),   20);
+    ScrewKnobLaf   = std::make_unique<KnobLookAndFeel>(*screwKnobImage.get(), 2);
 }
 
 void MainComponent::createKeyboard() 
@@ -63,23 +78,23 @@ void MainComponent::createKeyboard()
         getElHeight(MOD_AMOUNT));
     placeElement(*m_pitchBend.get(), PITCH_BEND);
 
-    m_lfoRate = std::make_unique<TinyKnobOne>(m_vts, juce::String(LFO_RATE), getElWidth(LFO_RATE));
+    m_lfoRate = std::make_unique<Knob>(m_vts, juce::String(LFO_RATE), TinyKnobOneLaf);
     placeElement(*m_lfoRate.get(), LFO_RATE);
 }
 
 void MainComponent::createController()
 {
-    m_globalDetune = std::make_unique<KnobOne>(m_vts, juce::String(GLOBAL_DETUNE), getElWidth(GLOBAL_DETUNE));
+    m_globalDetune = std::make_unique<Knob>(m_vts, juce::String(GLOBAL_DETUNE), KnobOneLaf);
     placeElement(*m_globalDetune, GLOBAL_DETUNE);
 
-    m_glide = std::make_unique<KnobOne>(m_vts, juce::String(GLIDE_RATE), getElWidth(GLIDE_RATE));
+    m_glide = std::make_unique<Knob>(m_vts, juce::String(GLIDE_RATE), KnobOneLaf);
     placeElement(*m_glide.get(), GLIDE_RATE);
 
     m_oscModOn = std::make_unique<BigOrangeToggle>(m_vts, juce::String(OSC_MOD_ON), getElWidth(OSC_MOD_ON),
                                                                              getElHeight(OSC_MOD_ON));
     placeElement(*m_oscModOn.get(), OSC_MOD_ON);
 
-    m_modMix = std::make_unique<KnobOne>(m_vts, juce::String(MOD_MIX), getElWidth(MOD_MIX));
+    m_modMix = std::make_unique<Knob>(m_vts, juce::String(MOD_MIX), KnobOneLaf);
     placeElement(*m_modMix.get(), MOD_MIX);
 
     m_osc3_filterEG_modSrc = std::make_unique<BrownToggle>(m_vts, juce::String(OSC3_FILTEG_MOD), getElWidth(OSC3_FILTEG_MOD),
@@ -94,30 +109,30 @@ void MainComponent::createController()
 void MainComponent::createOscBank()
 {
     // OSC ONE
-    m_oscOneRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC1_RANGE), getElWidth(OSC1_RANGE));
+    m_oscOneRange = std::make_unique<Knob>(m_vts, juce::String(OSC1_RANGE), KnobTwoLaf);
     placeElement(*m_oscOneRange.get(), OSC1_RANGE);
 
-    m_oscOneWaveForm = std::make_unique<KnobTwo>(m_vts, juce::String(OSC1_WAVE), getElWidth(OSC1_WAVE));
+    m_oscOneWaveForm = std::make_unique<Knob>(m_vts, juce::String(OSC1_WAVE), KnobTwoLaf);
     placeElement(*m_oscOneWaveForm.get(), OSC1_WAVE);
     
     // OSC Two
-    m_oscTwoRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_RANGE), getElWidth(OSC2_RANGE));
+    m_oscTwoRange = std::make_unique<Knob>(m_vts, juce::String(OSC2_RANGE), KnobTwoLaf);
     placeElement(*m_oscTwoRange.get(), OSC2_RANGE);
 
-    m_oscTwoDetune = std::make_unique<BigKnobOne>(m_vts, juce::String(OSC2_DETUNE), getElWidth(OSC2_DETUNE));
+    m_oscTwoDetune = std::make_unique<Knob>(m_vts, juce::String(OSC2_DETUNE), BigKnobOneLaf);
     placeElement(*m_oscTwoDetune.get(), OSC2_DETUNE);
 
-    m_oscTwoWaveForm = std::make_unique<KnobTwo>(m_vts, juce::String(OSC2_WAVE), getElWidth(OSC2_WAVE));
+    m_oscTwoWaveForm = std::make_unique<Knob>(m_vts, juce::String(OSC2_WAVE), KnobTwoLaf);
     placeElement(*m_oscTwoWaveForm.get(), OSC2_WAVE);
 
     // OSC Three
-    m_oscThreeRange = std::make_unique<KnobTwo>(m_vts, juce::String(OSC3_RANGE), getElWidth(OSC3_RANGE));
+    m_oscThreeRange = std::make_unique<Knob>(m_vts, juce::String(OSC3_RANGE), KnobTwoLaf);
     placeElement(*m_oscThreeRange.get(), OSC3_RANGE);
 
-    m_oscThreeDetune = std::make_unique<BigKnobOne>(m_vts, juce::String(OSC3_DETUNE), getElWidth(OSC3_DETUNE));
+    m_oscThreeDetune = std::make_unique<Knob>(m_vts, juce::String(OSC3_DETUNE), BigKnobOneLaf);
     placeElement(*m_oscThreeDetune.get(), OSC3_DETUNE);
 
-    m_oscThreeWaveForm = std::make_unique<KnobTwo>(m_vts,  juce::String(OSC3_WAVE), getElWidth(OSC3_WAVE));
+    m_oscThreeWaveForm = std::make_unique<Knob>(m_vts,  juce::String(OSC3_WAVE), KnobTwoLaf);
     placeElement(*m_oscThreeWaveForm.get(), OSC3_WAVE);
 
     m_osc3Ctrl = std::make_unique<BigOrangeToggle>(m_vts, juce::String(OSC3_CTRL), getElWidth(OSC3_CTRL),
@@ -127,11 +142,11 @@ void MainComponent::createOscBank()
 
 void MainComponent::createMixer()
 {
-    m_load = std::make_unique<ScrewKnob>(m_vts, juce::String(LOAD), getElWidth(LOAD));
+    m_load = std::make_unique<Knob>(m_vts, juce::String(LOAD), ScrewKnobLaf);
     placeElement(*m_load.get(), LOAD);
 
     // Oscillators
-    m_oscOneGain = std::make_unique<KnobOne>(m_vts, juce::String(OSC1_GAIN), getElWidth(OSC3_WAVE));
+    m_oscOneGain = std::make_unique<Knob>(m_vts, juce::String(OSC1_GAIN), KnobOneLaf);
     placeElement(*m_oscOneGain.get(), OSC1_GAIN);
 
     m_oscOnePowerButton = std::make_unique<BlueToggle>(m_vts, juce::String(OSC1_ON), getElWidth(OSC1_ON),
