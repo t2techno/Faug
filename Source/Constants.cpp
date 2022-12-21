@@ -109,3 +109,18 @@ const std::map<std::string, double> skewMap =
   {F_CUTOFF, 0.75},
   {GLIDE_RATE, 0.5}
 };
+
+const enum AssetType {
+    KNOB_ONE, BIG_KNOB_ONE, TINY_KNOB_ONE, KNOB_TWO,
+
+};
+
+const std::map<std::string, AssetType> assetTypeMap =
+{
+    {GLOBAL_DETUNE, KNOB_ONE},
+    {GLIDE_RATE, KNOB_ONE},
+    {MOD_MIX, KNOB_ONE},
+
+    {LFO_RATE, TINY_KNOB_ONE}
+    {}
+};

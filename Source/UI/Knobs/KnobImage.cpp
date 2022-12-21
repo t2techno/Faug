@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    KnobImage.h
+    KnobImage.cpp
     Created: 8 Aug 2022 3:22:40pm
     Author:  tytu1
 
@@ -29,5 +29,5 @@ public:
     std::unique_ptr<float> pivotPoint;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobImage)
+    JUCE_HEAVYWEIGHT_LEAK_DETECTOR(KnobImage)
 };
