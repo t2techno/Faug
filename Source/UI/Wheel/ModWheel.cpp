@@ -10,28 +10,17 @@
 
 #include "ModWheel.h"
 
-ModWheel::ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int wheelWidth, int wheelHeight)
+ModWheel::ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, ModWheelLookAndFeel& laf)
 {
     slider = std::make_unique<juce::Slider>();
     addAndMakeVisible(slider.get());
-    slider->setBounds(0, 0, wheelWidth, wheelHeight);
+    slider->setBounds(0, 0, laf.wheelWidth, laf.wheelHeight);
     slider->setSliderStyle(juce::Slider::LinearVertical);
     slider->setTextBoxStyle(juce::Slider::NoTextBox, true, 80, 20);
     attach.reset(new SliderAttachment(vts, juce::String(paramId), *slider.get()));
-
-    modWheelLaf->setWheelImages(BinaryData::wheel_png, BinaryData::wheel_pngSize, 
-                                BinaryData::wheelShading_png, BinaryData::wheelShading_pngSize,
-                                wheelWidth, wheelHeight);
-    setLaf(modWheelLaf.get());
+    slider->setLookAndFeel(&laf);
 }
 
 ModWheel::~ModWheel()
 {
-    slider->setLookAndFeel(nullptr);
 }
-
-void ModWheel::setLaf(ModWheelLookAndFeel* laf) {
-    slider->setLookAndFeel(laf);
-}
-
-std::unique_ptr<ModWheelLookAndFeel>ModWheel::modWheelLaf = std::make_unique<ModWheelLookAndFeel>();

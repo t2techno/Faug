@@ -55,7 +55,7 @@ private:
     juce::AudioProcessorValueTreeState& m_vts;
 	std::unique_ptr<juce::Drawable> background;
 
-	// 3 Image assets
+	// 3 knob Image assets
 	std::unique_ptr<juce::Image> floatKnobImage;
 	std::unique_ptr<juce::Image> intKnobImage;
 	std::unique_ptr<juce::Image> screwKnobImage;
@@ -66,6 +66,11 @@ private:
 	std::unique_ptr<KnobLookAndFeel>FloatKnobLaf;
 	std::unique_ptr<KnobLookAndFeel>IntKnobLaf;
 	std::unique_ptr<KnobLookAndFeel>ScrewKnobLaf;
+
+	//modWheel
+	std::unique_ptr<juce::Image> modWheelImage;
+	std::unique_ptr<juce::Image> modWheelShading;
+	std::unique_ptr<ModWheelLookAndFeel> modWheelLaf;
 
 
 	// CONTROLLERS

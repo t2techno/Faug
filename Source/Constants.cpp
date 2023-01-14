@@ -102,6 +102,7 @@ const char * const BIG_FLOAT_KNOB_EX = OSC2_DETUNE;
 const char * const TINY_FLOAT_KNOB_EX = VOLUME;
 const char * const INT_KNOB_EX = OSC1_RANGE;
 const char * const SCREW_FLOAT_EX = LOAD;
+const char * const MOD_WHEEL_EX = MOD_AMOUNT;
 
 const std::map<std::string, double> skewMap = 
 {
@@ -115,18 +116,4 @@ const std::map<std::string, double> skewMap =
   {F_DECAY, 0.5},
   {F_CUTOFF, 0.75},
   {GLIDE_RATE, 0.5}
-};
-
-const enum AssetType {
-    KNOB_ONE, BIG_KNOB_ONE, TINY_KNOB_ONE, KNOB_TWO,
-
-};
-
-const std::map<std::string, AssetType> assetTypeMap =
-{
-    {GLOBAL_DETUNE, KNOB_ONE},
-    {GLIDE_RATE, KNOB_ONE},
-    {MOD_MIX, KNOB_ONE},
-
-    {LFO_RATE, TINY_KNOB_ONE}
 };

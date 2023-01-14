@@ -18,12 +18,10 @@ typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 class ModWheel : public juce::Component
 {
 public:
-    ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, const int wheelWidth, const int wheelHeight);
+    ModWheel(juce::AudioProcessorValueTreeState& vts, juce::String paramId, ModWheelLookAndFeel& laf);
     virtual ~ModWheel() override;
-    void setLaf(ModWheelLookAndFeel* laf);
 
 private:
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
-    static std::unique_ptr<ModWheelLookAndFeel> modWheelLaf;
 };

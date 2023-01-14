@@ -12,21 +12,16 @@
 #include "ModWheelLookAndFeel.h"
 #include "ModWheelImage.cpp"
 //==============================================================================
-ModWheelLookAndFeel::ModWheelLookAndFeel()
+ModWheelLookAndFeel::ModWheelLookAndFeel(juce::Image& wheelImageIn, juce::Image& wheelShadingIn,
+                                         const int wheelWidthIn, const int wheelHeightIn) :
+    wheelImage(std::make_unique<ModWheelImage>(wheelImageIn, wheelWidth, wheelHeight)),
+    wheelShading(std::make_unique<juce::Image>(wheelShadingIn)),
+    wheelWidth(wheelWidthIn), wheelHeight(wheelHeightIn)
 {
 }
 
 ModWheelLookAndFeel::~ModWheelLookAndFeel()
 {}
-
-void ModWheelLookAndFeel::setWheelImages(const char* wheelData, const int wheelDataSize, 
-                                         const char* wheelShadingData, const int wheelShadingDataSize,
-                                         const int wheelWidth, const int wheelHeight){
-    wheelImage   = std::make_unique<ModWheelImage>(wheelData, wheelDataSize, wheelWidth, wheelHeight);
-
-    juce::Image tempImage = juce::ImageFileFormat::loadFrom(wheelShadingData, wheelShadingDataSize);
-    wheelShading = std::make_unique<juce::Image>(tempImage.rescaled(wheelWidth, wheelHeight));
-}
 
 juce::Font ModWheelLookAndFeel::getBaseFont()
 {

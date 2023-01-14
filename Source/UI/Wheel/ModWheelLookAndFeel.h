@@ -20,12 +20,9 @@ class ModWheelImage;
 class ModWheelLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    ModWheelLookAndFeel();
-    virtual ~ModWheelLookAndFeel() override;
-
-    void setWheelImages(const char* wheelData, const int wheelDataSize, 
-                        const char* wheelShadingData, const int wheelShadingDataSize,
+    ModWheelLookAndFeel(juce::Image& wheelImage, juce::Image& wheelShading,
                         const int wheelWidth, const int wheelHeight);
+    virtual ~ModWheelLookAndFeel() override;
 
     juce::Font getBaseFont();
     juce::Font getLabelFont(juce::Label&) override;
@@ -35,6 +32,9 @@ public:
     void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
         float sliderPos, float minSliderPos, float maxSliderPos,
         const juce::Slider::SliderStyle sliderStyle, juce::Slider& slider) override;
+
+    int wheelWidth;
+    int wheelHeight;
 
 private:
     std::unique_ptr<ModWheelImage> wheelImage;

@@ -15,12 +15,11 @@
 class ModWheelImage : public juce::DrawableImage
 {
 public:
-    ModWheelImage(const char* wheelData, const int wheelDataSize, const int wheelWidth, const int wheelHeight)
+    ModWheelImage(juce::Image& imageIn, const int wheelWidth, const int wheelHeight)
     {
-        juce::Image tempImage = juce::ImageFileFormat::loadFrom(wheelData, wheelDataSize);
-        float wheelScale = float(wheelWidth) / float(tempImage.getWidth());
+        float wheelScale = float(wheelWidth) / float(imageIn.getWidth());
 
-        wheelImage = std::make_unique<juce::Image>(tempImage.rescaled(wheelWidth, tempImage.getHeight() * wheelScale));
+        wheelImage = std::make_unique<juce::Image>(imageIn.rescaled(wheelWidth, imageIn.getHeight() * wheelScale));
 
         setSize(wheelWidth, wheelHeight);
         setImage(*wheelImage.get());

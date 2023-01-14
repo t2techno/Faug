@@ -92,11 +92,8 @@ extern const char * const BIG_FLOAT_KNOB_EX;
 extern const char * const TINY_FLOAT_KNOB_EX;
 extern const char * const INT_KNOB_EX;
 extern const char * const SCREW_FLOAT_EX;
-
+extern const char * const MOD_WHEEL_EX;
 
 extern const std::map<std::string, std::array<float, 4>> guiPositions;
 
 extern const std::map<std::string, double> skewMap;
-
-extern const enum AssetType;
-extern const std::map<std::string, AssetType> assetTypeMap;

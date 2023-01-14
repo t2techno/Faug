@@ -44,7 +44,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::initializeAssets()
 {
-    // load images
+    //knobs
     background     = juce::Drawable::createFromImageData(BinaryData::background_png, BinaryData::background_pngSize);
     floatKnobImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::knobOne_png,   BinaryData::knobOne_pngSize));
     intKnobImage   = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::knobTwo_png,   BinaryData::knobTwo_pngSize));
@@ -55,6 +55,11 @@ void MainComponent::initializeAssets()
     BigFloatKnobLaf  = std::make_unique<KnobLookAndFeel>(*floatKnobImage.get(), getElWidth(BIG_FLOAT_KNOB_EX));
     IntKnobLaf       = std::make_unique<KnobLookAndFeel>(*intKnobImage.get(),   getElWidth(INT_KNOB_EX));
     ScrewKnobLaf     = std::make_unique<KnobLookAndFeel>(*screwKnobImage.get(), getElWidth(SCREW_FLOAT_EX));
+
+    //modWheel
+    modWheelImage   = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::wheel_png, BinaryData::wheel_pngSize));
+    modWheelShading = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(BinaryData::wheelShading_png, BinaryData::wheelShading_pngSize));
+    modWheelLaf     = std::make_unique<ModWheelLookAndFeel>(*modWheelImage.get(), *modWheelShading.get(), getElWidth(MOD_WHEEL_EX), getElHeight(MOD_WHEEL_EX));
 }
 
 void MainComponent::createKeyboard() 
@@ -70,12 +75,10 @@ void MainComponent::createKeyboard()
         getElHeight(DECAY_ON));
     placeElement(*m_decayOn.get(), DECAY_ON);
 
-    m_modAmount = std::make_unique<ModWheel>(m_vts, juce::String(MOD_AMOUNT), getElWidth(MOD_AMOUNT),
-        getElHeight(MOD_AMOUNT));
+    m_modAmount = std::make_unique<ModWheel>(m_vts, juce::String(MOD_AMOUNT), *modWheelLaf.get());
     placeElement(*m_modAmount.get(), MOD_AMOUNT);
 
-    m_pitchBend = std::make_unique<ModWheel>(m_vts, juce::String(PITCH_BEND), getElWidth(PITCH_BEND),
-        getElHeight(MOD_AMOUNT));
+    m_pitchBend = std::make_unique<ModWheel>(m_vts, juce::String(PITCH_BEND), *modWheelLaf.get());
     placeElement(*m_pitchBend.get(), PITCH_BEND);
 
     m_lfoRate = std::make_unique<TinyFloatKnob>(m_vts, juce::String(LFO_RATE), *TinyFloatKnobLaf.get());
