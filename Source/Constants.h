@@ -87,6 +87,13 @@ extern const char * const SUSTAIN;
 extern const char * const VOLUME;
 extern const char * const ON;
 
+extern const char * const FLOAT_KNOB_EX;
+extern const char * const BIG_FLOAT_KNOB_EX;
+extern const char * const TINY_FLOAT_KNOB_EX;
+extern const char * const INT_KNOB_EX;
+extern const char * const SCREW_FLOAT_EX;
+
+
 extern const std::map<std::string, std::array<float, 4>> guiPositions;
 
 extern const std::map<std::string, double> skewMap;

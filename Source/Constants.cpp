@@ -96,6 +96,13 @@ const char* const SUSTAIN = "sustain";
 const char * const VOLUME = "masterVolume";
 const char * const ON = "on";
 
+// for sizing look and feels
+const char * const FLOAT_KNOB_EX = OSC1_GAIN;
+const char * const BIG_FLOAT_KNOB_EX = OSC2_DETUNE;
+const char * const TINY_FLOAT_KNOB_EX = VOLUME;
+const char * const INT_KNOB_EX = OSC1_RANGE;
+const char * const SCREW_FLOAT_EX = LOAD;
+
 const std::map<std::string, double> skewMap = 
 {
   {VOLUME,0.5},
@@ -122,5 +129,4 @@ const std::map<std::string, AssetType> assetTypeMap =
     {MOD_MIX, KNOB_ONE},
 
     {LFO_RATE, TINY_KNOB_ONE}
-    {}
 };

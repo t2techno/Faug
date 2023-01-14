@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "ModWheelLookAndFeel.h"
-#include "ModWheelImage.h"
+#include "ModWheelImage.cpp"
 //==============================================================================
 ModWheelLookAndFeel::ModWheelLookAndFeel()
 {
