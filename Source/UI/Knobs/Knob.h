@@ -27,3 +27,33 @@ private:
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
 };
+
+class FloatKnob : public Knob {
+    public:
+        FloatKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, KnobLookAndFeel& laf) : Knob(vts, paramId, laf) {}
+        virtual ~FloatKnob() override {}
+};
+
+class BigFloatKnob : public Knob {
+public:
+    BigFloatKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, KnobLookAndFeel& laf) : Knob(vts, paramId, laf) {}
+    virtual ~BigFloatKnob() override {}
+};
+
+class TinyFloatKnob : public Knob {
+public:
+    TinyFloatKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, KnobLookAndFeel& laf) : Knob(vts, paramId, laf) {}
+    virtual ~TinyFloatKnob() override {}
+};
+
+class IntKnob : public Knob {
+public:
+    IntKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, KnobLookAndFeel& laf) : Knob(vts, paramId, laf) {}
+    virtual ~IntKnob() override {}
+};
+
+class ScrewFloatKnob : public Knob {
+public:
+    ScrewFloatKnob(juce::AudioProcessorValueTreeState& vts, juce::String paramId, KnobLookAndFeel& laf) : Knob(vts, paramId, laf) {}
+    virtual ~ScrewFloatKnob() override {}
+};
