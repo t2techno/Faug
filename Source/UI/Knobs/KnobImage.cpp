@@ -29,5 +29,5 @@ public:
     std::unique_ptr<float> pivotPoint;
 
 private:
-    JUCE_HEAVYWEIGHT_LEAK_DETECTOR(KnobImage)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobImage)
 };

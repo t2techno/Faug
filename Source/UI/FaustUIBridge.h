@@ -79,6 +79,7 @@ class  FaustUIBridge : public UI
 
 
 private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FaustUIBridge)
     juce::AudioProcessorValueTreeState& vts;
     juce::Array<juce::String> labels;
     float* currentFreqZone;

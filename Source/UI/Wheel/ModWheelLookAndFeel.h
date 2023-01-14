@@ -37,6 +37,7 @@ public:
     int wheelHeight;
 
 private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModWheelLookAndFeel)
     std::unique_ptr<ModWheelImage> wheelImage;
     std::unique_ptr<juce::Image> wheelShading;
     juce::AffineTransform transform = juce::AffineTransform();

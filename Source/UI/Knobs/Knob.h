@@ -24,6 +24,7 @@ public:
     virtual ~Knob() override;
 
 private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Knob)
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
 };

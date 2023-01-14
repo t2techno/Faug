@@ -22,6 +22,7 @@ public:
     virtual ~ModWheel() override;
 
 private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModWheel)
     std::unique_ptr<juce::Slider>     slider;
     std::unique_ptr<SliderAttachment> attach;
 };
