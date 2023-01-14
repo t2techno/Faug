@@ -20,15 +20,10 @@ ToggleLookAndFeel::ToggleLookAndFeel()
 ToggleLookAndFeel::~ToggleLookAndFeel()
 {}
 
-ToggleLookAndFeel::ToggleLookAndFeel(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
-{
-    setToggleImage(toggleData, toggleDataSize, toggleWidth, toggleHeight);
-}
-
-void ToggleLookAndFeel::setToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
-{
-    toggleImage = std::make_unique<ToggleImage>(toggleData, toggleDataSize, toggleWidth, toggleHeight);
-}
+ToggleLookAndFeel::ToggleLookAndFeel(juce::Image& toggleImageIn, int toggleWidthIn, int toggleHeightIn) :
+    toggleImage(std::make_unique<ToggleImage>(toggleImageIn,toggleWidth, toggleHeight)), 
+    toggleWidth(toggleWidthIn), toggleHeight(toggleHeightIn)
+{}
 
 juce::Font ToggleLookAndFeel::getBaseFont()
 {

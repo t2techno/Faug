@@ -102,6 +102,13 @@ const char * const BIG_FLOAT_KNOB_EX = OSC2_DETUNE;
 const char * const TINY_FLOAT_KNOB_EX = VOLUME;
 const char * const INT_KNOB_EX = OSC1_RANGE;
 const char * const SCREW_FLOAT_EX = LOAD;
+
+const char * const ORANGE_TOG_EX = F_MOD_ON;
+const char * const BIG_ORANGE_TOG_EX = OSC_MOD_ON;
+const char * const BLUE_TOG_EX  = OSC1_ON;
+const char * const WHITE_TOG_EX = GLIDE_ON;
+const char * const BROWN_TOG_EX = ON;
+
 const char * const MOD_WHEEL_EX = MOD_AMOUNT;
 
 const std::map<std::string, double> skewMap = 

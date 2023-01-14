@@ -12,25 +12,13 @@
 #include "Toggle.h"
 
 
-Toggle::Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, int toggleWidth, int toggleHeight)
+Toggle::Toggle(juce::AudioProcessorValueTreeState& vts, juce::String paramId, ToggleLookAndFeel& laf)
 {
     toggle = std::make_unique<juce::ToggleButton>();
-    toggle->setBounds(0, 0, toggleWidth, toggleHeight);
+    toggle->setBounds(0, 0, laf.toggleWidth, laf.toggleHeight);
+    toggle->setLookAndFeel(&laf);
     addAndMakeVisible(toggle.get());
     attach.reset(new ButtonAttachment(vts, paramId, *toggle.get()));
 }
 
-Toggle::~Toggle()
-{
-}
-
-void Toggle::setLaf(ToggleLookAndFeel* laf)
-{
-    toggle->setLookAndFeel(laf);
-}
-
-std::unique_ptr<ToggleLookAndFeel> BigOrangeToggle::toggleLaf = std::make_unique<ToggleLookAndFeel>();
-std::unique_ptr<ToggleLookAndFeel> OrangeToggle::toggleLaf    = std::make_unique<ToggleLookAndFeel>();
-std::unique_ptr<ToggleLookAndFeel> BlueToggle::toggleLaf      = std::make_unique<ToggleLookAndFeel>();
-std::unique_ptr<ToggleLookAndFeel> BrownToggle::toggleLaf     = std::make_unique<ToggleLookAndFeel>();
-std::unique_ptr<ToggleLookAndFeel> WhiteToggle::toggleLaf     = std::make_unique<ToggleLookAndFeel>();
+Toggle::~Toggle(){}

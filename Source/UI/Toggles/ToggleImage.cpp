@@ -16,11 +16,9 @@
 class ToggleImage  : public juce::DrawableImage
 {
 public:
-    ToggleImage(const char* toggleData, const int toggleDataSize, int toggleWidth, int toggleHeight)
+    ToggleImage(juce::Image& toggleImageIn, int toggleWidth, int toggleHeight)
     {
-        toggleImage = std::make_unique<juce::Image>(juce::ImageFileFormat::loadFrom(toggleData, toggleDataSize));
-        setSize(toggleDataSize, toggleDataSize);
-        setImage(toggleImage->rescaled(toggleWidth, toggleHeight));
+        setImage(toggleImageIn.rescaled(toggleWidth, toggleHeight));
         pivot_x = toggleWidth / 2;
         pivot_y = toggleHeight / 2;
     }

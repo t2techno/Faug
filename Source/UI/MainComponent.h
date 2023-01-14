@@ -61,11 +61,23 @@ private:
 	std::unique_ptr<juce::Image> screwKnobImage;
 
 	// referenced among 5 LookAndFeels of varying size
-	std::unique_ptr<KnobLookAndFeel>BigFloatKnobLaf;
-	std::unique_ptr<KnobLookAndFeel>TinyFloatKnobLaf;
-	std::unique_ptr<KnobLookAndFeel>FloatKnobLaf;
-	std::unique_ptr<KnobLookAndFeel>IntKnobLaf;
-	std::unique_ptr<KnobLookAndFeel>ScrewKnobLaf;
+	std::unique_ptr<KnobLookAndFeel> bigFloatKnobLaf;
+	std::unique_ptr<KnobLookAndFeel> tinyFloatKnobLaf;
+	std::unique_ptr<KnobLookAndFeel> floatKnobLaf;
+	std::unique_ptr<KnobLookAndFeel> intKnobLaf;
+	std::unique_ptr<KnobLookAndFeel> screwKnobLaf;
+
+	// toggles
+	std::unique_ptr<juce::Image> orangeToggle;
+	std::unique_ptr<juce::Image> blueToggle;
+	std::unique_ptr<juce::Image> brownToggle;
+	std::unique_ptr<juce::Image> whiteToggle;
+
+	std::unique_ptr<ToggleLookAndFeel> orangeToggleLaf;
+	std::unique_ptr<ToggleLookAndFeel> bigOrangeToggleLaf;
+	std::unique_ptr<ToggleLookAndFeel> blueToggleLaf;
+	std::unique_ptr<ToggleLookAndFeel> brownToggleLaf;
+	std::unique_ptr<ToggleLookAndFeel>  whiteToggleLaf;
 
 	//modWheel
 	std::unique_ptr<juce::Image> modWheelImage;
@@ -111,26 +123,26 @@ private:
 
 	std::unique_ptr<IntKnob> m_oscThreeRange;
 	std::unique_ptr<IntKnob> m_oscThreeWaveForm;
-	std::unique_ptr<BigFloatKnob> m_oscThreeDetune;
+	std::unique_ptr<BigFloatKnob>   m_oscThreeDetune;
 	std::unique_ptr<BigOrangeToggle>m_osc3Ctrl;
 
 	// MIXER
 	std::unique_ptr<ScrewFloatKnob>  m_load;
 
 	std::unique_ptr<BlueToggle> m_oscOnePowerButton;
-	std::unique_ptr<FloatKnob>    m_oscOneGain;
+	std::unique_ptr<FloatKnob>  m_oscOneGain;
 
 	std::unique_ptr<BlueToggle> m_oscTwoPowerButton;
-	std::unique_ptr<FloatKnob>    m_oscTwoGain;
+	std::unique_ptr<FloatKnob>  m_oscTwoGain;
 
 	std::unique_ptr<BlueToggle> m_oscThreePowerButton;
-	std::unique_ptr<FloatKnob>    m_oscThreeGain;
+	std::unique_ptr<FloatKnob>  m_oscThreeGain;
 
 	std::unique_ptr<BlueToggle> m_feedbackOn;
-	std::unique_ptr<FloatKnob>    m_feedbackGain;
+	std::unique_ptr<FloatKnob>  m_feedbackGain;
 
 	std::unique_ptr<BlueToggle> m_noiseOn;
-	std::unique_ptr<FloatKnob>    m_noiseGain;
+	std::unique_ptr<FloatKnob>  m_noiseGain;
 	std::unique_ptr<BlueToggle> m_noiseType;
 
 	// In-Between
@@ -157,7 +169,7 @@ private:
 	// POWER
 	//tiny knob one
 	std::unique_ptr<TinyFloatKnob> master_volume;
-	std::unique_ptr<BrownToggle> master_on;
+	std::unique_ptr<BrownToggle>   master_on;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
