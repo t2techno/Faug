@@ -6,7 +6,7 @@
               headerPath="/usr/include/;">
   <MAINGROUP id="NOdcBF" name="Faug">
     <GROUP id="{E1C47AD4-A12A-1BBF-6BD5-35E169980668}" name="Images">
-      <FILE id="MghOwL" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
+      <FILE id="UFslB5" name="background.png" compile="0" resource="1" file="imageWork/background.png"/>
       <FILE id="LfPswK" name="backgroundExample.png" compile="0" resource="1"
             file="imageWork/backgroundExample.png"/>
       <GROUP id="{29766A75-040E-BEE0-DB29-607DE52B43DD}" name="toggles">
@@ -53,7 +53,8 @@
         <GROUP id="{FD5AB648-6586-CAEF-7E03-A5E15438B1C4}" name="Wheel">
           <FILE id="klGsfs" name="ModWheel.cpp" compile="1" resource="0" file="Source/UI/Wheel/ModWheel.cpp"/>
           <FILE id="QM3Cp3" name="ModWheel.h" compile="0" resource="0" file="Source/UI/Wheel/ModWheel.h"/>
-          <FILE id="h5i75j" name="ModWheelImage.h" compile="0" resource="0" file="Source/UI/Wheel/ModWheelImage.h"/>
+          <FILE id="Zg9yOd" name="ModWheelImage.cpp" compile="1" resource="0"
+                file="Source/UI/Wheel/ModWheelImage.cpp"/>
           <FILE id="SJ5iEO" name="ModWheelLookAndFeel.cpp" compile="1" resource="0"
                 file="Source/UI/Wheel/ModWheelLookAndFeel.cpp"/>
           <FILE id="DlDzC9" name="ModWheelLookAndFeel.h" compile="0" resource="0"
@@ -64,7 +65,7 @@
         <GROUP id="{78B36E4E-225D-C158-D484-E5B6F8E89E94}" name="Toggles">
           <FILE id="LutJMt" name="Toggle.cpp" compile="1" resource="0" file="Source/UI/Toggles/Toggle.cpp"/>
           <FILE id="xH4FmF" name="Toggle.h" compile="0" resource="0" file="Source/UI/Toggles/Toggle.h"/>
-          <FILE id="NiUqcA" name="ToggleImage.h" compile="0" resource="0" file="Source/UI/Toggles/ToggleImage.h"/>
+          <FILE id="XHYvId" name="ToggleImage.cpp" compile="1" resource="0" file="Source/UI/Toggles/ToggleImage.cpp"/>
           <FILE id="GScc6R" name="ToggleLookAndFeel.cpp" compile="1" resource="0"
                 file="Source/UI/Toggles/ToggleLookAndFeel.cpp"/>
           <FILE id="L7ZW4E" name="ToggleLookAndFeel.h" compile="0" resource="0"
@@ -73,7 +74,7 @@
         <GROUP id="{670D16E6-CD1F-215A-76A0-E627481DB3C8}" name="Knobs">
           <FILE id="HEoDtF" name="Knob.cpp" compile="1" resource="0" file="Source/UI/Knobs/Knob.cpp"/>
           <FILE id="UZyXGO" name="Knob.h" compile="0" resource="0" file="Source/UI/Knobs/Knob.h"/>
-          <FILE id="gSRgEm" name="KnobImage.h" compile="0" resource="0" file="Source/UI/Knobs/KnobImage.h"/>
+          <FILE id="i8sj0y" name="KnobImage.cpp" compile="1" resource="0" file="Source/UI/Knobs/KnobImage.cpp"/>
           <FILE id="KlMUzd" name="KnobLookAndFeel.cpp" compile="1" resource="0"
                 file="Source/UI/Knobs/KnobLookAndFeel.cpp"/>
           <FILE id="AKmIME" name="KnobLookAndFeel.h" compile="0" resource="0"
