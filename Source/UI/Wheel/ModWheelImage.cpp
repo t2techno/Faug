@@ -35,5 +35,5 @@ public:
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModWheelImage)
-        std::unique_ptr<juce::Image> wheelImage;
+    std::unique_ptr<juce::Image> wheelImage;
 };

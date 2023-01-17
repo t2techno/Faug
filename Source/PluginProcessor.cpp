@@ -24,7 +24,7 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     m_params(*this, nullptr)
 {
-    m_keyState = std::make_unique <juce::MidiKeyboardState>();
+    m_keyState    = std::make_unique <juce::MidiKeyboardState>();
     m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params);
 }
 

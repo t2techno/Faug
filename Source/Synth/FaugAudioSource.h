@@ -29,6 +29,7 @@ class FaugAudioSource : public juce::AudioSource,
 		static const int noteMemory = 10;
 
 	private:
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FaugAudioSource)
 		juce::MidiMessageCollector midiCollector;
 		juce::Synthesiser synth;
 		juce::MidiKeyboardState& keyboardState;
