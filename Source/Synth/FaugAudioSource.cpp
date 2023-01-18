@@ -10,11 +10,10 @@
 
 FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts, 
                                  FaustUIBridge& fBridge, mydsp& fDsp)
-    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes(), currentNote(0), prevNote(-1),
-      mBridge(fBridge), mFaust(fDsp)
+    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes(), currentNote(0), prevNote(0),
+      mBridge(fBridge), mFaust(fDsp), synth()
 {
     // This is a mono-synth, only one voice needed
-    
 
     synth.addSound(new FaustDspSound());
     synth.setNoteStealingEnabled(true);
@@ -36,13 +35,14 @@ void FaugAudioSource::prepareToPlay(int samplesPerBlockExpected, double sampleRa
 {
     FaustDspVoice* synthVoice = new FaustDspVoice(mVts, mFaust);
     synthVoice->prepareToPlay(sampleRate, samplesPerBlockExpected);
-
     synth.addVoice(synthVoice);
+
     synth.setCurrentPlaybackSampleRate(sampleRate);
     midiCollector.reset(sampleRate);
 }
 
 void FaugAudioSource::releaseResources() {
+    synth.removeVoice(0);
 }
 
 void FaugAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo & bufferToFill)
