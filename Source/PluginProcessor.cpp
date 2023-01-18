@@ -8,6 +8,8 @@
 #include "./Synth/FaugAudioSource.h"
 #include "PluginProcessor.h"
 #include "./UI/PluginEditor.h"
+#include "./UI/FaustUIBridge.h"
+#include "./FaustExp/FaugExp.cpp"
 #include "Constants.h"
 
 //==============================================================================
@@ -22,10 +24,11 @@ FaugAudioProcessor::FaugAudioProcessor()
 #endif
     ),
 #endif
-    m_params(*this, nullptr)
+    m_params(*this, nullptr), m_keyState(std::make_unique<juce::MidiKeyboardState>()), m_dsp(std::make_unique<mydsp>())
 {
-    m_keyState    = std::make_unique <juce::MidiKeyboardState>();
-    m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params);
+    m_audioSource = std::make_unique<FaugAudioSource>(*m_keyState.get(), m_params, *m_UiBridge.get(), *m_dsp.get());
+    m_UiBridge = std::make_unique<FaustUIBridge>(m_params);
+    m_dsp.get()->buildUserInterface(m_UiBridge.get());
 }
 
 FaugAudioProcessor::~FaugAudioProcessor()
@@ -99,7 +102,9 @@ void FaugAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::ValueTree root(juce::Identifier("FAUG"));
 
+    m_dsp.get()->init(sampleRate);
     m_audioSource->prepareToPlay(samplesPerBlock, sampleRate);
+
     m_params.state = root;
 }
 

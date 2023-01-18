@@ -4,15 +4,17 @@
 
 #include <JuceHeader.h>
 class mydsp;
-class FaustDspVoice;
 class FaustUIBridge;
+class FaustDspVoice;
+
 
 class FaugAudioSource : public juce::AudioSource,
 							   juce::MidiInputCallback,
 					   private juce::MidiKeyboardStateListener 
 {
 	public:
-		FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts);
+		FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts,
+			FaustUIBridge& fBridge, mydsp& fDsp);
 		virtual ~FaugAudioSource() override;
 
 		void setUsingSynthSound();
@@ -33,8 +35,8 @@ class FaugAudioSource : public juce::AudioSource,
 		juce::MidiMessageCollector midiCollector;
 		juce::Synthesiser synth;
 		juce::MidiKeyboardState& keyboardState;
-		std::unique_ptr<mydsp> mFaust;
-		std::unique_ptr<FaustUIBridge> mBridge;
+		mydsp& mFaust;
+		FaustUIBridge& mBridge;
 		juce::AudioProcessorValueTreeState& mVts;
 
 		int currentNote;

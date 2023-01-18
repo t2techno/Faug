@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 
 class FaugAudioSource;
+class mydsp;
+class FaustUIBridge;
 
 //==============================================================================
 /**
@@ -65,4 +67,6 @@ private:
     juce::AudioProcessorValueTreeState m_params;
     std::unique_ptr<FaugAudioSource> m_audioSource;
     std::unique_ptr<juce::MidiKeyboardState> m_keyState;
+    std::unique_ptr<mydsp> m_dsp;
+    std::unique_ptr<FaustUIBridge> m_UiBridge;
 };

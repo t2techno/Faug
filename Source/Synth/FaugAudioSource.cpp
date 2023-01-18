@@ -8,13 +8,19 @@
 #include "../UI/FaustUIBridge.h"
 #include "../FaustExp/FaugExp.cpp"
 
-FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts)
-    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes(), currentNote(0)
+FaugAudioSource::FaugAudioSource(juce::MidiKeyboardState& keyState, juce::AudioProcessorValueTreeState& vts, 
+                                 FaustUIBridge& fBridge, mydsp& fDsp)
+    : keyboardState(keyState), mVts(vts), numHeldNotes(0), heldNotes(), currentNote(0), prevNote(-1),
+      mBridge(fBridge), mFaust(fDsp)
 {
     // This is a mono-synth, only one voice needed
-    mFaust = std::make_unique<mydsp>();
- 
+    
+
+    synth.addSound(new FaustDspSound());
+    synth.setNoteStealingEnabled(true);
+
     keyboardState.addListener(this);
+
 }
 
 FaugAudioSource::~FaugAudioSource()
@@ -28,24 +34,15 @@ void FaugAudioSource::setUsingSynthSound()
 
 void FaugAudioSource::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
-    mBridge = std::make_unique<FaustUIBridge>(mVts);
-
-    FaustDspVoice* synthVoice = new FaustDspVoice(mVts, *mFaust.get());
+    FaustDspVoice* synthVoice = new FaustDspVoice(mVts, mFaust);
     synthVoice->prepareToPlay(sampleRate, samplesPerBlockExpected);
 
     synth.addVoice(synthVoice);
-    synth.addSound(new FaustDspSound());
-    synth.setNoteStealingEnabled(true);
-
-    mFaust->init(sampleRate);
-    mFaust->buildUserInterface(mBridge.get());
     synth.setCurrentPlaybackSampleRate(sampleRate);
     midiCollector.reset(sampleRate);
 }
 
 void FaugAudioSource::releaseResources() {
-    mFaust.reset();
-    mBridge.reset();
 }
 
 void FaugAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo & bufferToFill)
@@ -79,7 +76,7 @@ void FaugAudioSource::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, in
     //If the voice is active, it's currently playing currentNote. Move it to prev_freq for glide
         //If the voice isn't active, set prev_freq to new note so there is no glide
 
-    mVts.getParameterAsValue(PREV_FREQ).setValue(synth.getVoice(0)->isVoiceActive() ? mBridge->getCurrentFreq() :
+    mVts.getParameterAsValue(PREV_FREQ).setValue(synth.getVoice(0)->isVoiceActive() ? mBridge.getCurrentFreq() :
                                                                            juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
     currentNote = midiNoteNumber;
     heldNotes[numHeldNotes++] = midiNoteNumber;
@@ -108,7 +105,7 @@ void FaugAudioSource::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, i
     bool triggerNewNote = (synth.getVoice(0)->getCurrentlyPlayingNote() == midiNoteNumber && numHeldNotes > 0);
     if (triggerNewNote)
     {
-        mVts.getParameterAsValue(PREV_FREQ).setValue(mBridge->getCurrentFreq());
+        mVts.getParameterAsValue(PREV_FREQ).setValue(mBridge.getCurrentFreq());
         mVts.getParameterAsValue(GATE).setValue(false);
         currentNote = heldNotes[numHeldNotes-1];
         if (currentNote != 0) {
