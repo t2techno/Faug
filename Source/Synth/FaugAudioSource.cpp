@@ -76,7 +76,7 @@ void FaugAudioSource::handleNoteOn(juce::MidiKeyboardState*, int midiChannel, in
     //If the voice is active, it's currently playing currentNote. Move it to prev_freq for glide
         //If the voice isn't active, set prev_freq to new note so there is no glide
 
-    mVts.getParameterAsValue(PREV_FREQ).setValue(synth.getVoice(0)->isVoiceActive() ? mBridge.getCurrentFreq() :
+    mVts.getParameterAsValue(PREV_FREQ).setValue(synth.getVoice(0)->isVoiceActive() ? mVts.getParameterAsValue(FREQ).getValue() :
                                                                            juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
     currentNote = midiNoteNumber;
     heldNotes[numHeldNotes++] = midiNoteNumber;
@@ -105,7 +105,7 @@ void FaugAudioSource::handleNoteOff(juce::MidiKeyboardState*, int midiChannel, i
     bool triggerNewNote = (synth.getVoice(0)->getCurrentlyPlayingNote() == midiNoteNumber && numHeldNotes > 0);
     if (triggerNewNote)
     {
-        mVts.getParameterAsValue(PREV_FREQ).setValue(mBridge.getCurrentFreq());
+        mVts.getParameterAsValue(PREV_FREQ).setValue(mVts.getParameterAsValue(FREQ).getValue());
         mVts.getParameterAsValue(GATE).setValue(false);
         currentNote = heldNotes[numHeldNotes-1];
         if (currentNote != 0) {
